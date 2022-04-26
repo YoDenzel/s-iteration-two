@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/s-iteration-two/auth/static/css/main.27f8ffe5.css",
+    "main.js": "/s-iteration-two/auth/static/js/main.20f1b7a6.js",
+    "static/media/Roboto-Medium.ttf": "/s-iteration-two/auth/static/media/Roboto-Medium.7429a63c09f79a1760b0.ttf",
+    "static/media/Roboto-Regular.ttf": "/s-iteration-two/auth/static/media/Roboto-Regular.a8d6ac03c7b96b7acb62.ttf",
+    "static/media/Roboto-Black.ttf": "/s-iteration-two/auth/static/media/Roboto-Black.2a4285847db4a9acb97f.ttf",
+    "static/media/Roboto-Bold.ttf": "/s-iteration-two/auth/static/media/Roboto-Bold.75371f53f06181df75f1.ttf",
+    "static/media/Roboto-Light.ttf": "/s-iteration-two/auth/static/media/Roboto-Light.8be2d1487420548b3b8d.ttf",
+    "index.html": "/s-iteration-two/auth/index.html",
+    "main.27f8ffe5.css.map": "/s-iteration-two/auth/static/css/main.27f8ffe5.css.map",
+    "main.20f1b7a6.js.map": "/s-iteration-two/auth/static/js/main.20f1b7a6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.27f8ffe5.css",
+    "static/js/main.20f1b7a6.js"
+  ]
+}
