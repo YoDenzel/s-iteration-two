@@ -8,32 +8,32 @@
   --button-default: linear-gradient(90deg, #0ec261 2.61%, #039f67 112.6%);
   --button-hover: linear-gradient(90deg, #0b934a 2.61%, #026e47 112.6%);
   --button-clicked: linear-gradient(90deg, #076432 2.61%, #013c27 112.6%);
-  --aside-background: #111518;
+  --admin-background: #f5f6f8;
 }
 
 @font-face {
-  font-family: 'Roboto-Bold';
+  font-family: 'Roboto';
   src: local('Roboto-Bold'),
     url('./fonts/Roboto/Roboto-Bold.ttf') format('truetype');
   font-weight: bold;
 }
 
 @font-face {
-  font-family: 'Roboto-Light';
-  src: local('Roboto-Light'),
+  font-family: 'Roboto';
+  src: local('Roboto'),
     url('./fonts/Roboto/Roboto-Light.ttf') format('truetype');
   font-weight: 300;
 }
 
 @font-face {
-  font-family: 'Roboto-Medium';
+  font-family: 'Roboto';
   src: local('Roboto-Medium'),
     url('./fonts/Roboto//Roboto-Medium.ttf') format('truetype');
   font-weight: 500;
 }
 
 @font-face {
-  font-family: 'Roboto-Regular';
+  font-family: 'Roboto';
   src: local('Roboto-Regular'),
     url('./fonts/Roboto/Roboto-Regular.ttf') format('truetype');
   font-weight: 400;
