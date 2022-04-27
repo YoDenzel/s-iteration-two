@@ -1,10 +1,24 @@
+import { createTheme, ThemeProvider } from '@mui/material';
+import { ruRU } from '@mui/material/locale';
 import { Routes, Route } from 'react-router';
 import { AuthPage } from '../pages';
 
 export function App() {
+  const theme = createTheme(
+    {
+      palette: {
+        background: {
+          default: '#F5F6F8',
+        },
+      },
+    },
+    ruRU,
+  );
   return (
-    <Routes>
-      <Route path="s-iteration-two/auth" element={<AuthPage />} />
-    </Routes>
+    <ThemeProvider theme={theme}>
+      <Routes>
+        <Route path="*" element={<AuthPage />} />
+      </Routes>
+    </ThemeProvider>
   );
 }
