@@ -8,10 +8,15 @@ import {
   RequestAccessButton,
   Title,
 } from './emoition-components';
+import { TAuthPage } from './types';
 
-export function AuthWindow() {
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
+export function AuthWindow({
+  login,
+  password,
+  setLogin,
+  setPassword,
+  authClickHandler,
+}: TAuthPage) {
   return (
     <Container component="section">
       <Title variant="h2">Вход</Title>
@@ -35,7 +40,9 @@ export function AuthWindow() {
       </InputWrapper>
       <ButtonsContainer>
         <RequestAccessButton>Запросить доступ</RequestAccessButton>
-        <AuthorizeButton variant="contained">Войти</AuthorizeButton>
+        <AuthorizeButton variant="contained" onClick={authClickHandler}>
+          Войти
+        </AuthorizeButton>
       </ButtonsContainer>
     </Container>
   );
