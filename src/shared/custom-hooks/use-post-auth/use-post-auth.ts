@@ -1,10 +1,14 @@
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, UseMutationResult, useQueryClient } from 'react-query';
 import { fetchPostAuth } from '../../api';
-import { TPostAuth } from '../../types';
+import { TPostAuth, TPostAuthResponse } from '../../types';
 
 const QUERY_KEY = 'carOrder';
 
-export const usePostAuth = () => {
+export const usePostAuth = (): UseMutationResult<
+  TPostAuthResponse,
+  unknown,
+  TPostAuth
+> => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
