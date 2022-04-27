@@ -3,3 +3,8 @@ export type TIcons = Partial<{
   height: number;
   color: string;
 }>;
+
+export type TPostAuth = {
+  username: string;
+  password: string;
+}
