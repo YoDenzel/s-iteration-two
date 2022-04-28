@@ -23,7 +23,7 @@ export function App() {
       <Routes>
         {!isAuthenticated ? (
           <>
-            <Route path="/s-iteration-two" element={<AuthPage />} />
+            <Route path="/s-iteration-two/" element={<AuthPage />} />
             <Route path="/s-iteration-two/admin/*" element={<AuthPage />} />
           </>
         ) : (
