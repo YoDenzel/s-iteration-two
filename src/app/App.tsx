@@ -22,7 +22,10 @@ export function App() {
     <ThemeProvider theme={theme}>
       <Routes>
         {!isAuthenticated ? (
-          <Route path="/s-iteration-two/admin/*" element={<AuthPage />} />
+          <>
+            <Route path="/s-iteration-two/admin/" element={<AuthPage />} />
+            <Route path="/s-iteration-two/admin/*" element={<AuthPage />} />
+          </>
         ) : (
           <>
             <Route
