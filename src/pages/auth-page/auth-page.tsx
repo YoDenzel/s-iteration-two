@@ -1,20 +1,51 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthWindow } from '../../components';
-import { usePostAuth } from '../../shared/custom-hooks';
+import {
+  setAuthObj,
+  setIsAuthenticated,
+} from '../../redux/auth-slice/auth-slice';
+import { useAppDispatch, usePostAuth } from '../../shared/custom-hooks';
 import { Icons } from '../../shared/icons';
 import { Wrapper, TitleContainer, Title } from './emotion-components';
 
 export function AuthPage() {
-  const { data, mutateAsync } = usePostAuth();
+  const { data, mutateAsync, isError } = usePostAuth();
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const authClickHandler = () => {
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const authClickHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     mutateAsync({
       username: login,
       password: password,
     });
   };
-  console.log(data);
+
+  useEffect(() => {
+    if ((!login || !password) && isError)
+      setErrorMessage('Введите логин или пароль');
+    else if (isError) setErrorMessage('Неправильный логин или пароль');
+  }, [isError]);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(
+        setAuthObj({
+          authObj: data,
+        }),
+      );
+      dispatch(
+        setIsAuthenticated({
+          isAuthenticated: true,
+        }),
+      );
+      navigate('/s-iteration-two/admin/order-list');
+    }
+  }, [data]);
+
   return (
     <Wrapper component="main">
       <TitleContainer>
@@ -27,6 +58,7 @@ export function AuthPage() {
         password={password}
         setPassword={setPassword}
         authClickHandler={authClickHandler}
+        errorMessage={errorMessage}
       />
     </Wrapper>
   );
