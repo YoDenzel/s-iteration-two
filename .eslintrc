@@ -31,6 +31,7 @@
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
     "import/no-unresolved": "off",
+    "import/named": "off",
     "no-else-return": "off"
   }
 }
