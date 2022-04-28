@@ -18,12 +18,14 @@ export function App() {
     },
     ruRU,
   );
+  // приходится использовать руты так, из-за gh pages, он отчаянно не хочет видеть корректную homepage вида
+  // s-itertaion-two/admin/*
   return (
     <ThemeProvider theme={theme}>
       <Routes>
         {!isAuthenticated ? (
           <>
-            <Route path="/s-iteration-two/" element={<AuthPage />} />
+            <Route path="/s-iteration-two" element={<AuthPage />} />
             <Route path="/s-iteration-two/admin/*" element={<AuthPage />} />
           </>
         ) : (
