@@ -3,5 +3,6 @@ export type TAuthPage = {
   setLogin: (v: string) => void;
   password: string;
   setPassword: (v: string) => void;
-  authClickHandler: () => void;
+  authClickHandler: (e: React.FormEvent<HTMLFormElement>) => void;
+  errorMessage?: string;
 };
