@@ -1,6 +1,6 @@
 {
   "name": "s-iteration-two",
-  "homepage": "https://yodenzel.github.io/s-iteration-two/auth",
+  "homepage": "https://yodenzel.github.io/s-iteration-two/admin/auth",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,11 +12,11 @@
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "@types/react-redux": "^7.1.24",
     "gh-pages": "^3.2.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-query": "^3.38.0",
+    "react-redux": "^7.2.6",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "sass": "^1.50.1",
@@ -52,6 +52,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
+    "@types/react-redux": "^7.1.23",
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-standard": "^17.0.0",
