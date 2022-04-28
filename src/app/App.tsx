@@ -1,6 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material';
 import { ruRU } from '@mui/material/locale';
 import { Routes, Route, Navigate } from 'react-router';
+import { NavigationMenu } from '../components';
 import { AuthPage, OrderListPage } from '../pages';
 import { useAppSelector } from '../shared/custom-hooks';
 
@@ -22,14 +23,15 @@ export function App() {
   // s-itertaion-two/admin/*
   return (
     <ThemeProvider theme={theme}>
-      <Routes>
-        {!isAuthenticated ? (
-          <>
-            <Route path="/s-iteration-two" element={<AuthPage />} />
-            <Route path="/s-iteration-two/admin/*" element={<AuthPage />} />
-          </>
-        ) : (
-          <>
+      {!isAuthenticated ? (
+        <Routes>
+          <Route path="/s-iteration-two" element={<AuthPage />} />
+          <Route path="/s-iteration-two/admin/*" element={<AuthPage />} />
+        </Routes>
+      ) : (
+        <div className="flex">
+          <NavigationMenu />
+          <Routes>
             <Route
               path="/s-iteration-two/admin/order-list"
               element={<OrderListPage />}
@@ -40,9 +42,9 @@ export function App() {
                 <Navigate to="/s-iteration-two/admin/order-list" replace />
               }
             />
-          </>
-        )}
-      </Routes>
+          </Routes>
+        </div>
+      )}
     </ThemeProvider>
   );
 }
