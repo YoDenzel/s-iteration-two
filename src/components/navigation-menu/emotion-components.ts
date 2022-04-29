@@ -21,7 +21,7 @@ export const ApplicationTitleContainer = styled(Box)`
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 23px 0;
+  padding: 15px 0;
   padding-left: 49px;
 `;
 
