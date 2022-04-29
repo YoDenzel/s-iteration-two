@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { addDays } from 'date-fns';
 import { AuthWindow } from '../../components';
 import {
   setAuthObj,
@@ -13,6 +15,7 @@ export function AuthPage() {
   const { data, mutateAsync, isError } = usePostAuth();
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+  const [cookies, setCookie] = useCookies(['auth']);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -37,6 +40,10 @@ export function AuthPage() {
           authObj: data,
         }),
       );
+      setCookie('auth', data.access_token, {
+        path: '/s-iteration-two',
+        expires: addDays(new Date(), 1),
+      });
       dispatch(
         setIsAuthenticated({
           isAuthenticated: true,
@@ -45,7 +52,6 @@ export function AuthPage() {
       navigate('/s-iteration-two/admin/order-list');
     }
   }, [data]);
-
   return (
     <Wrapper component="main">
       <TitleContainer>
