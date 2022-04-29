@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { CookiesProvider } from 'react-cookie';
 import { Provider } from 'react-redux';
 import './index.scss';
 import { App } from './app/App';
@@ -22,7 +23,9 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <BrowserRouter>
-          <App />
+          <CookiesProvider>
+            <App />
+          </CookiesProvider>
         </BrowserRouter>
       </Provider>
     </QueryClientProvider>
