@@ -1,14 +1,12 @@
 import { createTheme, ThemeProvider } from '@mui/material';
 import { ruRU } from '@mui/material/locale';
+import { useCookies } from 'react-cookie';
 import { Routes, Route, Navigate } from 'react-router';
 import { NavigationMenu } from '../components';
 import { AuthPage, OrderListPage } from '../pages';
-import { useAppSelector } from '../shared/custom-hooks';
 
 export function App() {
-  const isAuthenticated = useAppSelector(
-    state => state.authSlice.isAuthenticated,
-  );
+  const [cookie] = useCookies(['access']);
   const theme = createTheme(
     {
       palette: {
@@ -23,7 +21,7 @@ export function App() {
   // s-itertaion-two/admin/*
   return (
     <ThemeProvider theme={theme}>
-      {!isAuthenticated ? (
+      {!cookie.access ? (
         <Routes>
           <Route path="/s-iteration-two" element={<AuthPage />} />
           <Route path="/s-iteration-two/admin/*" element={<AuthPage />} />
