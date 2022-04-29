@@ -1,8 +1,23 @@
-import styled from '@emotion/styled';
-import { Box } from '@mui/system';
+import { Container, Title } from './emotion-components';
+import { TNavigationMenuItem } from './types';
 
-const Container = styled(Box)``;
-
-export function NavigationMenuItem() {
-  return <Container></Container>;
+export function NavigationMenuItem({
+  Icon,
+  title,
+  clickHandler,
+  activeIndex,
+  itemIndex,
+}: TNavigationMenuItem) {
+  return (
+    <Container onClick={() => clickHandler(itemIndex)} disableFocusRipple>
+      {Icon}
+      <Title
+        sx={{
+          color: activeIndex === itemIndex ? '#007bff' : '#CACEDB',
+        }}
+      >
+        {title}
+      </Title>
+    </Container>
+  );
 }
