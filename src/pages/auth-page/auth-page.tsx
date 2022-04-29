@@ -1,4 +1,6 @@
+import { addDays } from 'date-fns';
 import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { AuthWindow } from '../../components';
 import {
@@ -11,6 +13,7 @@ import { Wrapper, TitleContainer, Title } from './emotion-components';
 
 export function AuthPage() {
   const { data, mutateAsync, isError } = usePostAuth();
+  const [cookie, setCookie] = useCookies(['access']);
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
@@ -37,6 +40,10 @@ export function AuthPage() {
           authObj: data,
         }),
       );
+      setCookie('access', data.access_token, {
+        expires: addDays(new Date(), 1),
+        path: '/',
+      });
       dispatch(
         setIsAuthenticated({
           isAuthenticated: true,
