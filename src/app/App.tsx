@@ -1,14 +1,15 @@
+import { Routes, Route, Navigate } from 'react-router';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { ruRU } from '@mui/material/locale';
-import { Routes, Route, Navigate } from 'react-router';
-import { NavigationMenu } from '../components';
-import { AuthPage, OrderListPage } from '../pages';
+import { AuthPage, AdminPanel } from '../pages';
 import { useAppSelector } from '../shared/custom-hooks';
+import { useCookies } from 'react-cookie';
 
 export function App() {
   const isAuthenticated = useAppSelector(
     state => state.authSlice.isAuthenticated,
   );
+  const [cookie] = useCookies(['auth']);
   const theme = createTheme(
     {
       palette: {
@@ -23,27 +24,24 @@ export function App() {
   // s-itertaion-two/admin/*
   return (
     <ThemeProvider theme={theme}>
-      {!isAuthenticated ? (
+      {!cookie.auth ? (
         <Routes>
           <Route path="/s-iteration-two" element={<AuthPage />} />
           <Route path="/s-iteration-two/admin/*" element={<AuthPage />} />
         </Routes>
       ) : (
-        <div className="flex">
-          <NavigationMenu />
-          <Routes>
-            <Route
-              path="/s-iteration-two/admin/order-list"
-              element={<OrderListPage />}
-            />
-            <Route
-              path="*"
-              element={
-                <Navigate to="/s-iteration-two/admin/order-list" replace />
-              }
-            />
-          </Routes>
-        </div>
+        <Routes>
+          <Route
+            path="/s-iteration-two/admin/order-list"
+            element={<AdminPanel />}
+          />
+          <Route
+            path="*"
+            element={
+              <Navigate to="/s-iteration-two/admin/order-list" replace />
+            }
+          />
+        </Routes>
       )}
     </ThemeProvider>
   );
