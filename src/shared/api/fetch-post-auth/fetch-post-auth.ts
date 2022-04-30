@@ -1,22 +1,18 @@
-import { TPostAuth } from "../../types";
+import { TPostAuth } from '../../types';
+import { requestOptions } from '../constants';
 
-export const fetchPostAuth = async ({password, username} : TPostAuth) => {
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Basic MTFkN2M5Zjo0Y2JjZWE5NmRl`,
-      'X-Api-Factory-Application-Id': `${process.env.REACT_APP_API_KEY}`,
-    },
+export const fetchPostAuth = async ({ password, username }: TPostAuth) => {
+  const options = {
+    ...requestOptions,
     body: JSON.stringify({
       username: username,
       password: password,
     }),
   };
+
   const response = await fetch(
     'https://api-factory.simbirsoft1.com/api/auth/login',
-    requestOptions,
+    options,
   );
   if (!response.ok) throw new Error(response.statusText);
   const data = await response.json();
