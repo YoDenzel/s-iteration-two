@@ -15,7 +15,7 @@ export function AuthPage() {
   const { data, mutateAsync, isError } = usePostAuth();
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const [cookies, setCookie] = useCookies(['auth']);
+  const [cookies, setCookie] = useCookies(['access']);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ export function AuthPage() {
           authObj: data,
         }),
       );
-      setCookie('auth', data.access_token, {
+      setCookie('access', data.access_token, {
         path: '/s-iteration-two',
         expires: addDays(new Date(), 1),
       });

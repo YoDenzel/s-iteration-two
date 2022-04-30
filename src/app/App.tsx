@@ -9,7 +9,7 @@ export function App() {
   const isAuthenticated = useAppSelector(
     state => state.authSlice.isAuthenticated,
   );
-  const [cookie] = useCookies(['auth']);
+  const [cookie] = useCookies(['access']);
   const theme = createTheme(
     {
       palette: {
@@ -24,7 +24,7 @@ export function App() {
   // s-itertaion-two/admin/*
   return (
     <ThemeProvider theme={theme}>
-      {!cookie.auth ? (
+      {!cookie.access ? (
         <Routes>
           <Route path="/s-iteration-two" element={<AuthPage />} />
           <Route path="/s-iteration-two/admin/*" element={<AuthPage />} />
