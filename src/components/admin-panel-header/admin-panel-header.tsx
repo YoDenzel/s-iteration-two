@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useClickOutside } from '../../shared/custom-hooks';
 import { Icons } from '../../shared/icons';
 import { Images } from '../../shared/images';
 import {
@@ -14,10 +15,14 @@ import {
   SearchField,
   SearchLoop,
 } from './emotion-components';
+import { TAdminPanelHeader } from './types';
 
-export function AdminPanelHeader() {
+export function AdminPanelHeader({ logoutClickhandler }: TAdminPanelHeader) {
   const [value, setValue] = useState('');
-  const [isDropdownActive, setIsDropdownActive] = useState(true);
+  const [isDropdownActive, setIsDropdownActive] = useState(false);
+  const dropdownRef = useClickOutside<HTMLDivElement>(() =>
+    setIsDropdownActive(false),
+  );
 
   return (
     <Container component="header">
@@ -49,8 +54,10 @@ export function AdminPanelHeader() {
           />
         </ProfileFlexWrapper>
         {isDropdownActive && (
-          <Dropdown>
-            <MenuItem variant="text">Выйти</MenuItem>
+          <Dropdown component="ul" ref={dropdownRef}>
+            <MenuItem variant="text" onClick={() => logoutClickhandler()}>
+              Выйти
+            </MenuItem>
           </Dropdown>
         )}
       </ProfileBlock>
