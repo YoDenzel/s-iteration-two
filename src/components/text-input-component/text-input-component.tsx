@@ -19,6 +19,9 @@ export function TextInputComponent({
         value={value}
         onChange={e => setValue(e.target.value)}
         type={type}
+        inputProps={{
+          autoComplete: 'new-password',
+        }}
       />
       {errorMessage && <Error>{errorMessage}</Error>}
     </Box>
