@@ -81,7 +81,7 @@ export const ProfileFlexWrapper = styled(Box)`
 
 export const Dropdown = styled(Box)`
   position: absolute;
-  top: 75px;
+  top: 59px;
   background-color: white;
   width: 185px;
   padding-left: 24px;
