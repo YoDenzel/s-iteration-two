@@ -4,7 +4,11 @@ import { addDays } from 'date-fns';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { AdminPanelHeader, NavigationMenu } from '../../components';
-import { useAppSelector, usePostLogout } from '../../shared/custom-hooks';
+import {
+  useAppSelector,
+  useClickOutside,
+  usePostLogout,
+} from '../../shared/custom-hooks';
 
 const Wrapper = styled(Box)`
   flex: 1;
@@ -19,7 +23,12 @@ export function AdminPanel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const authObj = useAppSelector(state => state.authSlice.authObj);
   const [cookie, _, removeCookie] = useCookies(['access']);
+  const [isDropdownActive, setIsDropdownActive] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
   const { mutateAsync } = usePostLogout();
+  const dropdownRef = useClickOutside<HTMLDivElement>(() =>
+    setIsDropdownActive(false),
+  );
 
   const logoutClickhandler = () => {
     mutateAsync({ accessToken: cookie.access });
@@ -35,7 +44,14 @@ export function AdminPanel() {
         setActiveIndex={setActiveIndex}
       />
       <Container>
-        <AdminPanelHeader logoutClickhandler={logoutClickhandler} />
+        <AdminPanelHeader
+          logoutClickhandler={logoutClickhandler}
+          dropdownRef={dropdownRef}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          isDropdownActive={isDropdownActive}
+          setIsDropdownActive={setIsDropdownActive}
+        />
       </Container>
     </Wrapper>
   );

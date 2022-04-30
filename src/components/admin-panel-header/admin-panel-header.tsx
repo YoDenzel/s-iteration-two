@@ -17,13 +17,14 @@ import {
 } from './emotion-components';
 import { TAdminPanelHeader } from './types';
 
-export function AdminPanelHeader({ logoutClickhandler }: TAdminPanelHeader) {
-  const [value, setValue] = useState('');
-  const [isDropdownActive, setIsDropdownActive] = useState(false);
-  const dropdownRef = useClickOutside<HTMLDivElement>(() =>
-    setIsDropdownActive(false),
-  );
-
+export function AdminPanelHeader({
+  logoutClickhandler,
+  dropdownRef,
+  isDropdownActive,
+  searchValue,
+  setIsDropdownActive,
+  setSearchValue,
+}: TAdminPanelHeader) {
   return (
     <Container component="header">
       <SearchLoop>
@@ -31,9 +32,9 @@ export function AdminPanelHeader({ logoutClickhandler }: TAdminPanelHeader) {
       </SearchLoop>
       <SearchField
         variant="outlined"
-        value={value}
+        value={searchValue}
         type="text"
-        onChange={e => setValue(e.target.value)}
+        onChange={e => setSearchValue(e.target.value)}
         placeholder="Поиск"
         inputProps={{
           autoComplete: 'off',
