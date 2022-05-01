@@ -3,21 +3,18 @@ import { Box } from '@mui/system';
 import { addDays } from 'date-fns';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { AdminPanelHeader, NavigationMenu } from '../../components';
+import {
+  AdminPanelFooter,
+  AdminPanelHeader,
+  NavigationMenu,
+  OrdersListComponent,
+} from '../../components';
 import {
   useAppSelector,
   useClickOutside,
   usePostLogout,
 } from '../../shared/custom-hooks';
-
-const Wrapper = styled(Box)`
-  flex: 1;
-  display: flex;
-`;
-
-const Container = styled(Box)`
-  flex: 1;
-`;
+import { Container, Wrapper } from './emotion-components';
 
 export function AdminPanel() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -52,6 +49,8 @@ export function AdminPanel() {
           isDropdownActive={isDropdownActive}
           setIsDropdownActive={setIsDropdownActive}
         />
+        <OrdersListComponent />
+        <AdminPanelFooter />
       </Container>
     </Wrapper>
   );
