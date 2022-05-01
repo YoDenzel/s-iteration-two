@@ -10,6 +10,7 @@ export const Container = styled(Box)`
   box-shadow: 0px 1px 75px rgba(90, 97, 105, 0.11),
     0px 2px 4px rgba(90, 97, 105, 0.12), 0px 7.5px 11px rgba(90, 97, 105, 0.1),
     0px 3.5px 17.5px rgba(165, 182, 201, 0.1);
+  z-index: 1;
 `;
 
 export const ApplicationTitleWrapper = styled(Box)`
