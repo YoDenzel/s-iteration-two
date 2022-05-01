@@ -43,7 +43,7 @@ export function AdminPanelHeader({
       <NotificationBlock>
         <Icons.NotificationBell />
       </NotificationBlock>
-      <ProfileBlock>
+      <ProfileBlock ref={dropdownRef}>
         <ProfileFlexWrapper>
           <ProfilePicture src={Images.profilePicture} />
           <ProfileTitle typography="h2">Admin</ProfileTitle>
@@ -55,7 +55,7 @@ export function AdminPanelHeader({
           />
         </ProfileFlexWrapper>
         {isDropdownActive && (
-          <Dropdown component="ul" ref={dropdownRef}>
+          <Dropdown component="ul">
             <MenuItem variant="text" onClick={() => logoutClickhandler()}>
               Выйти
             </MenuItem>
