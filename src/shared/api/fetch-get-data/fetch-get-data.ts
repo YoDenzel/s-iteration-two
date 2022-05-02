@@ -1,14 +1,15 @@
-import {requestOptions} from '../constants'
+import { useCookies } from 'react-cookie';
+import { requestOptions } from '../constants';
 
-export const fetchData = async (url: string) => {   
-    const options = {...requestOptions, body: null, header: {
-        ...requestOptions.headers,
-        Authorization: 'Bearer 52efbe08228671240494f537f2486bc109a637b4'
-    } }
-
+export const fetchData = async (url: string, token: string) => {
   const response = await fetch(
     `https://api-factory.simbirsoft1.com/api/db/${url}`,
-    options
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'X-Api-Factory-Application-Id': `${process.env.REACT_APP_API_KEY}`,
+      },
+    },
   );
   if (!response.ok) throw new Error(response.statusText);
   const data = response.json();
