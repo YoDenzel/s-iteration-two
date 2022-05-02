@@ -27,6 +27,7 @@ export const ApplicationTitleContainer = styled(Box)`
 `;
 
 export const Title = styled(Typography)`
+  font-family: 'Helvetica';
   font-weight: 400;
   font-size: 16px;
   line-height: 18px;

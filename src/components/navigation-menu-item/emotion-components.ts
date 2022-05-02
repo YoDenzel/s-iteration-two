@@ -10,6 +10,7 @@ export const Container = styled(Button)`
 `;
 
 export const Title = styled(Typography)`
+  font-family: 'Helvetica';
   font-weight: 400;
   font-size: 15px;
   line-height: 17px;

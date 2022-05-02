@@ -18,6 +18,7 @@ export const NavBlock = styled(Box)`
 `;
 
 export const NavLink = styled(Link)`
+  font-family: 'Helvetica';
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
@@ -26,6 +27,7 @@ export const NavLink = styled(Link)`
 `;
 
 export const Copyright = styled(Typography)`
+  font-family: 'Helvetica';
   font-style: normal;
   font-weight: 500;
   font-size: 14px;

@@ -24,6 +24,7 @@ export const TitleContainer = styled(Box)`
 
 export const Title = styled(Typography)`
   color: #3d5170;
+  font-family: 'Helvetica';
   font-style: normal;
   font-weight: 400;
   font-size: 24px;

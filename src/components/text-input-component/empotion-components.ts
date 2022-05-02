@@ -19,6 +19,7 @@ export const Input = styled(TextField)`
 `;
 
 export const InputTitle = styled(Typography)`
+  font-family: 'Helvetica';
   font-weight: 400;
   font-size: 10.5px;
   line-height: 12px;
@@ -26,6 +27,7 @@ export const InputTitle = styled(Typography)`
 `;
 
 export const Error = styled(Typography)`
+  font-family: 'Helvetica';
   font-style: normal;
   font-weight: 400;
   font-size: 10px;

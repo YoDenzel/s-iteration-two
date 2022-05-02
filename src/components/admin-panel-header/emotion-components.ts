@@ -16,6 +16,7 @@ export const SearchLoop = styled(Box)`
 
 export const SearchField = styled(TextField)`
   flex: 1;
+  font-family: 'Helvetica';
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -59,6 +60,7 @@ export const ProfilePicture = styled.img`
 `;
 
 export const ProfileTitle = styled(Typography)`
+  font-family: 'Helvetica';
   font-weight: 400;
   font-size: 15px;
   line-height: 17px;
@@ -93,6 +95,7 @@ export const Dropdown = styled(Box)`
 `;
 
 export const MenuItem = styled(Button)`
+  font-family: 'Helvetica';
   font-weight: 400;
   font-size: 11.5px;
   line-height: 13px;
