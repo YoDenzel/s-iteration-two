@@ -5,6 +5,7 @@ import { Orders } from './orders';
 import { NotificationBell } from './notifications-bell';
 import { DropdownArrow } from './dropdown-arrow';
 import { SearchLoop } from './search-loop';
+import { DropdownBothWaysArrow } from './dropdown-both-ways-arrow';
 
 export const Icons = {
   NeedForDriveLogo,
@@ -14,4 +15,5 @@ export const Icons = {
   NotificationBell,
   DropdownArrow,
   SearchLoop,
+  DropdownBothWaysArrow,
 };
