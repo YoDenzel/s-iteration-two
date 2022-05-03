@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authSlice from './auth-slice/auth-slice';
+import filterActiveData from './filter-active-data/filter-active-data';
 
 export const store = configureStore({
   reducer: {
     authSlice: authSlice,
+    filterActiveData: filterActiveData,
   },
 });
 
