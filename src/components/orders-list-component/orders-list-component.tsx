@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { useAppSelector } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { filterDataArr } from '../../shared/functions';
 import {
@@ -13,14 +14,13 @@ import { OrderFilterComponent } from '../orders-filter-component';
 import { Container, Title, Wrapper } from './emotion-components';
 
 export function OrdersListComponent() {
-  const [activeRateObj, setActiveRateObj] = useState<TOptionsArr | null>(null);
-  const [activeCitiesObj, setActiveCitiesObj] = useState<TOptionsArr | null>(
-    null,
-  );
-  const [activeStatusObj, setActiveStatusObj] = useState<TOptionsArr | null>(
-    null,
-  );
-  const [activeCarObj, setActiveCarObj] = useState<TOptionsArr | null>(null);
+  const { activeCarObj, activeCitiesObj, activeRateObj, activeStatusObj } =
+    useAppSelector(state => ({
+      activeRateObj: state.filterActiveData.activeRateObj,
+      activeCarObj: state.filterActiveData.activeCarObj,
+      activeStatusObj: state.filterActiveData.activeStatusObj,
+      activeCitiesObj: state.filterActiveData.activeCitiesObj,
+    }));
   const [filter, setFilter] = useState('');
   const [cookie] = useCookies(['access']);
   const { data } = useGetData<any>({
@@ -91,10 +91,6 @@ export function OrdersListComponent() {
               activeStatusObj,
               activeCarObj,
             ],
-            setActiveCitiesObj: setActiveCitiesObj,
-            setActiveRateObj: setActiveRateObj,
-            setActiveStatusObj: setActiveStatusObj,
-            setActiveCarObj: setActiveCarObj,
           })}
           submitHandler={submitHandler}
         />
