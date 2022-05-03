@@ -4,12 +4,14 @@ import { useAppSelector } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { filterDataArr } from '../../shared/functions';
 import {
+  TCarOrder,
   TCarRate,
   TCars,
   TCities,
   TOptionsArr,
   TOrderStatus,
 } from '../../shared/types';
+import { OrderInformation } from '../order-information';
 import { OrderFilterComponent } from '../orders-filter-component';
 import { Container, Title, Wrapper } from './emotion-components';
 
@@ -23,9 +25,9 @@ export function OrdersListComponent() {
     }));
   const [filter, setFilter] = useState('');
   const [cookie] = useCookies(['access']);
-  const { data } = useGetData<any>({
+  const { data } = useGetData<TCarOrder>({
     QUERY_KEY: 'order',
-    url: `order?${filter}&page=1&limit=10`,
+    url: `order?${filter}&page=0&limit=10`,
     token: cookie.access,
   });
   const { data: rateData } = useGetData<TOptionsArr[]>({
@@ -67,15 +69,16 @@ export function OrdersListComponent() {
   console.log(data);
 
   const submitHandler = (e: React.FormEvent<HTMLDivElement>) => {
+    let filterStr = '';
     e.preventDefault();
     if (activeRateObj)
-      setFilter(state => (state += `&rateId=${activeRateObj.id}`));
+      setFilter(() => (filterStr += `&rateId=${activeRateObj.id}`));
     if (activeCitiesObj)
-      setFilter(state => (state += `&cityId=${activeCitiesObj.id}`));
+      setFilter(() => (filterStr += `&cityId=${activeCitiesObj.id}`));
     if (activeStatusObj)
-      setFilter(state => (state += `&orderStatusId=${activeStatusObj.id}`));
+      setFilter(() => (filterStr += `&orderStatusId=${activeStatusObj.id}`));
     if (activeCarObj)
-      setFilter(state => (state += `&carId=${activeCarObj.id}`));
+      setFilter(() => (filterStr += `&carId=${activeCarObj.id}`));
   };
 
   return (
@@ -94,6 +97,7 @@ export function OrdersListComponent() {
           })}
           submitHandler={submitHandler}
         />
+        <OrderInformation activeOrderObj={data?.data[0]} />
       </Container>
     </Wrapper>
   );
