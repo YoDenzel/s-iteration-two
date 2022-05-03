@@ -37,4 +37,57 @@ type TCarRateTypeId = {
   unit: string;
 };
 
-export type TOptionsArr = { title: string; optionId: string };
+export type TOptionsArr = { name: string; id: string };
+
+export type TCities = {
+  fields: {};
+  count: number;
+  data: TCitiesData[];
+};
+
+export type TCitiesData = {
+  updatedAt: string;
+  createdAt: string;
+  name: string;
+  id: string;
+};
+
+export type TOrderStatus = {
+  fields: {};
+  count: number;
+  data: TOptionsArr[];
+};
+
+export type TCars = {
+  fields: {};
+  count: number;
+  data: TCarsData[];
+};
+
+export type TCarsData = {
+  categoryId: TCarCategoryId;
+  colors: string[];
+  createdAt: number;
+  description: string;
+  id: string;
+  name: string;
+  number: string;
+  priceMax: number;
+  priceMin: number;
+  tank: number;
+  thumbnail: TCarThumbnail;
+  updatedAt: number;
+};
+
+export type TCarCategoryId = {
+  name: string;
+  id: string;
+  description: string;
+};
+
+export type TCarThumbnail = {
+  mimetype: string;
+  originalname: string;
+  path: string;
+  size: number;
+};
