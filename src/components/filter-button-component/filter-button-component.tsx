@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { setActiveObj } from '../../redux/filter-active-data/filter-active-data';
+import { useAppDispatch } from '../../shared/custom-hooks';
 import { DropdownBothWaysArrow } from '../../shared/icons/dropdown-both-ways-arrow';
 import { TOptionsArr } from '../../shared/types';
 import { Dropdown, DropdownItem, FilterButton } from './emotion-components';
@@ -7,16 +9,23 @@ import { TFilterButtonComponent } from './types';
 export function FilterButtonComponent({
   optionsArr,
   buttonTitle,
-  setObj,
+  activeIndex,
   selectedOption,
 }: TFilterButtonComponent) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const dispatch = useAppDispatch();
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (val?: TOptionsArr) => {
-    val && setObj && setObj(val);
+  const handleClose = (val?: TOptionsArr, index?: number) => {
+    val &&
+      dispatch(
+        setActiveObj({
+          activeObj: val,
+          id: index,
+        }),
+      );
     setAnchorEl(null);
   };
   return (
@@ -45,7 +54,7 @@ export function FilterButtonComponent({
         {optionsArr?.map((item, index) => (
           <DropdownItem
             key={index + item.name}
-            onClick={() => handleClose(item)}
+            onClick={() => handleClose(item, activeIndex)}
             disableRipple
           >
             {item.name}
