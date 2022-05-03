@@ -9,5 +9,4 @@ type TFilterDataArr = {
   title: string;
   data?: TOptionsArr[];
   activeTitle: TOptionsArr | null;
-  setActiveObj: (v: TOptionsArr | null) => void;
 };
