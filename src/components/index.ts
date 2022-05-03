@@ -6,3 +6,4 @@ export { AdminPanelHeader } from './admin-panel-header';
 export { OrdersListComponent } from './orders-list-component';
 export { AdminPanelFooter } from './admin-panel-footer';
 export { FilterButtonComponent } from './filter-button-component';
+export { OrderFilterComponent } from './orders-filter-component';
