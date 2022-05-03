@@ -1,44 +1,8 @@
-import styled from '@emotion/styled';
-import { Button, Menu, MenuItem, Typography } from '@mui/material';
 import { useState } from 'react';
 import { DropdownBothWaysArrow } from '../../shared/icons/dropdown-both-ways-arrow';
 import { TOptionsArr } from '../../shared/types';
+import { Dropdown, DropdownItem, FilterButton } from './emotion-components';
 import { TFilterButtonComponent } from './types';
-
-const FilterButton = styled(Button)`
-  background: #ffffff;
-  border: 0.5px solid #becad6;
-  border-radius: 4px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 11px;
-  line-height: 13px;
-  color: #868e96;
-  &:hover {
-    background-color: #ffffff;
-  }
-  padding-top: 8px;
-  padding-bottom: 8.5px;
-  padding-right: 18px;
-  padding-left: 18px;
-  gap: 18px;
-  display: flex;
-  width: 120px;
-  text-transform: none;
-  text-align: left;
-`;
-
-const Dropdown = styled(Menu)``;
-
-const DropdownItem = styled(MenuItem)`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 11px;
-  line-height: 13px;
-  color: #868e96;
-  min-height: 24px;
-  width: 120px;
-`;
 
 export function FilterButtonComponent({
   optionsArr,
@@ -52,7 +16,7 @@ export function FilterButtonComponent({
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (val?: TOptionsArr) => {
-    val && setObj(val);
+    val && setObj && setObj(val);
     setAnchorEl(null);
   };
   return (
@@ -80,11 +44,11 @@ export function FilterButtonComponent({
       >
         {optionsArr?.map((item, index) => (
           <DropdownItem
-            key={index + item.title}
+            key={index + item.name}
             onClick={() => handleClose(item)}
             disableRipple
           >
-            {item.title}
+            {item.name}
           </DropdownItem>
         ))}
       </Dropdown>
