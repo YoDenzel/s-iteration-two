@@ -12,6 +12,7 @@ import './fonts/Roboto/Roboto-Bold.ttf';
 import './fonts/Roboto/Roboto-Light.ttf';
 import './fonts/Roboto/Roboto-Medium.ttf';
 import './fonts/Roboto/Roboto-Regular.ttf';
+import { AppThemeProvider } from './shared/ui/theme';
 
 const queryClient = new QueryClient();
 
@@ -21,13 +22,15 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <BrowserRouter>
-          <CookiesProvider>
-            <App />
-          </CookiesProvider>
-        </BrowserRouter>
-      </Provider>
+      <AppThemeProvider>
+        <Provider store={store}>
+          <BrowserRouter>
+            <CookiesProvider>
+              <App />
+            </CookiesProvider>
+          </BrowserRouter>
+        </Provider>
+      </AppThemeProvider>
     </QueryClientProvider>
   </React.StrictMode>,
 );
