@@ -14,7 +14,6 @@ export const FilterButton = styled(Button)`
     background-color: #ffffff;
   }
   padding: 8px 18px 8.5px 18px;
-  justify-content: space-between;
   text-align: left;
   display: flex;
   width: 120px;

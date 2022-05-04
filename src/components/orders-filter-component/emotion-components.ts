@@ -3,17 +3,20 @@ import { Box, Button } from '@mui/material';
 
 export const Wrapper = styled(Box)`
   width: 100%;
-  background-color: #ffffff;
   display: flex;
-  padding: 16px 0px 14px 21px;
+  padding: 16px 0px 14px 0px;
   box-shadow: 0px -0.5px 0px #e0e2e8, 0px 0.5px 0px #e0e2e8;
   justify-content: space-between;
-  border-radius: inherit;
+  border-top-right-radius: 9px;
+  border-top-left-radius: 9px;
 `;
 
 export const FilterButtonContainer = styled(Box)`
   display: flex;
   gap: 15px;
+  &:first-of-type {
+    margin-left: 21px;
+  }
 `;
 
 export const ApplyFilterButton = styled(Button)`
@@ -31,4 +34,5 @@ export const ApplyFilterButton = styled(Button)`
   margin-right: 21px;
   padding: 8px 15px 8.5px 15px;
   border-radius: 4px;
+  height: max-content;
 `;

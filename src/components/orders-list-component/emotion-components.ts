@@ -22,6 +22,12 @@ export const Title = styled(Typography)`
 `;
 
 export const Container = styled(Box)`
+  width: 100%;
+  height: 50%;
   border-radius: 9px;
   margin-top: 30px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 0px rgba(90, 97, 105, 0.11),
+    0px 4px 8px rgba(90, 97, 105, 0.12), 0px 10px 10px rgba(90, 97, 105, 0.06),
+    0px 7px 70px rgba(90, 97, 105, 0.1);
 `;
