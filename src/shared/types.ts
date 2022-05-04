@@ -91,3 +91,43 @@ export type TCarThumbnail = {
   path: string;
   size: number;
 };
+
+export type TCarOrder = {
+  fields: {};
+  count: number;
+  data: TCarOrderData[];
+};
+
+export type TCarOrderData = {
+  orderStatusId?: TOptionsArr | null;
+  cityId: TOptionsArr | null;
+  pointId: TPointId | null;
+  carId: TCarId;
+  color: string;
+  dateFrom: number;
+  dateTo: number;
+  rateId: string | null;
+  price: number;
+  isFullTank: boolean;
+  isNeedChildChair: boolean;
+  isRightWheel: boolean;
+};
+
+type TCarId = {
+  categoryId: TCarCategoryId;
+  colors: string[];
+  description: string;
+  id: string;
+  name: string;
+  number: string;
+  priceMax: number;
+  priceMin: number;
+  tank: number;
+  thumbnail: TCarThumbnail;
+};
+
+type TPointId = {
+  address: string;
+  id: string;
+  name: string;
+};
