@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { format } from 'date-fns';
 import { useAppSelector } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { filterDataArr } from '../../shared/functions';
@@ -80,7 +81,14 @@ export function OrdersListComponent() {
     if (activeCarObj)
       setFilter(() => (filterStr += `&carId=${activeCarObj.id}`));
   };
-
+  const dateFrom = format(
+    new Date(data?.data[0].dateFrom || 0),
+    'dd.MM.yyyy hh:mm',
+  );
+  const dateTo = format(
+    new Date(data?.data[0].dateTo || 0),
+    'dd.MM.yyyy HH:mm',
+  );
   return (
     <Wrapper component="main">
       <Title variant="h1">Заказы</Title>
@@ -97,7 +105,11 @@ export function OrdersListComponent() {
           })}
           submitHandler={submitHandler}
         />
-        <OrderInformation activeOrderObj={data?.data[0]} />
+        <OrderInformation
+          activeOrderObj={data?.data[0]}
+          dateFrom={dateFrom}
+          dateTo={dateTo}
+        />
       </Container>
     </Wrapper>
   );
