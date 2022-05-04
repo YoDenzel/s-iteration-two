@@ -3,7 +3,7 @@ import { TextField, Typography } from '@mui/material';
 
 export const Input = styled(TextField)`
   width: 100%;
-  border: 0.5px solid #becad6;
+  border: 0.5px solid ${({ theme }) => theme.colors.inputBorder};
   border-radius: 4px;
   margin-top: 8px;
   padding: 0;
@@ -22,7 +22,7 @@ export const InputTitle = styled(Typography)`
   font-weight: 400;
   font-size: 10.5px;
   line-height: 12px;
-  color: #495057;
+  color: ${({ theme }) => theme.colors.primaryFont};
 `;
 
 export const Error = styled(Typography)`
@@ -30,7 +30,7 @@ export const Error = styled(Typography)`
   font-weight: 400;
   font-size: 10px;
   line-height: 11px;
-  color: #c4183c;
-  margin-top: 4.5px;
-  margin-left: 9px;
+  color: ${({ theme }) => theme.colors.red};
+  margin-top: ${({ theme }) => theme.spacing(0.5)}px;
+  margin-left: ${({ theme }) => theme.spacing(1.125)}px;
 `;

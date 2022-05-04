@@ -3,10 +3,10 @@ import { Box, Typography, Button } from '@mui/material';
 
 export const Container = styled(Box)`
   width: 375px;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.white};
   border-radius: 9px;
-  @media (max-width: 767px) {
-    width: 100%;
+  @media (max-width: 370px) {
+    width: 90%;
   } ;
 `;
 
@@ -17,7 +17,7 @@ export const Title = styled(Typography)`
   line-height: 20px;
   text-align: center;
   letter-spacing: -0.4375px;
-  color: #3d5170;
+  color: ${({ theme }) => theme.colors.titleFont};
   padding-top: 11px;
   padding-right: 17px;
   height: 60px;
@@ -40,7 +40,7 @@ export const RequestAccessButton = styled(Button)`
   font-weight: 400;
   font-size: 10.5px;
   line-height: 12px;
-  color: #007bff;
+  color: ${({ theme }) => theme.colors.blue};
   &:hover {
     background: unset;
   }
@@ -54,8 +54,8 @@ export const AuthorizeButton = styled(Button)`
   font-weight: 400;
   font-size: 11.5px;
   line-height: 13px;
-  color: #ffffff;
-  background: #007bff;
+  color: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.blue};
   padding: 12px 45px;
   border-radius: 4px;
   text-transform: none;
