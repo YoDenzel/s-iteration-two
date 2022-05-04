@@ -58,6 +58,7 @@ export const AuthorizeButton = styled(Button)`
   background: #007bff;
   padding: 12px 45px;
   border-radius: 4px;
+  text-transform: none;
 `;
 
 export const InputWrapper = styled(Box)`
