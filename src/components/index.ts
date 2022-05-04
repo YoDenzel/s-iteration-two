@@ -7,3 +7,5 @@ export { OrdersListComponent } from './orders-list-component';
 export { AdminPanelFooter } from './admin-panel-footer';
 export { FilterButtonComponent } from './filter-button-component';
 export { OrderFilterComponent } from './orders-filter-component';
+export { OrderInformation } from './order-information';
+export { CheckboxItem } from './checkbox-item';
