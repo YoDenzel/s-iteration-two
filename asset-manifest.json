@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/s-iteration-two/static/css/main.cfb17dd2.css",
-    "main.js": "/s-iteration-two/static/js/main.91700aa7.js",
+    "main.css": "/s-iteration-two/static/css/main.aa2fcb49.css",
+    "main.js": "/s-iteration-two/static/js/main.c9aa3a10.js",
     "static/media/Roboto-Medium.ttf": "/s-iteration-two/static/media/Roboto-Medium.7429a63c09f79a1760b0.ttf",
     "static/media/Roboto-Regular.ttf": "/s-iteration-two/static/media/Roboto-Regular.a8d6ac03c7b96b7acb62.ttf",
     "static/media/Roboto-Black.ttf": "/s-iteration-two/static/media/Roboto-Black.2a4285847db4a9acb97f.ttf",
     "static/media/Roboto-Bold.ttf": "/s-iteration-two/static/media/Roboto-Bold.75371f53f06181df75f1.ttf",
     "static/media/Roboto-Light.ttf": "/s-iteration-two/static/media/Roboto-Light.8be2d1487420548b3b8d.ttf",
     "index.html": "/s-iteration-two/index.html",
-    "main.cfb17dd2.css.map": "/s-iteration-two/static/css/main.cfb17dd2.css.map",
-    "main.91700aa7.js.map": "/s-iteration-two/static/js/main.91700aa7.js.map"
+    "main.aa2fcb49.css.map": "/s-iteration-two/static/css/main.aa2fcb49.css.map",
+    "main.c9aa3a10.js.map": "/s-iteration-two/static/js/main.c9aa3a10.js.map"
   },
   "entrypoints": [
-    "static/css/main.cfb17dd2.css",
-    "static/js/main.91700aa7.js"
+    "static/css/main.aa2fcb49.css",
+    "static/js/main.c9aa3a10.js"
   ]
 }
