@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { useClickOutside } from '../../shared/custom-hooks';
 import { Icons } from '../../shared/icons';
 import { Images } from '../../shared/images';
 import {

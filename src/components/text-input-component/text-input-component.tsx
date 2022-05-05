@@ -20,7 +20,7 @@ export function TextInputComponent({
         onChange={e => setValue(e.target.value)}
         type={type}
         inputProps={{
-          autoComplete: 'new-password',
+          autoComplete: 'off',
         }}
       />
       {errorMessage && <Error>{errorMessage}</Error>}

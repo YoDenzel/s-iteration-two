@@ -2,15 +2,12 @@ import styled from '@emotion/styled';
 import { Box, Typography } from '@mui/material';
 
 export const Wrapper = styled(Box)`
-  background-color: #f5f6f8;
+  background-color: ${({ theme }) => theme.colors.primaryBackground};
   width: 100%;
   height: 100vh;
   display: flex;
   align-items: center;
   flex-direction: column;
-  @media (max-width: 767px) {
-    background-color: #ffffff;
-  }
 `;
 
 export const TitleContainer = styled(Box)`
@@ -23,8 +20,8 @@ export const TitleContainer = styled(Box)`
 `;
 
 export const Title = styled(Typography)`
-  color: #3d5170;
   font-family: 'Helvetica';
+  color: ${({ theme }) => theme.colors.titleFont};
   font-style: normal;
   font-weight: 400;
   font-size: 24px;

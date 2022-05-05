@@ -5,12 +5,12 @@ export const Container = styled(Box)`
   display: flex;
   flex-direction: column;
   width: 285px;
-  background-color: #ffffff;
   height: 100vh;
   box-shadow: 0px 1px 75px rgba(90, 97, 105, 0.11),
     0px 2px 4px rgba(90, 97, 105, 0.12), 0px 7.5px 11px rgba(90, 97, 105, 0.1),
     0px 3.5px 17.5px rgba(165, 182, 201, 0.1);
   z-index: 1;
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 export const ApplicationTitleWrapper = styled(Box)`
@@ -21,8 +21,8 @@ export const ApplicationTitleWrapper = styled(Box)`
 export const ApplicationTitleContainer = styled(Box)`
   display: flex;
   align-items: center;
-  gap: 7px;
   padding: 15px 0;
+  gap: ${({ theme }) => theme.spacing(1)}px;
   padding-left: 49px;
 `;
 
@@ -33,5 +33,5 @@ export const Title = styled(Typography)`
   line-height: 18px;
   display: flex;
   align-items: center;
-  color: #3d5170;
+  color: ${({ theme }) => theme.colors.titleFont};
 `;

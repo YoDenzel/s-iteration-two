@@ -13,9 +13,9 @@ import { Wrapper, TitleContainer, Title } from './emotion-components';
 
 export function AuthPage() {
   const { data, mutateAsync, isError } = usePostAuth();
+  const [cookie, setCookie] = useCookies(['access']);
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const [cookies, setCookie] = useCookies(['access']);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
