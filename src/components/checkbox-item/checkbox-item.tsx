@@ -29,6 +29,7 @@ const ButtonTitle = styled(({ isActive, children, ...props }: TButtonTitle) => (
   line-height: 12px;
   letter-spacing: -0.175439px;
   color: ${props => (props.isActive ? '#121212' : '#999999')};
+  text-align: left;
 `;
 
 export function CheckboxItem({ isActive, title }: TCheckboxItem) {
