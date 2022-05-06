@@ -82,11 +82,11 @@ export function OrdersListComponent() {
       setFilter(() => (filterStr += `&carId=${activeCarObj.id}`));
   };
   const dateFrom = format(
-    new Date(data?.data[0].dateFrom || 0),
+    new Date(data?.data[0]?.dateFrom || 0),
     'dd.MM.yyyy hh:mm',
   );
   const dateTo = format(
-    new Date(data?.data[0].dateTo || 0),
+    new Date(data?.data[0]?.dateTo || 0),
     'dd.MM.yyyy HH:mm',
   );
   return (
