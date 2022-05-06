@@ -1,8 +1,7 @@
-import styled from '@emotion/styled';
-import { Box } from '@mui/system';
 import { addDays } from 'date-fns';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 import {
   AdminPanelFooter,
   AdminPanelHeader,
@@ -18,7 +17,6 @@ import { Container, Wrapper } from './emotion-components';
 
 export function AdminPanel() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const authObj = useAppSelector(state => state.authSlice.authObj);
   const [cookie, _, removeCookie] = useCookies(['access']);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -26,6 +24,7 @@ export function AdminPanel() {
   const dropdownRef = useClickOutside<HTMLDivElement>(() =>
     setIsDropdownActive(false),
   );
+  const navigate = useNavigate();
 
   const logoutClickhandler = () => {
     mutateAsync({ accessToken: cookie.access });
@@ -33,6 +32,7 @@ export function AdminPanel() {
       path: '/s-iteration-two',
       expires: addDays(new Date(), 1),
     });
+    navigate('/s-iteration-two/admin');
   };
   return (
     <Wrapper>
