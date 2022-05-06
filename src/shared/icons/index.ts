@@ -7,6 +7,8 @@ import { DropdownArrow } from './dropdown-arrow';
 import { SearchLoop } from './search-loop';
 import { DropdownBothWaysArrow } from './dropdown-both-ways-arrow';
 import { CheckMark } from './check-mark';
+import { XIcon } from './x-icon';
+import { MoreIcon } from './more-icon';
 
 export const Icons = {
   NeedForDriveLogo,
@@ -18,4 +20,6 @@ export const Icons = {
   SearchLoop,
   DropdownBothWaysArrow,
   CheckMark,
+  XIcon,
+  MoreIcon,
 };
