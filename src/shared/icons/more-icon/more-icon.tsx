@@ -1,5 +1,12 @@
-export const MoreIcon = () => (
-  <svg width={3} height={8} fill="none" xmlns="http://www.w3.org/2000/svg">
+import { TIcons } from '../../types';
+
+export const MoreIcon = ({ width = 3, height = 8 }: TIcons) => (
+  <svg
+    width={width}
+    height={height}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       fillRule="evenodd"
       clipRule="evenodd"
