@@ -1,5 +1,5 @@
 import { addDays } from 'date-fns';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -9,8 +9,8 @@ import {
   OrdersListComponent,
 } from '../../components';
 import {
-  useAppSelector,
   useClickOutside,
+  useGetWindowWidth,
   usePostLogout,
 } from '../../shared/custom-hooks';
 import { Container, Wrapper } from './emotion-components';
@@ -19,12 +19,21 @@ export function AdminPanel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [cookie, _, removeCookie] = useCookies(['access']);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
+  const [isMenuActive, setIsMenuActive] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const { windowWidth } = useGetWindowWidth();
   const { mutateAsync } = usePostLogout();
   const dropdownRef = useClickOutside<HTMLDivElement>(() =>
     setIsDropdownActive(false),
   );
+  const mobileMenuRef = useClickOutside<HTMLDivElement>(
+    () => windowWidth < 1024 && setIsMenuActive(false),
+  );
   const navigate = useNavigate();
+
+  useEffect(() => {
+    windowWidth > 1023 && setIsMenuActive(true);
+  }, [windowWidth]);
 
   const logoutClickhandler = () => {
     mutateAsync({ accessToken: cookie.access });
@@ -39,6 +48,10 @@ export function AdminPanel() {
       <NavigationMenu
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
+        isMenuActive={isMenuActive}
+        setIsMenuActive={setIsMenuActive}
+        windowWidth={windowWidth}
+        mobileMenuRef={mobileMenuRef}
       />
       <Container>
         <AdminPanelHeader
