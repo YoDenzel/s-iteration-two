@@ -6,6 +6,7 @@ export const Container = styled(Box)`
   width: 100%;
   box-shadow: 0px 2.5px 9.5px rgba(90, 97, 105, 0.12);
   display: flex;
+  justify-content: flex-end;
 `;
 
 export const SearchLoop = styled(Box)`
@@ -104,4 +105,18 @@ export const MenuItem = styled(Button)`
   color: #121212;
   padding: 10px 40px;
   margin: 8px 0;
+`;
+
+export const FlexWrapper = styled(Box)`
+  display: flex;
+  width: 100%;
+`;
+
+export const TabletHeaderPanel = styled(Box)`
+  display: none;
+  @media (max-width: ${({ theme }) => theme.breakPoints.tablet}) {
+    width: 325px;
+    height: 75px;
+    display: block;
+  }
 `;
