@@ -11,11 +11,17 @@ export const Container = styled(Box)`
     0px 3.5px 17.5px rgba(165, 182, 201, 0.1);
   z-index: 1;
   background-color: ${({ theme }) => theme.colors.white};
+  @media (max-width: ${({ theme }) => theme.breakPoints.tablet}) {
+    height: fit-content;
+    position: absolute;
+    width: 240px;
+  }
 `;
 
 export const ApplicationTitleWrapper = styled(Box)`
   width: 100%;
   box-shadow: 0px 1px 0px #e1e5eb;
+  display: flex;
 `;
 
 export const ApplicationTitleContainer = styled(Box)`
@@ -24,6 +30,12 @@ export const ApplicationTitleContainer = styled(Box)`
   padding: 15px 0;
   gap: ${({ theme }) => theme.spacing(1)}px;
   padding-left: 49px;
+`;
+
+export const TabsContainer = styled(Box)`
+  width: 100%;
+  @media (max-width: ${({ theme }) => theme.breakPoints.tablet}) {
+  }
 `;
 
 export const Title = styled(Typography)`

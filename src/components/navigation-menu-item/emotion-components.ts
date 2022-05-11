@@ -7,6 +7,7 @@ export const Container = styled(Button)`
   box-shadow: inset 0px -1px 0px #e1e5eb;
   justify-content: flex-start;
   padding-left: 28px;
+  width: 100%;
 `;
 
 export const Title = styled(Typography)`
@@ -15,4 +16,5 @@ export const Title = styled(Typography)`
   font-size: 15px;
   line-height: 17px;
   padding: 20px 0;
+  text-align: left;
 `;
