@@ -1,9 +1,4 @@
 export type TCheckboxItem = {
-  isActive: boolean;
+  isActive: boolean | null;
   title: string;
-};
-
-export type TButtonTitle = {
-  children: string | undefined;
-  isActive: boolean;
 };
