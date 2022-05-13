@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { format } from 'date-fns';
-import { useAppSelector } from '../../shared/custom-hooks';
+import { useAppDispatch, useAppSelector } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { filterDataArr } from '../../shared/functions';
 import {
@@ -15,6 +15,7 @@ import {
 import { OrderInformation } from '../order-information';
 import { OrderFilterComponent } from '../orders-filter-component';
 import { Container, Title, Wrapper } from './emotion-components';
+import { setCheckboxesStatus } from '../../redux/car-order-checkbox-data/car-order-checkbox-data';
 
 export function OrdersListComponent() {
   const { activeCarObj, activeCitiesObj, activeRateObj, activeStatusObj } =
@@ -26,9 +27,10 @@ export function OrdersListComponent() {
     }));
   const [filter, setFilter] = useState('');
   const [cookie] = useCookies(['access']);
+  const dispatch = useAppDispatch();
   const { data } = useGetData<TCarOrder>({
     QUERY_KEY: 'order',
-    url: `order?${filter}&page=0&limit=10`,
+    url: `order?${filter}&page=0&limit=1`,
     token: cookie.access,
   });
   const { data: rateData } = useGetData<TOptionsArr[]>({
@@ -51,6 +53,10 @@ export function OrdersListComponent() {
         id: item.id,
       })),
   });
+  const filteredCities = citiesData?.filter(
+    (val, index, arr) =>
+      index === arr.findIndex(item => item.name === val.name),
+  );
   const { data: orderStatusData } = useGetData<TOrderStatus>({
     QUERY_KEY: 'status',
     url: 'orderStatus',
@@ -67,7 +73,16 @@ export function OrdersListComponent() {
       })),
   });
 
-  console.log(data);
+  useEffect(() => {
+    data &&
+      dispatch(
+        setCheckboxesStatus({
+          isChildChair: data.data[0]?.isNeedChildChair || false,
+          isRightWheel: data.data[0]?.isRightWheel || false,
+          isTankFull: data.data[0]?.isFullTank || false,
+        }),
+      );
+  }, [data]);
 
   const submitHandler = (e: React.FormEvent<HTMLDivElement>) => {
     let filterStr = '';
@@ -95,7 +110,7 @@ export function OrdersListComponent() {
       <Container>
         <OrderFilterComponent
           filterDataArr={filterDataArr({
-            data: [rateData, citiesData, orderStatusData?.data, carsData],
+            data: [rateData, filteredCities, orderStatusData?.data, carsData],
             activeObjArr: [
               activeRateObj,
               activeCitiesObj,
