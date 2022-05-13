@@ -4,8 +4,10 @@ import {
   Container,
   Dropdown,
   FlexWrapper,
+  Icon,
   MenuItem,
   NotificationBlock,
+  NotificationCount,
   OpenDropdown,
   ProfileBlock,
   ProfileFlexWrapper,
@@ -43,7 +45,10 @@ export function AdminPanelHeader({
           }}
         />
         <NotificationBlock>
-          <Icons.NotificationBell />
+          <Icon>
+            <Icons.NotificationBell />
+          </Icon>
+          <NotificationCount>2</NotificationCount>
         </NotificationBlock>
         <ProfileBlock ref={dropdownRef}>
           <ProfileFlexWrapper>
