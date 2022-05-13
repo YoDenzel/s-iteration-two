@@ -9,6 +9,10 @@ export const Wrapper = styled(Box)`
   justify-content: space-between;
   border-top-right-radius: 9px;
   border-top-left-radius: 9px;
+  @media (max-width: ${({ theme }) => theme.breakPoints.tablet}) {
+    flex-direction: column;
+    gap: 15px;
+  }
 `;
 
 export const FilterButtonContainer = styled(Box)`
@@ -16,6 +20,11 @@ export const FilterButtonContainer = styled(Box)`
   gap: 15px;
   &:first-of-type {
     margin-left: 21px;
+  }
+  @media (max-width: ${({ theme }) => theme.breakPoints.mobile}) {
+    margin-left: 0;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -35,4 +44,9 @@ export const ApplyFilterButton = styled(Button)`
   padding: 8px 15px 8.5px 15px;
   border-radius: 4px;
   height: max-content;
+  @media (max-width: ${({ theme }) => theme.breakPoints.tablet}) {
+    margin-right: 0;
+    border-radius: 0;
+    padding: 10px;
+  }
 `;
