@@ -51,7 +51,7 @@ export const Title = styled(Typography)<{ isblack: number }>`
   font-size: 13px;
   line-height: 15px;
   letter-spacing: -0.408571px;
-  color: ${isblack => (isblack ? '#121212' : '#889098')};
+  color: ${({ isblack }) => (isblack ? '#121212' : '#889098')};
   padding-right: 5px;
 `;
 
