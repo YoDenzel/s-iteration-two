@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/s-iteration-two/static/css/main.aa2fcb49.css",
-    "main.js": "/s-iteration-two/static/js/main.f01b2711.js",
+    "main.js": "/s-iteration-two/static/js/main.83a20fd2.js",
     "static/media/Roboto-Medium.ttf": "/s-iteration-two/static/media/Roboto-Medium.7429a63c09f79a1760b0.ttf",
     "static/media/Roboto-Regular.ttf": "/s-iteration-two/static/media/Roboto-Regular.a8d6ac03c7b96b7acb62.ttf",
     "static/media/Roboto-Black.ttf": "/s-iteration-two/static/media/Roboto-Black.2a4285847db4a9acb97f.ttf",
@@ -9,10 +9,10 @@
     "static/media/Roboto-Light.ttf": "/s-iteration-two/static/media/Roboto-Light.8be2d1487420548b3b8d.ttf",
     "index.html": "/s-iteration-two/index.html",
     "main.aa2fcb49.css.map": "/s-iteration-two/static/css/main.aa2fcb49.css.map",
-    "main.f01b2711.js.map": "/s-iteration-two/static/js/main.f01b2711.js.map"
+    "main.83a20fd2.js.map": "/s-iteration-two/static/js/main.83a20fd2.js.map"
   },
   "entrypoints": [
     "static/css/main.aa2fcb49.css",
-    "static/js/main.f01b2711.js"
+    "static/js/main.83a20fd2.js"
   ]
 }
