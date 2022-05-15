@@ -14,8 +14,15 @@ import {
 } from '../../shared/types';
 import { OrderInformation } from '../order-information';
 import { OrderFilterComponent } from '../orders-filter-component';
-import { Container, Title, Wrapper } from './emotion-components';
+import {
+  Container,
+  Empty,
+  ErrorMessage,
+  Title,
+  Wrapper,
+} from './emotion-components';
 import { setCheckboxesStatus } from '../../redux/car-order-checkbox-data/car-order-checkbox-data';
+import { Loader } from '../loader';
 
 export function OrdersListComponent() {
   const { activeCarObj, activeCitiesObj, activeRateObj, activeStatusObj } =
@@ -28,7 +35,7 @@ export function OrdersListComponent() {
   const [filter, setFilter] = useState('');
   const [cookie] = useCookies(['access']);
   const dispatch = useAppDispatch();
-  const { data } = useGetData<TCarOrder>({
+  const { data, isLoading, isError } = useGetData<TCarOrder>({
     QUERY_KEY: 'order',
     url: `order?${filter}&page=0&limit=1`,
     token: cookie.access,
@@ -120,11 +127,20 @@ export function OrdersListComponent() {
           })}
           submitHandler={submitHandler}
         />
-        <OrderInformation
-          activeOrderObj={data?.data[0]}
-          dateFrom={dateFrom}
-          dateTo={dateTo}
-        />
+        {isLoading && <Loader />}
+        {!isLoading && !isError && data?.data.length !== 0 && (
+          <OrderInformation
+            activeOrderObj={data?.data[0]}
+            dateFrom={dateFrom}
+            dateTo={dateTo}
+          />
+        )}
+        {isError && (
+          <ErrorMessage>
+            Ошибка, попробуйте позже или перезагрузите страницу
+          </ErrorMessage>
+        )}
+        {data?.data.length === 0 && <Empty>Ничего не найдено</Empty>}
       </Container>
     </Wrapper>
   );
