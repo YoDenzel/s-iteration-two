@@ -33,34 +33,36 @@ export function FilterButtonComponent({
       <FilterButton onClick={handleClick} endIcon={<DropdownBothWaysArrow />}>
         {selectedOption || buttonTitle}
       </FilterButton>
-      <Dropdown
-        anchorEl={anchorEl}
-        open={open}
-        onClose={() => handleClose()}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        PaperProps={{
-          style: {
-            maxHeight: 24 * 4.5,
-          },
-        }}
-      >
-        {optionsArr?.map((item, index) => (
-          <DropdownItem
-            key={index + item.name}
-            onClick={() => handleClose(item, activeIndex)}
-            disableRipple
-          >
-            {item.name}
-          </DropdownItem>
-        ))}
-      </Dropdown>
+      {(optionsArr?.length || 0) > 0 && (
+        <Dropdown
+          anchorEl={anchorEl}
+          open={open}
+          onClose={() => handleClose()}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          PaperProps={{
+            style: {
+              maxHeight: 24 * 4.5,
+            },
+          }}
+        >
+          {optionsArr?.map((item, index) => (
+            <DropdownItem
+              key={index + item.name}
+              onClick={() => handleClose(item, activeIndex)}
+              disableRipple
+            >
+              {item.name}
+            </DropdownItem>
+          ))}
+        </Dropdown>
+      )}
     </div>
   );
 }

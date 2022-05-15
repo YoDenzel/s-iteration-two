@@ -30,4 +30,6 @@ export const DropdownItem = styled(MenuItem)`
   color: #868e96;
   min-height: 24px;
   width: 120px;
+  white-space: unset;
+  flex-wrap: wrap;
 `;
