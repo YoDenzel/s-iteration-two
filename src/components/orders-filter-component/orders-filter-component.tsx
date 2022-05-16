@@ -1,3 +1,4 @@
+import { normalizeFilterButtonTitle } from '../../shared/functions';
 import { FilterButtonComponent } from '../filter-button-component';
 import {
   Wrapper,
@@ -18,7 +19,9 @@ export function OrderFilterComponent({
             key={item.title + index}
             optionsArr={item.data}
             buttonTitle={item.title}
-            selectedOption={item.activeTitle?.name}
+            selectedOption={normalizeFilterButtonTitle(
+              item.activeTitle?.name || '',
+            )}
             activeIndex={index}
           />
         ))}
