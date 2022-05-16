@@ -1,7 +1,10 @@
-import { useCookies } from 'react-cookie';
-import { requestOptions } from '../constants';
+import { TFetchGetData } from './types';
 
-export const fetchData = async (url: string, token: string) => {
+export const fetchData = async ({
+  token,
+  url,
+  setErrorStatus,
+}: TFetchGetData) => {
   const response = await fetch(
     `https://api-factory.simbirsoft1.com/api/db/${url}`,
     {
@@ -11,7 +14,10 @@ export const fetchData = async (url: string, token: string) => {
       },
     },
   );
-  if (!response.ok) throw new Error(response.statusText);
+  if (!response.ok) {
+    setErrorStatus && setErrorStatus(`${response.status}`);
+    throw new Error(response.statusText);
+  }
   const data = response.json();
   return data;
 };
