@@ -65,6 +65,7 @@ export const Price = styled(Typography)`
   color: ${({ theme }) => theme.colors.black};
   padding-top: ${({ theme }) => theme.spacing(1.5)}px;
   flex: 20%;
+  margin-left: ${({ theme }) => theme.spacing(1.2)}px;
 `;
 
 export const ChangeStatusBlock = styled(Box)`
