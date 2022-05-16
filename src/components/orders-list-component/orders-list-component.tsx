@@ -33,7 +33,7 @@ export function OrdersListComponent() {
   const dispatch = useAppDispatch();
   const { data, isLoading, isError } = useGetData<TCarOrder>({
     QUERY_KEY: 'order',
-    url: `order12?${filter}&page=0&limit=1`,
+    url: `order?${filter}&page=0&limit=1`,
     token: cookie.access,
     setErrorStatus: setError,
   });
