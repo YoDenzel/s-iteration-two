@@ -14,15 +14,10 @@ import {
 } from '../../shared/types';
 import { OrderInformation } from '../order-information';
 import { OrderFilterComponent } from '../orders-filter-component';
-import {
-  Container,
-  Empty,
-  ErrorMessage,
-  Title,
-  Wrapper,
-} from './emotion-components';
+import { Container, Empty, Title, Wrapper } from './emotion-components';
 import { setCheckboxesStatus } from '../../redux/car-order-checkbox-data/car-order-checkbox-data';
 import { Loader } from '../loader';
+import { ErrorComponent } from '../error-component';
 
 export function OrdersListComponent() {
   const { activeCarObj, activeCitiesObj, activeRateObj, activeStatusObj } =
@@ -33,12 +28,14 @@ export function OrdersListComponent() {
       activeCitiesObj: state.filterActiveData.activeCitiesObj,
     }));
   const [filter, setFilter] = useState('');
+  const [error, setError] = useState('');
   const [cookie] = useCookies(['access']);
   const dispatch = useAppDispatch();
   const { data, isLoading, isError } = useGetData<TCarOrder>({
     QUERY_KEY: 'order',
-    url: `order?${filter}&page=0&limit=1`,
+    url: `order12?${filter}&page=0&limit=1`,
     token: cookie.access,
+    setErrorStatus: setError,
   });
   const { data: rateData } = useGetData<TOptionsArr[]>({
     QUERY_KEY: 'rateType',
@@ -46,7 +43,7 @@ export function OrdersListComponent() {
     token: cookie.access,
     selectorFunction: (arr: TCarRate) =>
       arr.data.map(item => ({
-        name: item.rateTypeId.name,
+        name: item?.rateTypeId?.name,
         id: item.id,
       })),
   });
@@ -56,8 +53,8 @@ export function OrdersListComponent() {
     token: cookie.access,
     selectorFunction: (arr: TCities) =>
       arr.data.map(item => ({
-        name: item.name,
-        id: item.id,
+        name: item?.name,
+        id: item?.id,
       })),
   });
   const filteredCities = citiesData?.filter(
@@ -75,8 +72,8 @@ export function OrdersListComponent() {
     token: cookie.access,
     selectorFunction: (data: TCars) =>
       data.data.map(item => ({
-        name: item.name,
-        id: item.id,
+        name: item?.name,
+        id: item?.id,
       })),
   });
 
@@ -112,36 +109,46 @@ export function OrdersListComponent() {
     'dd.MM.yyyy HH:mm',
   );
   return (
-    <Wrapper component="main">
-      <Title variant="h1">Заказы</Title>
-      <Container>
-        <OrderFilterComponent
-          filterDataArr={filterDataArr({
-            data: [rateData, filteredCities, orderStatusData?.data, carsData],
-            activeObjArr: [
-              activeRateObj,
-              activeCitiesObj,
-              activeStatusObj,
-              activeCarObj,
-            ],
-          })}
-          submitHandler={submitHandler}
+    <>
+      {isError && (
+        <ErrorComponent
+          reloadButtonClickhandler={() => window.location.reload()}
+          errorCodeStatus={error}
         />
-        {isLoading && <Loader />}
-        {!isLoading && !isError && data?.data.length !== 0 && (
-          <OrderInformation
-            activeOrderObj={data?.data[0]}
-            dateFrom={dateFrom}
-            dateTo={dateTo}
-          />
-        )}
-        {isError && (
-          <ErrorMessage>
-            Ошибка, попробуйте позже или перезагрузите страницу
-          </ErrorMessage>
-        )}
-        {data?.data.length === 0 && <Empty>Ничего не найдено</Empty>}
-      </Container>
-    </Wrapper>
+      )}
+      {!isError && (
+        <Wrapper component="main">
+          <Title variant="h1">Заказы</Title>
+          <Container>
+            <OrderFilterComponent
+              filterDataArr={filterDataArr({
+                data: [
+                  rateData,
+                  filteredCities,
+                  orderStatusData?.data,
+                  carsData,
+                ],
+                activeObjArr: [
+                  activeRateObj,
+                  activeCitiesObj,
+                  activeStatusObj,
+                  activeCarObj,
+                ],
+              })}
+              submitHandler={submitHandler}
+            />
+            {isLoading && <Loader />}
+            {!isLoading && data?.data.length !== 0 && (
+              <OrderInformation
+                activeOrderObj={data?.data[0]}
+                dateFrom={dateFrom}
+                dateTo={dateTo}
+              />
+            )}
+            {data?.data.length === 0 && <Empty>Ничего не найдено</Empty>}
+          </Container>
+        </Wrapper>
+      )}
+    </>
   );
 }
