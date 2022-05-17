@@ -1,5 +1,11 @@
 import styled from '@emotion/styled';
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Box, Button, Menu, MenuItem } from '@mui/material';
+
+export const Container = styled(Box)`
+  @media (max-width: ${({ theme }) => theme.breakPoints.mobile}) {
+    flex: 40%;
+  }
+`;
 
 export const FilterButton = styled(Button)`
   background: #ffffff;

@@ -23,8 +23,11 @@ export const FilterButtonContainer = styled(Box)`
   }
   @media (max-width: ${({ theme }) => theme.breakPoints.mobile}) {
     margin-left: 0;
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
+    &:first-of-type {
+      margin-left: ${({ theme }) => theme.spacing(3.7)}px;
+    }
   }
 `;
 

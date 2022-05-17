@@ -1,5 +1,17 @@
 import styled from '@emotion/styled';
-import { Box, Button, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Pagination,
+  Typography,
+} from '@mui/material';
+
+export const Wrapper = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+`;
 
 export const Container = styled(Box)`
   display: flex;
@@ -105,4 +117,20 @@ export const ChangeStatusButton = styled(Button)<{ activeindex: number }>`
   @media (max-width: ${({ theme }) => theme.breakPoints.desktopMin}) {
     border: none;
   }
+`;
+
+export const PaginationBlock = styled(Pagination)`
+  align-self: center;
+  padding-bottom: ${({ theme }) => theme.spacing(1.5)}px;
+  padding-top: ${({ theme }) => theme.spacing(1.5)}px;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  box-shadow: 0px -0.5px 0px #e0e2e8, 0px 0.5px 0px #e0e2e8;
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 17px;
+  letter-spacing: -0.471429px;
 `;
