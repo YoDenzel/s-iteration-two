@@ -3,7 +3,12 @@ import { setActiveObj } from '../../redux/filter-active-data/filter-active-data'
 import { useAppDispatch } from '../../shared/custom-hooks';
 import { DropdownBothWaysArrow } from '../../shared/icons/dropdown-both-ways-arrow';
 import { TOptionsArr } from '../../shared/types';
-import { Dropdown, DropdownItem, FilterButton } from './emotion-components';
+import {
+  Container,
+  Dropdown,
+  DropdownItem,
+  FilterButton,
+} from './emotion-components';
 import { TFilterButtonComponent } from './types';
 
 export function FilterButtonComponent({
@@ -29,7 +34,7 @@ export function FilterButtonComponent({
     setAnchorEl(null);
   };
   return (
-    <div>
+    <Container>
       <FilterButton onClick={handleClick} endIcon={<DropdownBothWaysArrow />}>
         {selectedOption || buttonTitle}
       </FilterButton>
@@ -63,6 +68,6 @@ export function FilterButtonComponent({
           ))}
         </Dropdown>
       )}
-    </div>
+    </Container>
   );
 }
