@@ -29,6 +29,13 @@ export const FilterButtonContainer = styled(Box)`
       margin-left: ${({ theme }) => theme.spacing(3.7)}px;
     }
   }
+  @media (max-width: 300px) {
+    flex-direction: column;
+    flex-wrap: unset;
+    &:first-of-type {
+      margin-left: 0;
+    }
+  }
 `;
 
 export const ApplyFilterButton = styled(Button)`

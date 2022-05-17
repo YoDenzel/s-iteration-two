@@ -1,10 +1,5 @@
 import styled from '@emotion/styled';
-import {
-  Box,
-  Button,
-  Pagination,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Pagination, Typography } from '@mui/material';
 
 export const Wrapper = styled(Box)`
   display: flex;
@@ -23,6 +18,7 @@ export const Container = styled(Box)`
     margin-bottom: ${({ theme }) => theme.spacing(2.5)}px;
     gap: ${({ theme }) => theme.spacing(2.5)}px;
     align-items: center;
+    padding: 0;
   }
 `;
 
