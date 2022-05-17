@@ -27,6 +27,7 @@ import {
 } from './emotion-components';
 import { setCheckboxesStatus } from '../../redux/car-order-checkbox-data/car-order-checkbox-data';
 import { Loader } from '../loader';
+import { PAGE_LIMIT } from './constants';
 
 export function OrdersListComponent() {
   const { activeCarObj, activeCitiesObj, activeRateObj, activeStatusObj } =
@@ -42,7 +43,7 @@ export function OrdersListComponent() {
   const dispatch = useAppDispatch();
   const { data, isLoading, isError } = useGetData<TCarOrder>({
     QUERY_KEY: 'order',
-    url: `order?${filter}&page=0&limit=1`,
+    url: `order?${filter}&page=${currentPage - 1}&limit=${PAGE_LIMIT}`,
     token: cookie.access,
   });
   const { data: rateData } = useGetData<TOptionsArr[]>({
@@ -86,7 +87,7 @@ export function OrdersListComponent() {
   });
   const { paginationRange, totalPageCount } = usePagination({
     currentPage: currentPage,
-    pageSize: 1,
+    pageSize: PAGE_LIMIT,
     totalCount: data?.count ?? 1,
     siblingCount: 1,
   });
