@@ -4,6 +4,7 @@ import {
   Wrapper,
   FilterButtonContainer,
   ApplyFilterButton,
+  CancelFilterButton,
 } from './emotion-components';
 import { TOrdersFilterComponent } from './types';
 
@@ -26,6 +27,7 @@ export function OrderFilterComponent({
           />
         ))}
       </FilterButtonContainer>
+      <CancelFilterButton>Отменить</CancelFilterButton>
       <ApplyFilterButton type="submit">Применить</ApplyFilterButton>
     </Wrapper>
   );

@@ -60,3 +60,5 @@ export const ApplyFilterButton = styled(Button)`
     padding: 10px;
   }
 `;
+
+export const CancelFilterButton = styled(Button)``
