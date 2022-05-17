@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { format } from 'date-fns';
-import { useAppDispatch, useAppSelector } from '../../shared/custom-hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+  usePagination,
+} from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { filterDataArr } from '../../shared/functions';
 import {
@@ -33,6 +37,7 @@ export function OrdersListComponent() {
       activeCitiesObj: state.filterActiveData.activeCitiesObj,
     }));
   const [filter, setFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const [cookie] = useCookies(['access']);
   const dispatch = useAppDispatch();
   const { data, isLoading, isError } = useGetData<TCarOrder>({
@@ -46,8 +51,8 @@ export function OrdersListComponent() {
     token: cookie.access,
     selectorFunction: (arr: TCarRate) =>
       arr.data.map(item => ({
-        name: item.rateTypeId.name,
-        id: item.id,
+        name: item?.rateTypeId?.name,
+        id: item?.id,
       })),
   });
   const { data: citiesData } = useGetData<TOptionsArr[]>({
@@ -56,13 +61,13 @@ export function OrdersListComponent() {
     token: cookie.access,
     selectorFunction: (arr: TCities) =>
       arr.data.map(item => ({
-        name: item.name,
-        id: item.id,
+        name: item?.name,
+        id: item?.id,
       })),
   });
   const filteredCities = citiesData?.filter(
     (val, index, arr) =>
-      index === arr.findIndex(item => item.name === val.name),
+      index === arr.findIndex(item => item?.name === val.name),
   );
   const { data: orderStatusData } = useGetData<TOrderStatus>({
     QUERY_KEY: 'status',
@@ -75,9 +80,15 @@ export function OrdersListComponent() {
     token: cookie.access,
     selectorFunction: (data: TCars) =>
       data.data.map(item => ({
-        name: item.name,
-        id: item.id,
+        name: item?.name,
+        id: item?.id,
       })),
+  });
+  const { paginationRange, totalPageCount } = usePagination({
+    currentPage: currentPage,
+    pageSize: 1,
+    totalCount: data?.count ?? 1,
+    siblingCount: 1,
   });
 
   useEffect(() => {
@@ -111,6 +122,21 @@ export function OrdersListComponent() {
     new Date(data?.data[0]?.dateTo || 0),
     'dd.MM.yyyy HH:mm',
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
+  const isNextPage = () => {
+    if (currentPage === totalPageCount) return true;
+    else return false;
+  };
+
+  const isPrevPage = () => {
+    if (currentPage === 1) return true;
+    else return false;
+  };
+
   return (
     <Wrapper component="main">
       <Title variant="h1">Заказы</Title>
@@ -133,6 +159,17 @@ export function OrdersListComponent() {
             activeOrderObj={data?.data[0]}
             dateFrom={dateFrom}
             dateTo={dateTo}
+            isNextPage={isNextPage}
+            isPrevPage={isPrevPage}
+            currentPage={currentPage}
+            paginationRange={paginationRange}
+            setCurrrentPage={setCurrentPage}
+            nextPageClickhandler={() =>
+              setCurrentPage(prevValue => prevValue + 1)
+            }
+            prevPageClickhandler={() =>
+              setCurrentPage(prevValue => prevValue - 1)
+            }
           />
         )}
         {isError && (

@@ -4,9 +4,11 @@ export type TOrderInformation = {
   activeOrderObj?: TCarOrderData;
   dateTo?: string;
   dateFrom?: string;
-};
-
-export type TTitleStyle = {
-  isBlack: boolean;
-  children: string | undefined;
+  isPrevPage: () => boolean;
+  isNextPage: () => boolean;
+  currentPage: number;
+  setCurrrentPage: (v: number) => void;
+  nextPageClickhandler: () => void;
+  prevPageClickhandler: () => void;
+  paginationRange: (string | number)[] | undefined;
 };
