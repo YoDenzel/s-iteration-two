@@ -40,7 +40,7 @@ export function NavigationMenu({
               clickHandler={setActiveIndex}
               Icon={
                 <item.icon
-                  color={activeIndex === index ? '#007BFF' : '#CACEDB'}
+                  htmlColor={activeIndex === index ? '#007BFF' : '#CACEDB'}
                 />
               }
               title={item.title}
