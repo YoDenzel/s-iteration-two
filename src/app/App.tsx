@@ -1,5 +1,6 @@
 import { useCookies } from 'react-cookie';
-import { Routes, Route, Navigate } from 'react-router';
+import { Routes, Route } from 'react-router';
+import { ErrorComponent } from '../components/error-component';
 import { AuthPage, AdminPanel } from '../pages';
 
 export function App() {
@@ -19,7 +20,12 @@ export function App() {
       />
       <Route
         path="*"
-        element={<Navigate to="/s-iteration-two/admin/order-list" replace />}
+        element={
+          <ErrorComponent
+            errorCodeStatus="404"
+            reloadButtonClickhandler={() => history.back()}
+          />
+        }
       />
     </Routes>
   );

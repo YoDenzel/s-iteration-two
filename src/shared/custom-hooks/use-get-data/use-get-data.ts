@@ -8,6 +8,7 @@ type TUseGetData = {
   url: string;
   selectorFunction?: any;
   token: string;
+  setErrorStatus?: (v: string) => void;
 };
 
 export const useGetData = <T>({
@@ -15,11 +16,21 @@ export const useGetData = <T>({
   url,
   selectorFunction,
   token,
+  setErrorStatus,
 }: TUseGetData): UseQueryResult<T> => {
-  const query = useQuery([QUERY_KEY, url], () => fetchData(url, token), {
-    select: selectorFunction,
-    staleTime: STALE_TIME,
-    retry: 0,
-  });
+  const query = useQuery(
+    [QUERY_KEY, url],
+    () =>
+      fetchData({
+        url: url,
+        token: token,
+        setErrorStatus: setErrorStatus,
+      }),
+    {
+      select: selectorFunction,
+      staleTime: STALE_TIME,
+      retry: 0,
+    },
+  );
   return query;
 };
