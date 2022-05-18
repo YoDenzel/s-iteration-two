@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import { fetchData } from '../../api';
 
-const STALE_TIME = 0;
+const STALE_TIME = 86000;
 
 type TUseGetData = {
   QUERY_KEY: string;
