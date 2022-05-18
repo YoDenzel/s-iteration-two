@@ -50,7 +50,8 @@ export const ApplyFilterButton = styled(Button)`
   &:hover {
     background: #007bff;
   }
-  margin-right: 21px;
+  margin-right: ${({ theme }) => theme.spacing(2.8)}px;
+  margin-left: ${({ theme }) => theme.spacing(1)}px;
   padding: 8px 15px 8.5px 15px;
   border-radius: 4px;
   height: max-content;
@@ -61,4 +62,27 @@ export const ApplyFilterButton = styled(Button)`
   }
 `;
 
-export const CancelFilterButton = styled(Button)``
+export const CancelFilterButton = styled(Button)`
+  background: ${({ theme }) => theme.colors.red};
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  letter-spacing: -0.345714px;
+  color: ${({ theme }) => theme.colors.white};
+  text-transform: none;
+  &:hover {
+    background: ${({ theme }) => theme.colors.red};
+  }
+  margin: 0 4px;
+  padding: 8px 15px 8.5px 15px;
+  border-radius: 4px;
+  height: max-content;
+  @media (max-width: ${({ theme }) => theme.breakPoints.tablet}) {
+    margin-right: 0;
+    border-radius: 0;
+    padding: 10px;
+  }
+`;
