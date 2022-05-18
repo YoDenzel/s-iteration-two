@@ -3,6 +3,7 @@ import { TOptionsArr } from '../../shared/types';
 export type TOrdersFilterComponent = {
   filterDataArr: Array<TFilterDataArr>;
   submitHandler: (e: React.FormEvent<HTMLDivElement>) => void;
+  cancelButtonClickhandler?: () => void;
 };
 
 type TFilterDataArr = {

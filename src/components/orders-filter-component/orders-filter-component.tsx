@@ -11,6 +11,7 @@ import { TOrdersFilterComponent } from './types';
 export function OrderFilterComponent({
   filterDataArr,
   submitHandler,
+  cancelButtonClickhandler,
 }: TOrdersFilterComponent) {
   return (
     <Wrapper component="form" onSubmit={e => submitHandler(e)}>
@@ -27,7 +28,11 @@ export function OrderFilterComponent({
           />
         ))}
       </FilterButtonContainer>
-      <CancelFilterButton>Отменить</CancelFilterButton>
+      {cancelButtonClickhandler && (
+        <CancelFilterButton onClick={() => cancelButtonClickhandler()}>
+          Отменить
+        </CancelFilterButton>
+      )}
       <ApplyFilterButton type="submit">Применить</ApplyFilterButton>
     </Wrapper>
   );
