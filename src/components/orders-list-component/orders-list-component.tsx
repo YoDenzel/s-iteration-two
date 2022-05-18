@@ -77,7 +77,7 @@ export function OrdersListComponent() {
   });
   const { data: carsData } = useGetData<TOptionsArr[]>({
     QUERY_KEY: 'cars',
-    url: 'car?limit=20',
+    url: 'car?limit=7',
     token: cookie.access,
     selectorFunction: (data: TCars) =>
       data.data.map(item => ({
