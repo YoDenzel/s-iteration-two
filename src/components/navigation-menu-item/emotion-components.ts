@@ -8,6 +8,7 @@ export const Container = styled(Button)`
   justify-content: flex-start;
   padding-left: 28px;
   width: 100%;
+  text-transform: none;
 `;
 
 export const Title = styled(Typography)`
