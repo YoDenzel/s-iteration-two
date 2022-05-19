@@ -9,3 +9,4 @@ export { FilterButtonComponent } from './filter-button-component';
 export { OrderFilterComponent } from './orders-filter-component';
 export { OrderInformation } from './order-information';
 export { CheckboxItem } from './checkbox-item';
+export { CarsListComponent } from './cars-list-component';
