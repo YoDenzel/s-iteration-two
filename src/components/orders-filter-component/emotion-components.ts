@@ -38,6 +38,15 @@ export const FilterButtonContainer = styled(Box)`
   }
 `;
 
+export const SubmitContainer = styled(Box)`
+  @media (max-width: ${({ theme }) => theme.breakPoints.tablet}) {
+    width: 100%;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
 export const ApplyFilterButton = styled(Button)`
   font-family: 'Helvetica';
   font-style: normal;
@@ -57,8 +66,10 @@ export const ApplyFilterButton = styled(Button)`
   height: max-content;
   @media (max-width: ${({ theme }) => theme.breakPoints.tablet}) {
     margin-right: 0;
+    margin-left: 0;
     border-radius: 0;
-    padding: 10px;
+    padding: ${({ theme }) => theme.spacing(1.25)}px;
+    width: 100%;
   }
 `;
 
@@ -81,8 +92,10 @@ export const CancelFilterButton = styled(Button)`
   border-radius: 4px;
   height: max-content;
   @media (max-width: ${({ theme }) => theme.breakPoints.tablet}) {
+    width: 100%;
     margin-right: 0;
     border-radius: 0;
     padding: 10px;
+    margin-left: 0;
   }
 `;
