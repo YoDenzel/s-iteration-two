@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { setActiveObj } from '../../redux/filter-active-data/filter-active-data';
 import { useAppDispatch } from '../../shared/custom-hooks';
 import { DropdownBothWaysArrow } from '../../shared/icons/dropdown-both-ways-arrow';
 import { TOptionsArr } from '../../shared/types';
@@ -16,6 +15,7 @@ export function FilterButtonComponent({
   buttonTitle,
   activeIndex,
   selectedOption,
+  dropdownItemClickhandler,
 }: TFilterButtonComponent) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const dispatch = useAppDispatch();
@@ -24,13 +24,7 @@ export function FilterButtonComponent({
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (val?: TOptionsArr, index?: number) => {
-    val &&
-      dispatch(
-        setActiveObj({
-          activeObj: val,
-          id: index,
-        }),
-      );
+    val && dropdownItemClickhandler(val, index);
     setAnchorEl(null);
   };
   return (
