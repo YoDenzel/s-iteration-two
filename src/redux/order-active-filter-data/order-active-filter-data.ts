@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TOptionsArr } from '../../shared/types';
 
-export const filterActiveData = createSlice({
+export const orderActiveFilterData = createSlice({
   name: 'fiterActiveData',
   initialState: {
     activeRateObj: null as TOptionsArr | null,
@@ -39,6 +39,6 @@ export const filterActiveData = createSlice({
   },
 });
 
-export const { setActiveObj } = filterActiveData.actions;
+export const { setActiveObj } = orderActiveFilterData.actions;
 
-export default filterActiveData.reducer;
+export default orderActiveFilterData.reducer;
