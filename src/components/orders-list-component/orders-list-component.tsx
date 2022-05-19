@@ -7,7 +7,6 @@ import {
   usePagination,
 } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
-import { filterDataArr } from '../../shared/functions';
 import {
   TCarOrder,
   TCarRate,
@@ -27,15 +26,16 @@ import {
 } from './emotion-components';
 import { setCheckboxesStatus } from '../../redux/car-order-checkbox-data/car-order-checkbox-data';
 import { Loader } from '../loader';
-import { PAGE_LIMIT } from './constants';
+import { filterDataArr, PAGE_LIMIT } from './constants';
+import { setActiveObj } from '../../redux/order-active-filter-data/order-active-filter-data';
 
 export function OrdersListComponent() {
   const { activeCarObj, activeCitiesObj, activeRateObj, activeStatusObj } =
     useAppSelector(state => ({
-      activeRateObj: state.filterActiveData.activeRateObj,
-      activeCarObj: state.filterActiveData.activeCarObj,
-      activeStatusObj: state.filterActiveData.activeStatusObj,
-      activeCitiesObj: state.filterActiveData.activeCitiesObj,
+      activeRateObj: state.orderActiveFilterData.activeRateObj,
+      activeCarObj: state.orderActiveFilterData.activeCarObj,
+      activeStatusObj: state.orderActiveFilterData.activeStatusObj,
+      activeCitiesObj: state.orderActiveFilterData.activeCitiesObj,
     }));
   const [filter, setFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -138,6 +138,15 @@ export function OrdersListComponent() {
     else return false;
   };
 
+  const dropdownItemClickhandler = (activeObj: TOptionsArr, index?: number) => {
+    dispatch(
+      setActiveObj({
+        activeObj: activeObj,
+        id: index,
+      }),
+    );
+  };
+
   return (
     <Wrapper component="main">
       <Title variant="h1">Заказы</Title>
@@ -153,6 +162,7 @@ export function OrdersListComponent() {
             ],
           })}
           submitHandler={submitHandler}
+          dropdownItemClickhandler={dropdownItemClickhandler}
         />
         {isLoading && <Loader />}
         {!isLoading && !isError && data?.data.length !== 0 && (
