@@ -131,3 +131,17 @@ type TPointId = {
   id: string;
   name: string;
 };
+
+export type TCarCategory = {
+  count: number;
+  fields: {};
+  data: TCarCategoryData[];
+};
+
+export type TCarCategoryData = {
+  updatedAt: number;
+  createdAt: number;
+  name: string;
+  description: string;
+  id: string;
+};
