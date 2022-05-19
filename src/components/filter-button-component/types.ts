@@ -5,4 +5,5 @@ export type TFilterButtonComponent = {
   buttonTitle: string;
   selectedOption?: string;
   activeIndex: number;
+  dropdownItemClickhandler: (activeObj: TOptionsArr, index?: number) => void;
 };
