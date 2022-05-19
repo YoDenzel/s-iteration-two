@@ -13,6 +13,7 @@ import {
   useGetWindowWidth,
   usePostLogout,
 } from '../../shared/custom-hooks';
+import { components } from './constants';
 import { Container, Wrapper } from './emotion-components';
 
 export function AdminPanel() {
@@ -43,6 +44,7 @@ export function AdminPanel() {
     });
     navigate('/s-iteration-two/admin');
   };
+  console.log(activeIndex);
   return (
     <Wrapper>
       <NavigationMenu
@@ -54,16 +56,21 @@ export function AdminPanel() {
         mobileMenuRef={mobileMenuRef}
       />
       <Container>
-        <AdminPanelHeader
-          logoutClickhandler={logoutClickhandler}
-          dropdownRef={dropdownRef}
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-          isDropdownActive={isDropdownActive}
-          setIsDropdownActive={setIsDropdownActive}
-        />
-        <OrdersListComponent />
-        <AdminPanelFooter />
+        <>
+          <AdminPanelHeader
+            logoutClickhandler={logoutClickhandler}
+            dropdownRef={dropdownRef}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            isDropdownActive={isDropdownActive}
+            setIsDropdownActive={setIsDropdownActive}
+          />
+          {components.map(
+            (Item, index) =>
+              index === activeIndex && <Item key={index + Date.now()} />,
+          )}
+          <AdminPanelFooter />
+        </>
       </Container>
     </Wrapper>
   );
