@@ -25,7 +25,7 @@ export function Pagination({
         isactive={!isPrevPage() ? 1 : 0}
         disableRipple
       >
-        <Icons.ChangePage />
+        <Icons.ChangePage color={!isPrevPage() ? '#007BFF' : '#868E96'} />
       </PrevPage>
       {paginationRange?.map((item, index) => {
         if (item === 'DOTS') {
@@ -52,7 +52,7 @@ export function Pagination({
         isactive={!isNextPage() ? 1 : 0}
         disableRipple
       >
-        <Icons.ChangePage />
+        <Icons.ChangePage color={!isNextPage() ? '#007BFF' : '#868E96'} />
       </NextPage>
     </Container>
   );
