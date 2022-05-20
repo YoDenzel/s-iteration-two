@@ -6,6 +6,7 @@ import { setActiveCarObj } from '../../redux/cars-active-filter-data/cars-active
 import { useAppSelector } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { TCarCategory, TCars, TOptionsArr } from '../../shared/types';
+import { CarsInformation } from '../cars-information';
 import { OrderFilterComponent } from '../orders-filter-component';
 
 export const Wrapper = styled(Box)`
@@ -50,7 +51,7 @@ export function CarsListComponent() {
   const [cookie] = useCookies(['access']);
   const { data } = useGetData<TCars>({
     QUERY_KEY: 'cars',
-    url: 'car?limit=20',
+    url: 'car?limit=5',
     token: cookie.access,
   });
   const { data: carCategoryData } = useGetData<TOptionsArr[]>({
@@ -95,6 +96,7 @@ export function CarsListComponent() {
           cancelButtonClickhandler={() => void 0}
           dropdownItemClickhandler={dropdownItemClickhandler}
         />
+        <CarsInformation carsData={data?.data} />
       </Container>
     </Wrapper>
   );
