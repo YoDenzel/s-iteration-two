@@ -18,7 +18,6 @@ export function FilterButtonComponent({
   dropdownItemClickhandler,
 }: TFilterButtonComponent) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const dispatch = useAppDispatch();
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
