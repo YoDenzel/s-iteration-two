@@ -18,9 +18,12 @@ const carsActiveFilterData = createSlice({
         }
       }
     },
+    removeFilter: state => {
+      state.activeCarCategoryObj = null;
+    },
   },
 });
 
-export const { setActiveCarObj } = carsActiveFilterData.actions;
+export const { setActiveCarObj, removeFilter } = carsActiveFilterData.actions;
 
 export default carsActiveFilterData.reducer;
