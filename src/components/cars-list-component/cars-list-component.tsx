@@ -1,13 +1,23 @@
 import styled from '@emotion/styled';
 import { Box, Typography } from '@mui/material';
+import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
-import { setActiveCarObj } from '../../redux/cars-active-filter-data/cars-active-filter-data';
-import { useAppSelector } from '../../shared/custom-hooks';
+import {
+  removeFilter,
+  setActiveCarObj,
+} from '../../redux/cars-active-filter-data/cars-active-filter-data';
+import {
+  useAppDispatch,
+  useAppSelector,
+  usePagination,
+} from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { TCarCategory, TCars, TOptionsArr } from '../../shared/types';
 import { CarsInformation } from '../cars-information';
+import { Loader } from '../loader';
 import { OrderFilterComponent } from '../orders-filter-component';
+import { PAGE_LIMIT } from './constants';
 
 export const Wrapper = styled(Box)`
   display: flex;
@@ -24,7 +34,7 @@ export const Wrapper = styled(Box)`
 
 export const Container = styled(Box)`
   width: 100%;
-  min-height: 50%;
+  min-height: 70%;
   border-radius: 9px;
   margin-top: ${({ theme }) => theme.spacing(3.8)}px;
   margin-bottom: ${({ theme }) => theme.spacing(2.5)}px;
@@ -49,9 +59,11 @@ export const Title = styled(Typography)`
 
 export function CarsListComponent() {
   const [cookie] = useCookies(['access']);
-  const { data } = useGetData<TCars>({
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filter, setFilter] = useState('');
+  const { data, isLoading } = useGetData<TCars>({
     QUERY_KEY: 'cars',
-    url: 'car?limit=5',
+    url: `car?${filter}&page=${currentPage - 1}&limit=${PAGE_LIMIT}`,
     token: cookie.access,
   });
   const { data: carCategoryData } = useGetData<TOptionsArr[]>({
@@ -63,6 +75,12 @@ export function CarsListComponent() {
         name: item?.name,
         id: item?.id,
       })),
+  });
+  const { paginationRange, totalPageCount } = usePagination({
+    currentPage: currentPage,
+    pageSize: PAGE_LIMIT,
+    totalCount: data?.count ?? 1,
+    siblingCount: 1,
   });
   const activeCarObj = useAppSelector(
     state => state.carsActiveFilterData.activeCarCategoryObj,
@@ -78,7 +96,22 @@ export function CarsListComponent() {
     );
   };
 
-  console.log(data);
+  const isNextPage = () => {
+    if (currentPage === totalPageCount) return true;
+    else return false;
+  };
+
+  const isPrevPage = () => {
+    if (currentPage === 1) return true;
+    else return false;
+  };
+
+  const submitHandler = (e: React.FormEvent<HTMLDivElement>) => {
+    let filterStr = '';
+    e.preventDefault();
+    if (activeCarObj)
+      setFilter(() => (filterStr += `&categoryId=${activeCarObj.id}`));
+  };
 
   return (
     <Wrapper>
@@ -92,11 +125,30 @@ export function CarsListComponent() {
               data: carCategoryData,
             },
           ]}
-          submitHandler={() => void 0}
-          cancelButtonClickhandler={() => void 0}
+          submitHandler={submitHandler}
+          cancelButtonClickhandler={() => {
+            dispatch(removeFilter());
+            setFilter('');
+          }}
           dropdownItemClickhandler={dropdownItemClickhandler}
         />
-        <CarsInformation carsData={data?.data} />
+        {isLoading && <Loader />}
+        {!isLoading && (
+          <CarsInformation
+            carsData={data?.data}
+            currentPage={currentPage}
+            setCurrrentPage={setCurrentPage}
+            isNextPage={isNextPage}
+            isPrevPage={isPrevPage}
+            nextPageClickhandler={() =>
+              setCurrentPage(prevValue => prevValue + 1)
+            }
+            prevPageClickhandler={() =>
+              setCurrentPage(prevValue => prevValue - 1)
+            }
+            paginationRange={paginationRange}
+          />
+        )}
       </Container>
     </Wrapper>
   );
