@@ -1,4 +1,5 @@
 import { Pagination } from '../pagination';
+import { rows } from './constants';
 import {
   Container,
   TableCarTextInfo,
@@ -10,14 +11,6 @@ import {
   Wrapper,
 } from './emotion-components';
 import { TCarsInformation } from './types';
-
-const rows = [
-  'Фотография машины',
-  'Название машины',
-  'Категория машины',
-  'Цена машины',
-  'Заполненность бака',
-];
 
 export function CarsInformation({
   carsData,
