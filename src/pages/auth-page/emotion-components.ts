@@ -20,6 +20,7 @@ export const TitleContainer = styled(Box)`
 `;
 
 export const Title = styled(Typography)`
+  font-family: 'Helvetica';
   color: ${({ theme }) => theme.colors.titleFont};
   font-style: normal;
   font-weight: 400;

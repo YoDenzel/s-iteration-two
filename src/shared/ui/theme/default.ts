@@ -13,6 +13,7 @@ export const defaultTheme = {
     blue: '#007BFF',
     red: '#C4183C',
     inputBorder: '#BECAD6',
+    veryLightGray: '#CACEDB',
   },
   spacing: (multiplier: number) => THEME_GRID_STEP * multiplier,
   breakPoints: {
