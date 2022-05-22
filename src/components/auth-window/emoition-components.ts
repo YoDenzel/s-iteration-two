@@ -11,6 +11,7 @@ export const Container = styled(Box)`
 `;
 
 export const Title = styled(Typography)`
+  font-family: 'Helvetica';
   font-style: normal;
   font-weight: 400;
   font-size: 17.5px;
@@ -36,6 +37,7 @@ export const ButtonsContainer = styled(Box)`
 export const RequestAccessButton = styled(Button)`
   margin-left: 17px;
   padding: 0;
+  font-family: 'Helvetica';
   font-style: normal;
   font-weight: 400;
   font-size: 10.5px;
@@ -50,6 +52,7 @@ export const RequestAccessButton = styled(Button)`
 `;
 
 export const AuthorizeButton = styled(Button)`
+  font-family: 'Helvetica';
   margin-right: 15px;
   font-weight: 400;
   font-size: 11.5px;

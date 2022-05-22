@@ -1,7 +1,7 @@
-import { addDays } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { addDays } from 'date-fns';
 import { AuthWindow } from '../../components';
 import {
   setAuthObj,
@@ -41,8 +41,8 @@ export function AuthPage() {
         }),
       );
       setCookie('access', data.access_token, {
+        path: '/s-iteration-two',
         expires: addDays(new Date(), 1),
-        path: '/',
       });
       dispatch(
         setIsAuthenticated({
@@ -52,7 +52,6 @@ export function AuthPage() {
       navigate('/s-iteration-two/admin/order-list');
     }
   }, [data]);
-
   return (
     <Wrapper component="main">
       <TitleContainer>

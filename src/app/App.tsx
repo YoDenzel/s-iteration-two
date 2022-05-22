@@ -1,7 +1,7 @@
 import { useCookies } from 'react-cookie';
-import { Routes, Route, Navigate } from 'react-router';
-import { NavigationMenu } from '../components';
-import { AuthPage, OrderListPage } from '../pages';
+import { Routes, Route } from 'react-router';
+import { ErrorComponent } from '../components/error-component';
+import { AuthPage, AdminPanel } from '../pages';
 
 export function App() {
   const [cookie] = useCookies(['access']);
@@ -13,18 +13,20 @@ export function App() {
       <Route path="/s-iteration-two/admin/*" element={<AuthPage />} />
     </Routes>
   ) : (
-    <div className="flex">
-      <NavigationMenu />
-      <Routes>
-        <Route
-          path="/s-iteration-two/admin/order-list"
-          element={<OrderListPage />}
-        />
-        <Route
-          path="*"
-          element={<Navigate to="/s-iteration-two/admin/order-list" replace />}
-        />
-      </Routes>
-    </div>
+    <Routes>
+      <Route
+        path="/s-iteration-two/admin/order-list"
+        element={<AdminPanel />}
+      />
+      <Route
+        path="*"
+        element={
+          <ErrorComponent
+            errorCodeStatus="404"
+            reloadButtonClickhandler={() => history.back()}
+          />
+        }
+      />
+    </Routes>
   );
 }

@@ -1,2 +1,2 @@
 export { AuthPage } from './auth-page';
-export { OrderListPage } from './order-list-page';
+export { AdminPanel } from './admin-panel';
