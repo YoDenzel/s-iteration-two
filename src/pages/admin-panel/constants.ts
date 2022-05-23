@@ -1,3 +1,11 @@
-import { CarsListComponent, OrdersListComponent } from '../../components';
+import {
+  CarsListComponent,
+  CitiesListComponent,
+  OrdersListComponent,
+} from '../../components';
 
-export const components = [CarsListComponent, OrdersListComponent];
+export const components = [
+  CarsListComponent,
+  OrdersListComponent,
+  CitiesListComponent,
+];
