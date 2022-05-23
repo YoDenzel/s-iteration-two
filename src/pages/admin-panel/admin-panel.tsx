@@ -44,7 +44,6 @@ export function AdminPanel() {
     });
     navigate('/s-iteration-two/admin');
   };
-  console.log(activeIndex);
   return (
     <Wrapper>
       <NavigationMenu
