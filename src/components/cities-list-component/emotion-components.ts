@@ -94,6 +94,7 @@ export const SearchInput = styled(TextField)`
     padding: 0;
     border-radius: 8px;
     padding-left: ${({ theme }) => theme.spacing(3.5)}px;
+    padding-right: ${({ theme }) => theme.spacing(1)}px;
     padding-top: ${({ theme }) => theme.spacing(0.8)}px;
     padding-bottom: ${({ theme }) => theme.spacing(0.8)}px;
   }

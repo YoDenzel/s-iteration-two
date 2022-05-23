@@ -40,7 +40,7 @@ export function CitiesListComponent() {
 
   return (
     <Wrapper component="main">
-      <Title>Список городов</Title>
+      <Title variant="h1">Список городов</Title>
       <Container component="section">
         {!isLoading && (
           <>
@@ -61,6 +61,8 @@ export function CitiesListComponent() {
                   placeholder="Введите название"
                   value={search}
                   onChange={e => setSearch(e.target.value)}
+                  variant="filled"
+                  InputProps={{ disableUnderline: true }}
                 />
               </SearchBlock>
             </TableHeader>
