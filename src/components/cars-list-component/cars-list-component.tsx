@@ -71,9 +71,9 @@ export function CarsListComponent() {
   };
 
   return (
-    <Wrapper>
+    <Wrapper component="main">
       <Title>Список автомобилей</Title>
-      <Container>
+      <Container component="section">
         <OrderFilterComponent
           filterDataArr={[
             {

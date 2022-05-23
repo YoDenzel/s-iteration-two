@@ -150,7 +150,7 @@ export function OrdersListComponent() {
   return (
     <Wrapper component="main">
       <Title variant="h1">Заказы</Title>
-      <Container>
+      <Container component="section">
         <OrderFilterComponent
           filterDataArr={filterDataArr({
             data: [rateData, filteredCities, orderStatusData?.data, carsData],
