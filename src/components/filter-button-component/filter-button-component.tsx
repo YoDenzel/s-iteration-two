@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useAppDispatch } from '../../shared/custom-hooks';
 import { DropdownBothWaysArrow } from '../../shared/icons/dropdown-both-ways-arrow';
 import { TOptionsArr } from '../../shared/types';
 import {
