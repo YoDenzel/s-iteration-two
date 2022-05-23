@@ -32,10 +32,6 @@ export function AdminPanel() {
   );
   const navigate = useNavigate();
 
-  useEffect(() => {
-    windowWidth > 1023 && setIsMenuActive(true);
-  }, [windowWidth]);
-
   const logoutClickhandler = () => {
     mutateAsync({ accessToken: cookie.access });
     removeCookie('access', {
@@ -44,11 +40,18 @@ export function AdminPanel() {
     });
     navigate('/s-iteration-two/admin');
   };
+
+  const navItemClickhandler = (index: number) => {
+    setActiveIndex(index);
+    if (windowWidth < 1024) {
+      setIsMenuActive(false);
+    }
+  };
   return (
     <Wrapper>
       <NavigationMenu
         activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
+        navItemClickhandler={navItemClickhandler}
         isMenuActive={isMenuActive}
         setIsMenuActive={setIsMenuActive}
         windowWidth={windowWidth}

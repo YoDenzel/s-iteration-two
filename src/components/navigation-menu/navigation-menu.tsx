@@ -13,7 +13,7 @@ import { TNavigationMen } from './types';
 
 export function NavigationMenu({
   activeIndex,
-  setActiveIndex,
+  navItemClickhandler,
   isMenuActive,
   setIsMenuActive,
   windowWidth,
@@ -32,12 +32,12 @@ export function NavigationMenu({
           />
         )}
       </ApplicationTitleWrapper>
-      {isMenuActive && (
+      {(isMenuActive || windowWidth > 1023) && (
         <TabsContainer>
           {menuTabsDataArr.map((item, index) => (
             <NavigationMenuItem
               key={item.title + index}
-              clickHandler={setActiveIndex}
+              clickHandler={navItemClickhandler}
               Icon={
                 <item.icon
                   htmlColor={activeIndex === index ? '#007BFF' : '#CACEDB'}
