@@ -23,7 +23,7 @@ export function CitiesListComponent() {
   const [cookie] = useCookies(['access']);
   const [search, setSearch] = useState('');
   const { data, isLoading } = useGetData<TCities>({
-    QUERY_KEY: 'cars',
+    QUERY_KEY: 'cities',
     url: `city`,
     token: cookie.access,
   });
