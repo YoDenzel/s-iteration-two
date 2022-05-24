@@ -12,3 +12,4 @@ export { CheckboxItem } from './checkbox-item';
 export { CarsListComponent } from './cars-list-component';
 export { CitiesListComponent } from './cities-list-component';
 export { RatesListComponent } from './rates-list-component';
+export { PointsListComponent } from './points-list-component';
