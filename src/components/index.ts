@@ -11,3 +11,4 @@ export { OrderInformation } from './order-information';
 export { CheckboxItem } from './checkbox-item';
 export { CarsListComponent } from './cars-list-component';
 export { CitiesListComponent } from './cities-list-component';
+export { RatesListComponent } from './rates-list-component';
