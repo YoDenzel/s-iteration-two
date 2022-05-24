@@ -1,5 +1,5 @@
 import { Pagination } from '../pagination';
-import { rows } from './constants';
+import { cols } from './constants';
 import {
   Container,
   TableCarTextInfo,
@@ -26,7 +26,7 @@ export function CarsInformation({
     <Wrapper>
       <Container component="section">
         <TableCols>
-          {rows.map((item, index) => (
+          {cols.map((item, index) => (
             <TableCol variant="h2" key={index + item}>
               {item}
             </TableCol>
