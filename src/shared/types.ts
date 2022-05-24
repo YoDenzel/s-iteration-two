@@ -145,3 +145,16 @@ export type TCarCategoryData = {
   description: string;
   id: string;
 };
+
+export type TPoint = {
+  count: number;
+  fields: {};
+  data: TPointData[];
+};
+
+export type TPointData = {
+  address: string;
+  id: string;
+  name: string;
+  cityId: TOptionsArr;
+};
