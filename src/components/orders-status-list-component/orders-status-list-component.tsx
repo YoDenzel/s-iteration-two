@@ -1,5 +1,11 @@
 import styled from '@emotion/styled';
 import { Typography, Box } from '@mui/material';
+import { useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
+import { TOrderStatus } from '../../shared/types';
+import { Loader } from '../loader';
+import { TableHeaderWithSearchAndCount } from '../table-header-with-search-and-count/table-header-with-search-and-count';
 
 export const Wrapper = styled(Box)`
   display: flex;
@@ -48,11 +54,72 @@ export const Title = styled(Typography)`
   margin-top: ${({ theme }) => theme.spacing(3.5)}px;
 `;
 
+export const RateTypesList = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: ${({ theme }) => theme.spacing(1.5)}px;
+  padding-bottom: ${({ theme }) => theme.spacing(1.5)}px;
+  margin-left: ${({ theme }) => theme.spacing(1.5)}px;
+  margin-right: ${({ theme }) => theme.spacing(1.5)}px;
+`;
+
+export const RateTypeItem = styled(Typography)`
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.377143px;
+  color: #3d5170;
+  border-bottom: 0.5px solid #e0e2e8;
+  padding-bottom: ${({ theme }) => theme.spacing(0.5)}px;
+  &:last-of-type {
+    border: none;
+  }
+`;
+
 export function OrdersStatusListComponent() {
+  const [cookie] = useCookies(['access']);
+  const [search, setSearch] = useState('');
+  const { data, isLoading } = useGetData<TOrderStatus>({
+    QUERY_KEY: 'orderStatus',
+    url: `orderStatus`,
+    token: cookie.access,
+  });
+
+  const filteredData = data?.data?.filter(item => {
+    if (
+      item?.name
+        .toLowerCase()
+        .replace(/\s/g, '')
+        .includes(search.toLowerCase().replace(/\s/g, ''))
+    )
+      return item;
+  });
+  console.log(data);
   return (
     <Wrapper>
-      <Title>Статусы закаов</Title>
-      <Container></Container>
+      <Title>Статусы заказов</Title>
+      <Container>
+        {!isLoading && (
+          <>
+            <TableHeaderWithSearchAndCount
+              inputValue={search}
+              setInputValue={setSearch}
+              placeholder="Введите название"
+              title="Количество типов тарифов"
+              count={data?.count}
+            />
+            <RateTypesList>
+              {filteredData?.map(item => (
+                <RateTypeItem key={item.id}>{item.name}</RateTypeItem>
+              ))}
+            </RateTypesList>
+          </>
+        )}
+        {isLoading && <Loader />}
+      </Container>
     </Wrapper>
   );
 }
