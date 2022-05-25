@@ -7,19 +7,23 @@ import {
 import { useAppDispatch, useAppSelector } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { TCities, TOptionsArr, TPoint } from '../../shared/types';
+import { ErrorComponent } from '../error-component';
 import { Loader } from '../loader';
 import { OrderFilterComponent } from '../orders-filter-component';
+import { Empty } from '../orders-list-component/emotion-components';
 import { PointsListInformation } from '../points-list-information';
 import { Container, Title, Wrapper } from './emotion-components';
 
 export function PointsListComponent() {
   const [cookie] = useCookies(['access']);
   const [filter, setFilter] = useState('');
+  const [error, setError] = useState('');
   const dispatch = useAppDispatch();
-  const { data, isLoading } = useGetData<TPoint>({
+  const { data, isLoading, isError } = useGetData<TPoint>({
     QUERY_KEY: 'points',
     url: `point?${filter}`,
     token: cookie.access,
+    setErrorStatus: setError,
   });
   const { data: cityData } = useGetData<TOptionsArr[]>({
     QUERY_KEY: 'cities',
@@ -52,27 +56,40 @@ export function PointsListComponent() {
   };
 
   return (
-    <Wrapper component="main">
-      <Title variant="h1">Пункты выдачи</Title>
-      <Container component="section">
-        <OrderFilterComponent
-          filterDataArr={[
-            {
-              title: 'Города',
-              activeTitle: activeCityObj,
-              data: cityData,
-            },
-          ]}
-          submitHandler={submitHandler}
-          cancelButtonClickhandler={() => {
-            dispatch(removeActiveCitytFilter());
-            setFilter('');
-          }}
-          dropdownItemClickhandler={dropdownItemClickhandler}
+    <>
+      {!isError && (
+        <Wrapper component="main">
+          <Title variant="h1">Пункты выдачи</Title>
+          <Container component="section">
+            <OrderFilterComponent
+              filterDataArr={[
+                {
+                  title: 'Города',
+                  activeTitle: activeCityObj,
+                  data: cityData,
+                },
+              ]}
+              submitHandler={submitHandler}
+              cancelButtonClickhandler={() => {
+                dispatch(removeActiveCitytFilter());
+                setFilter('');
+              }}
+              dropdownItemClickhandler={dropdownItemClickhandler}
+            />
+            {!isLoading && data?.count !== 0 && (
+              <PointsListInformation data={data?.data} />
+            )}
+            {data?.count === 0 && <Empty>Ничего не найдено</Empty>}
+            {isLoading && <Loader />}
+          </Container>
+        </Wrapper>
+      )}
+      {isError && (
+        <ErrorComponent
+          reloadButtonClickhandler={() => window.location.reload()}
+          errorCodeStatus={error}
         />
-        {!isLoading && <PointsListInformation data={data?.data} />}
-        {isLoading && <Loader />}
-      </Container>
-    </Wrapper>
+      )}
+    </>
   );
 }

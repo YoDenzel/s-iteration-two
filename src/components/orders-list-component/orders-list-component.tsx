@@ -169,7 +169,7 @@ export function OrdersListComponent() {
               dropdownItemClickhandler={dropdownItemClickhandler}
             />
             {isLoading && <Loader />}
-            {!isLoading && !isError && data?.data.length !== 0 && (
+            {!isLoading && data?.data.length !== 0 && (
               <OrderInformation
                 activeOrderObj={data?.data[0]}
                 dateFrom={dateFrom}

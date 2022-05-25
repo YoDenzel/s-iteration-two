@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { TOrderStatus } from '../../shared/types';
+import { ErrorComponent } from '../error-component';
 import { Loader } from '../loader';
+import { Empty } from '../orders-list-component/emotion-components';
 import { TableHeaderWithSearchAndCount } from '../table-header-with-search-and-count/table-header-with-search-and-count';
 import {
   Container,
@@ -15,10 +17,12 @@ import {
 export function OrdersStatusListComponent() {
   const [cookie] = useCookies(['access']);
   const [search, setSearch] = useState('');
-  const { data, isLoading } = useGetData<TOrderStatus>({
+  const [error, setError] = useState('');
+  const { data, isLoading, isError } = useGetData<TOrderStatus>({
     QUERY_KEY: 'orderStatus',
     url: `orderStatus`,
     token: cookie.access,
+    setErrorStatus: setError,
   });
 
   const filteredData = data?.data?.filter(item => {
@@ -30,29 +34,41 @@ export function OrdersStatusListComponent() {
     )
       return item;
   });
-  console.log(data);
   return (
-    <Wrapper>
-      <Title>Статусы заказов</Title>
-      <Container>
-        {!isLoading && (
-          <>
-            <TableHeaderWithSearchAndCount
-              inputValue={search}
-              setInputValue={setSearch}
-              placeholder="Введите название"
-              title="Количество типов тарифов"
-              count={data?.count}
-            />
-            <RateTypesList>
-              {filteredData?.map(item => (
-                <RateTypeItem key={item.id}>{item.name}</RateTypeItem>
-              ))}
-            </RateTypesList>
-          </>
-        )}
-        {isLoading && <Loader />}
-      </Container>
-    </Wrapper>
+    <>
+      {!isError && (
+        <Wrapper>
+          <Title>Статусы заказов</Title>
+          <Container>
+            {!isLoading && (
+              <>
+                <TableHeaderWithSearchAndCount
+                  inputValue={search}
+                  setInputValue={setSearch}
+                  placeholder="Введите название"
+                  title="Количество типов тарифов"
+                  count={data?.count}
+                />
+                {filteredData?.length !== 0 && (
+                  <RateTypesList>
+                    {filteredData?.map(item => (
+                      <RateTypeItem key={item.id}>{item.name}</RateTypeItem>
+                    ))}
+                  </RateTypesList>
+                )}
+                {filteredData?.length === 0 && <Empty>Ничего не найдено</Empty>}
+              </>
+            )}
+            {isLoading && <Loader />}
+          </Container>
+        </Wrapper>
+      )}
+      {isError && (
+        <ErrorComponent
+          reloadButtonClickhandler={() => window.location.reload()}
+          errorCodeStatus={error}
+        />
+      )}
+    </>
   );
 }
