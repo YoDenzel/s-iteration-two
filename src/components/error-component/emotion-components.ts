@@ -79,3 +79,13 @@ export const GoBackButton = styled(Button)`
     background-color: #007bff;
   }
 `;
+
+export const SignOutButton = styled(Button)`
+  background: ${({ theme }) => theme.colors.red};
+  color: ${({ theme }) => theme.colors.white};
+  position: absolute;
+  bottom: 5px;
+  &:hover {
+    background: ${({ theme }) => theme.colors.red};
+  }
+`;
