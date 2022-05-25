@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 export const Wrapper = styled(Box)`
   display: flex;
