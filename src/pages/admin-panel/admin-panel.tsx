@@ -1,12 +1,11 @@
 import { addDays } from 'date-fns';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import {
   AdminPanelFooter,
   AdminPanelHeader,
   NavigationMenu,
-  OrdersListComponent,
 } from '../../components';
 import {
   useClickOutside,
