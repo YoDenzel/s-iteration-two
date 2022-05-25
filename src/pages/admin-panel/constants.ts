@@ -5,6 +5,7 @@ import {
   OrdersListComponent,
   PointsListComponent,
   RatesListComponent,
+  RateTypesListComponent,
 } from '../../components';
 
 export const components = [
@@ -14,4 +15,5 @@ export const components = [
   RatesListComponent,
   PointsListComponent,
   CarsCategoriesListComponent,
+  RateTypesListComponent,
 ];
