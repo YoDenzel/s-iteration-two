@@ -1,4 +1,5 @@
 import {
+  CarsCategoriesListComponent,
   CarsListComponent,
   CitiesListComponent,
   OrdersListComponent,
@@ -12,4 +13,5 @@ export const components = [
   CitiesListComponent,
   RatesListComponent,
   PointsListComponent,
+  CarsCategoriesListComponent,
 ];
