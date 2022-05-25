@@ -10,7 +10,7 @@ import {
   RateTypesList,
   Title,
   Wrapper,
-} from './emtion-components';
+} from './emotion-components';
 
 export function OrdersStatusListComponent() {
   const [cookie] = useCookies(['access']);

@@ -17,17 +17,12 @@ import {
 } from '../../shared/types';
 import { OrderInformation } from '../order-information';
 import { OrderFilterComponent } from '../orders-filter-component';
-import {
-  Container,
-  Empty,
-  ErrorMessage,
-  Title,
-  Wrapper,
-} from './emotion-components';
+import { Container, Empty, Title, Wrapper } from './emotion-components';
 import { setCheckboxesStatus } from '../../redux/car-order-checkbox-data/car-order-checkbox-data';
 import { Loader } from '../loader';
 import { filterDataArr, PAGE_LIMIT } from './constants';
 import { setActiveObj } from '../../redux/order-active-filter-data/order-active-filter-data';
+import { ErrorComponent } from '../error-component';
 
 export function OrdersListComponent() {
   const { activeCarObj, activeCitiesObj, activeRateObj, activeStatusObj } =
@@ -39,12 +34,14 @@ export function OrdersListComponent() {
     }));
   const [filter, setFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [error, setError] = useState('');
   const [cookie] = useCookies(['access']);
   const dispatch = useAppDispatch();
   const { data, isLoading, isError } = useGetData<TCarOrder>({
     QUERY_KEY: 'order',
     url: `order?${filter}&page=${currentPage - 1}&limit=${PAGE_LIMIT}`,
     token: cookie.access,
+    setErrorStatus: setError,
   });
   const { data: rateData } = useGetData<TOptionsArr[]>({
     QUERY_KEY: 'rateType',
@@ -148,48 +145,58 @@ export function OrdersListComponent() {
   };
 
   return (
-    <Wrapper component="main">
-      <Title variant="h1">Заказы</Title>
-      <Container component="section">
-        <OrderFilterComponent
-          filterDataArr={filterDataArr({
-            data: [rateData, filteredCities, orderStatusData?.data, carsData],
-            activeObjArr: [
-              activeRateObj,
-              activeCitiesObj,
-              activeStatusObj,
-              activeCarObj,
-            ],
-          })}
-          submitHandler={submitHandler}
-          dropdownItemClickhandler={dropdownItemClickhandler}
+    <>
+      {!isError && (
+        <Wrapper component="main">
+          <Title variant="h1">Заказы</Title>
+          <Container component="section">
+            <OrderFilterComponent
+              filterDataArr={filterDataArr({
+                data: [
+                  rateData,
+                  filteredCities,
+                  orderStatusData?.data,
+                  carsData,
+                ],
+                activeObjArr: [
+                  activeRateObj,
+                  activeCitiesObj,
+                  activeStatusObj,
+                  activeCarObj,
+                ],
+              })}
+              submitHandler={submitHandler}
+              dropdownItemClickhandler={dropdownItemClickhandler}
+            />
+            {isLoading && <Loader />}
+            {!isLoading && !isError && data?.data.length !== 0 && (
+              <OrderInformation
+                activeOrderObj={data?.data[0]}
+                dateFrom={dateFrom}
+                dateTo={dateTo}
+                isNextPage={isNextPage}
+                isPrevPage={isPrevPage}
+                currentPage={currentPage}
+                paginationRange={paginationRange}
+                setCurrrentPage={setCurrentPage}
+                nextPageClickhandler={() =>
+                  setCurrentPage(prevValue => prevValue + 1)
+                }
+                prevPageClickhandler={() =>
+                  setCurrentPage(prevValue => prevValue - 1)
+                }
+              />
+            )}
+            {data?.data.length === 0 && <Empty>Ничего не найдено</Empty>}
+          </Container>
+        </Wrapper>
+      )}
+      {isError && (
+        <ErrorComponent
+          reloadButtonClickhandler={() => window.location.reload()}
+          errorCodeStatus={error}
         />
-        {isLoading && <Loader />}
-        {!isLoading && !isError && data?.data.length !== 0 && (
-          <OrderInformation
-            activeOrderObj={data?.data[0]}
-            dateFrom={dateFrom}
-            dateTo={dateTo}
-            isNextPage={isNextPage}
-            isPrevPage={isPrevPage}
-            currentPage={currentPage}
-            paginationRange={paginationRange}
-            setCurrrentPage={setCurrentPage}
-            nextPageClickhandler={() =>
-              setCurrentPage(prevValue => prevValue + 1)
-            }
-            prevPageClickhandler={() =>
-              setCurrentPage(prevValue => prevValue - 1)
-            }
-          />
-        )}
-        {isError && (
-          <ErrorMessage>
-            Ошибка, попробуйте позже или перезагрузите страницу
-          </ErrorMessage>
-        )}
-        {data?.data.length === 0 && <Empty>Ничего не найдено</Empty>}
-      </Container>
-    </Wrapper>
+      )}
+    </>
   );
 }
