@@ -3,6 +3,7 @@ import {
   CarsListComponent,
   CitiesListComponent,
   OrdersListComponent,
+  OrdersStatusListComponent,
   PointsListComponent,
   RatesListComponent,
   RateTypesListComponent,
@@ -16,4 +17,5 @@ export const components = [
   PointsListComponent,
   CarsCategoriesListComponent,
   RateTypesListComponent,
+  OrdersStatusListComponent,
 ];
