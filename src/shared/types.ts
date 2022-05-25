@@ -158,3 +158,15 @@ export type TPointData = {
   name: string;
   cityId: TOptionsArr;
 };
+
+export type TCarRateTypes = {
+  count: number;
+  fields: {};
+  data: TCarRateTypesData[];
+};
+
+export type TCarRateTypesData = {
+  name: string;
+  unit: string;
+  id: string;
+};
