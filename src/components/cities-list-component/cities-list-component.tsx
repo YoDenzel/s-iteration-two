@@ -1,20 +1,13 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
-import { Icons } from '../../shared/icons';
 import { TCities } from '../../shared/types';
 import { Loader } from '../loader';
+import { TableHeaderWithSearchAndCount } from '../table-header-with-search-and-count/table-header-with-search-and-count';
 import {
-  CitiesCountBlock,
-  CitiesCountNumber,
-  CitiesCountTitle,
   CitiesList,
   CityItem,
   Container,
-  Loop,
-  SearchBlock,
-  SearchInput,
-  TableHeader,
   Title,
   Wrapper,
 } from './emotion-components';
@@ -32,8 +25,8 @@ export function CitiesListComponent() {
     if (
       item?.name
         .toLowerCase()
-        .replace('/s/g', '')
-        .includes(search.toLowerCase().replace('/s/g', ''))
+        .replace(/\s/g, '')
+        .includes(search.toLowerCase().replace(/\s/g, ''))
     )
       return item;
   });
@@ -44,28 +37,13 @@ export function CitiesListComponent() {
       <Container component="section">
         {!isLoading && (
           <>
-            <TableHeader>
-              <CitiesCountBlock component="article">
-                <CitiesCountTitle variant="h2">
-                  Количество городов:
-                </CitiesCountTitle>
-                <CitiesCountNumber variant="h2">
-                  {data?.count}
-                </CitiesCountNumber>
-              </CitiesCountBlock>
-              <SearchBlock>
-                <Loop>
-                  <Icons.SearchLoop />
-                </Loop>
-                <SearchInput
-                  placeholder="Введите название"
-                  value={search}
-                  onChange={e => setSearch(e.target.value)}
-                  variant="filled"
-                  InputProps={{ disableUnderline: true }}
-                />
-              </SearchBlock>
-            </TableHeader>
+            <TableHeaderWithSearchAndCount
+              placeholder="Введите название"
+              count={data?.count}
+              inputValue={search}
+              setInputValue={setSearch}
+              title="Количество городов"
+            />
             <CitiesList>
               {filteredData?.map(item => (
                 <CityItem key={item?.id}>{item?.name}</CityItem>
