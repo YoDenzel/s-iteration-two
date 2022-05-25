@@ -4,7 +4,11 @@ import {
   removeActiveCitytFilter,
   setActiveCityFilterData,
 } from '../../redux/points-active-filter-data/points-active-filter-data';
-import { useAppDispatch, useAppSelector } from '../../shared/custom-hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useLocalStorage,
+} from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { TCities, TOptionsArr, TPoint } from '../../shared/types';
 import { ErrorComponent } from '../error-component';
@@ -16,7 +20,10 @@ import { Container, Title, Wrapper } from './emotion-components';
 
 export function PointsListComponent() {
   const [cookie] = useCookies(['access']);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useLocalStorage({
+    defaultValue: '',
+    key: 'pointsComponentFilter',
+  });
   const [error, setError] = useState('');
   const dispatch = useAppDispatch();
   const { data, isLoading, isError } = useGetData<TPoint>({
@@ -51,8 +58,8 @@ export function PointsListComponent() {
   const submitHandler = (e: React.FormEvent<HTMLDivElement>) => {
     let filterStr = '';
     e.preventDefault();
-    if (activeCityObj)
-      setFilter(() => (filterStr += `&cityId=${activeCityObj.id}`));
+    if (activeCityObj) filterStr += `&cityId=${activeCityObj.id}`;
+    setFilter(filterStr);
   };
 
   return (

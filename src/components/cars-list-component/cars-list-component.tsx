@@ -5,7 +5,11 @@ import {
   removeFilter,
   setActiveCarObj,
 } from '../../redux/cars-active-filter-data/cars-active-filter-data';
-import { useAppSelector, usePagination } from '../../shared/custom-hooks';
+import {
+  useAppSelector,
+  useLocalStorage,
+  usePagination,
+} from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { TCarCategory, TCars, TOptionsArr } from '../../shared/types';
 import { CarsInformation } from '../cars-information';
@@ -20,7 +24,10 @@ export function CarsListComponent() {
   const [cookie] = useCookies(['access']);
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState('');
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useLocalStorage({
+    key: 'carsList',
+    defaultValue: '',
+  });
   const { data, isLoading, isError } = useGetData<TCars>({
     QUERY_KEY: 'cars',
     url: `car?${filter}&page=${currentPage - 1}&limit=${PAGE_LIMIT}`,
@@ -70,8 +77,8 @@ export function CarsListComponent() {
   const submitHandler = (e: React.FormEvent<HTMLDivElement>) => {
     let filterStr = '';
     e.preventDefault();
-    if (activeCarObj)
-      setFilter(() => (filterStr += `&categoryId=${activeCarObj.id}`));
+    if (activeCarObj) filterStr += `&categoryId=${activeCarObj.id}`;
+    setFilter(filterStr);
   };
 
   return (

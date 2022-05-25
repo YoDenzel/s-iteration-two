@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { useLocalStorage } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { TCarRateTypes } from '../../shared/types';
 import { ErrorComponent } from '../error-component';
@@ -16,7 +17,10 @@ import {
 
 export function RateTypesListComponent() {
   const [cookie] = useCookies(['access']);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useLocalStorage({
+    key: 'rateTypesListComponent',
+    defaultValue: '',
+  });
   const [error, setError] = useState('');
   const { data, isLoading, isError } = useGetData<TCarRateTypes>({
     QUERY_KEY: 'rateTypes',
@@ -44,14 +48,14 @@ export function RateTypesListComponent() {
                 <TableHeaderWithSearchAndCount
                   inputValue={search}
                   setInputValue={setSearch}
-                  placeholder="Введите название"
+                  placeholder="Введите тариф"
                   title="Количество типов тарифов"
                   count={data?.count}
                 />
                 {filteredData?.length !== 0 && (
                   <RateTypesList>
                     {filteredData?.map(item => (
-                      <RateTypeItem key={item.id}>{item.name}</RateTypeItem>
+                      <RateTypeItem key={item?.id}>{item?.name}</RateTypeItem>
                     ))}
                   </RateTypesList>
                 )}

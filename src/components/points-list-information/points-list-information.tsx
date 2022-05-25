@@ -17,10 +17,12 @@ export function PointsListInformation({ data }: TPointsListInformation) {
         ))}
       </TableCols>
       {data?.map(item => (
-        <TableItem key={item.id}>
-          <TablePointInfo>{item.name}</TablePointInfo>
-          <TablePointInfo>{item.address}</TablePointInfo>
-          <TablePointInfo>{item.cityId.name}</TablePointInfo>
+        <TableItem key={item?.id}>
+          <TablePointInfo>{item?.name || 'Нет информации'}</TablePointInfo>
+          <TablePointInfo>{item?.address || 'Нет информации'}</TablePointInfo>
+          <TablePointInfo>
+            {item.cityId?.name || 'Нет информации'}
+          </TablePointInfo>
         </TableItem>
       ))}
     </Container>

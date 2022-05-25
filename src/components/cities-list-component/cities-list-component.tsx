@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { useLocalStorage } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { TCities } from '../../shared/types';
 import { ErrorComponent } from '../error-component';
@@ -16,7 +17,10 @@ import {
 
 export function CitiesListComponent() {
   const [cookie] = useCookies(['access']);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useLocalStorage({
+    key: 'citiesListComponent',
+    defaultValue: '',
+  });
   const [error, setError] = useState('');
   const { data, isLoading, isError } = useGetData<TCities>({
     QUERY_KEY: 'cities',

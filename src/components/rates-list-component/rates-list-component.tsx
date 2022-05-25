@@ -57,13 +57,13 @@ export function RatesListComponent() {
                     ))}
                   </TableCols>
                   {data?.data.map(item => (
-                    <TableItem key={item.id}>
+                    <TableItem key={item?.id}>
                       <TableRateTextInfo>
-                        {item.rateTypeId.name}
+                        {item?.rateTypeId?.name || 'Нет информации'}
                       </TableRateTextInfo>
-                      <TableRateTextInfo>{item.price}₽</TableRateTextInfo>
+                      <TableRateTextInfo>{item?.price}₽</TableRateTextInfo>
                       <TableRateTextInfo>
-                        {item.rateTypeId.unit}
+                        {item?.rateTypeId?.unit || 'Нет информации'}
                       </TableRateTextInfo>
                     </TableItem>
                   ))}

@@ -10,13 +10,17 @@ import {
 import {
   useClickOutside,
   useGetWindowWidth,
+  useLocalStorage,
   usePostLogout,
 } from '../../shared/custom-hooks';
 import { components } from './constants';
 import { Container, Wrapper } from './emotion-components';
 
 export function AdminPanel() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useLocalStorage({
+    key: 'activeComponentIndex',
+    defaultValue: '0',
+  });
   const [cookie, _, removeCookie] = useCookies(['access']);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   const [isMenuActive, setIsMenuActive] = useState(false);
@@ -41,7 +45,7 @@ export function AdminPanel() {
   };
 
   const navItemClickhandler = (index: number) => {
-    setActiveIndex(index);
+    setActiveIndex(String(index));
     if (windowWidth < 1024) {
       setIsMenuActive(false);
     }
@@ -49,7 +53,7 @@ export function AdminPanel() {
   return (
     <Wrapper>
       <NavigationMenu
-        activeIndex={activeIndex}
+        activeIndex={Number(activeIndex)}
         navItemClickhandler={navItemClickhandler}
         isMenuActive={isMenuActive}
         setIsMenuActive={setIsMenuActive}
@@ -68,7 +72,9 @@ export function AdminPanel() {
           />
           {components.map(
             (Item, index) =>
-              index === activeIndex && <Item key={index + Date.now()} />,
+              index === Number(activeIndex) && (
+                <Item key={index + Date.now()} />
+              ),
           )}
           <AdminPanelFooter />
         </>

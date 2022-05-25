@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 import {
   useAppDispatch,
   useAppSelector,
+  useLocalStorage,
   usePagination,
 } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
@@ -32,7 +33,10 @@ export function OrdersListComponent() {
       activeStatusObj: state.orderActiveFilterData.activeStatusObj,
       activeCitiesObj: state.orderActiveFilterData.activeCitiesObj,
     }));
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useLocalStorage({
+    defaultValue: '',
+    key: 'orderListComponent',
+  });
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState('');
   const [cookie] = useCookies(['access']);
@@ -103,14 +107,11 @@ export function OrdersListComponent() {
   const submitHandler = (e: React.FormEvent<HTMLDivElement>) => {
     let filterStr = '';
     e.preventDefault();
-    if (activeRateObj)
-      setFilter(() => (filterStr += `&rateId=${activeRateObj.id}`));
-    if (activeCitiesObj)
-      setFilter(() => (filterStr += `&cityId=${activeCitiesObj.id}`));
-    if (activeStatusObj)
-      setFilter(() => (filterStr += `&orderStatusId=${activeStatusObj.id}`));
-    if (activeCarObj)
-      setFilter(() => (filterStr += `&carId=${activeCarObj.id}`));
+    if (activeRateObj) filterStr += `&rateId=${activeRateObj.id}`;
+    if (activeCitiesObj) filterStr += `&cityId=${activeCitiesObj.id}`;
+    if (activeStatusObj) filterStr += `&orderStatusId=${activeStatusObj.id}`;
+    if (activeCarObj) filterStr += `&carId=${activeCarObj.id}`;
+    setFilter(filterStr);
   };
   const dateFrom = format(
     new Date(data?.data[0]?.dateFrom || 0),

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { useLocalStorage } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { TOrderStatus } from '../../shared/types';
 import { ErrorComponent } from '../error-component';
@@ -16,7 +17,10 @@ import {
 
 export function OrdersStatusListComponent() {
   const [cookie] = useCookies(['access']);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useLocalStorage({
+    key: 'orderStatusListComponent',
+    defaultValue: '',
+  });
   const [error, setError] = useState('');
   const { data, isLoading, isError } = useGetData<TOrderStatus>({
     QUERY_KEY: 'orderStatus',
@@ -45,8 +49,8 @@ export function OrdersStatusListComponent() {
                 <TableHeaderWithSearchAndCount
                   inputValue={search}
                   setInputValue={setSearch}
-                  placeholder="Введите название"
-                  title="Количество типов тарифов"
+                  placeholder="Введите статус"
+                  title="Количество статусов заказов"
                   count={data?.count}
                 />
                 {filteredData?.length !== 0 && (

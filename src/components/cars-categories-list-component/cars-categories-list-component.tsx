@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { useLocalStorage } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { TCarCategory } from '../../shared/types';
 import { ErrorComponent } from '../error-component';
@@ -20,7 +21,10 @@ import {
 
 export function CarsCategoriesListComponent() {
   const [cookie] = useCookies(['access']);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useLocalStorage({
+    defaultValue: '',
+    key: 'carsCategoriesListComponent',
+  });
   const [error, setError] = useState('');
   const { data, isLoading, isError } = useGetData<TCarCategory>({
     QUERY_KEY: 'category',
@@ -46,7 +50,7 @@ export function CarsCategoriesListComponent() {
             {!isLoading && (
               <>
                 <TableHeaderWithSearchAndCount
-                  placeholder="Введите"
+                  placeholder="Введите категорию"
                   inputValue={search}
                   setInputValue={setSearch}
                   count={data?.count}
