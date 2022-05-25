@@ -14,3 +14,5 @@ export { CitiesListComponent } from './cities-list-component';
 export { RatesListComponent } from './rates-list-component';
 export { PointsListComponent } from './points-list-component';
 export { CarsCategoriesListComponent } from './cars-categories-list-component';
+export { RateTypesListComponent } from './rate-types-list-component';
+export { OrdersStatusListComponent } from './orders-status-list-component';
