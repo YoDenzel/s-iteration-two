@@ -64,10 +64,12 @@ export function CarsCategoriesListComponent() {
                       ))}
                     </TableCols>
                     {filteredData?.map(item => (
-                      <TableItem key={item.id}>
-                        <TableCategoryInfo>{item.name}</TableCategoryInfo>
+                      <TableItem key={item?.id}>
                         <TableCategoryInfo>
-                          {item.description}
+                          {item?.name || 'Нет информации'}
+                        </TableCategoryInfo>
+                        <TableCategoryInfo>
+                          {item?.description || 'Нет информаци'}
                         </TableCategoryInfo>
                       </TableItem>
                     ))}

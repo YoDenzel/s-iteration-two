@@ -44,7 +44,7 @@ export function OrderInformation({
             </Title>
             <Title isblack={0}>
               {(activeOrderObj?.pointId !== null &&
-                activeOrderObj?.pointId.address) ||
+                activeOrderObj?.pointId?.address) ||
                 ''}
             </Title>
             <Title isblack={0}>{dateFrom + ' - ' + dateTo}</Title>

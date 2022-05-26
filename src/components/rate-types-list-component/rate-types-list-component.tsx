@@ -31,7 +31,7 @@ export function RateTypesListComponent() {
   const filteredData = data?.data?.filter(item => {
     if (
       item?.name
-        .toLowerCase()
+        ?.toLowerCase()
         .replace(/\s/g, '')
         .includes(search.toLowerCase().replace(/\s/g, ''))
     )

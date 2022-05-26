@@ -56,7 +56,9 @@ export function OrdersStatusListComponent() {
                 {filteredData?.length !== 0 && (
                   <RateTypesList>
                     {filteredData?.map(item => (
-                      <RateTypeItem key={item.id}>{item.name}</RateTypeItem>
+                      <RateTypeItem key={item?.id}>
+                        {item?.name || 'Нет информации'}
+                      </RateTypeItem>
                     ))}
                   </RateTypesList>
                 )}
