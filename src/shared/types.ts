@@ -170,3 +170,8 @@ export type TCarRateTypesData = {
   unit: string;
   id: string;
 };
+
+export type TSingleCar = {
+  fields: {};
+  data: TCarsData;
+};
