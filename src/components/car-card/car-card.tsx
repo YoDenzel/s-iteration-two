@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { Box, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useAppSelector } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
-import { TCars } from '../../shared/types';
+import { TSingleCar } from '../../shared/types';
 
 export const Wrapper = styled(Box)`
   display: flex;
@@ -23,25 +23,6 @@ export const Wrapper = styled(Box)`
   }
 `;
 
-export const Container = styled(Box)`
-  width: 100%;
-  height: 70%;
-  border-radius: 9px;
-  margin-top: ${({ theme }) => theme.spacing(3.8)}px;
-  margin-bottom: ${({ theme }) => theme.spacing(2.5)}px;
-  background-color: ${({ theme }) => theme.colors.white};
-  box-shadow: 0px 2px 0px rgba(90, 97, 105, 0.11),
-    0px 4px 8px rgba(90, 97, 105, 0.12), 0px 10px 10px rgba(90, 97, 105, 0.06),
-    0px 7px 70px rgba(90, 97, 105, 0.1);
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  @media (max-width: ${({ theme }) => theme.breakPoints.mobile}) {
-    overflow: unset;
-    height: 100%;
-  }
-`;
-
 export const Title = styled(Typography)`
   font-family: 'Helvetica';
   font-style: normal;
@@ -53,28 +34,112 @@ export const Title = styled(Typography)`
   margin-top: ${({ theme }) => theme.spacing(3.5)}px;
 `;
 
-export const CarInfoContainer = styled(Box)``;
+export const CarWrapper = styled(Box)`
+  display: flex;
+  width: 100%;
+`;
 
-export const CarOptionsContainer = styled(Box)``;
+export const CarInfoContainer = styled(Box)`
+  display: flex;
+  flex: 25%;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.colors.white};
+  box-shadow: 0px 2px 4px rgba(90, 97, 105, 0.12);
+  border-radius: 9px;
+  margin-right: ${({ theme }) => theme.spacing(3.5)}px;
+  flex-direction: column;
+`;
 
-export const PAGE_LIMIT = 1;
+export const CarOptionsContainer = styled(Box)`
+  display: flex;
+  flex: 75%;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.colors.white};
+  box-shadow: 0px 2px 4px rgba(90, 97, 105, 0.12);
+  border-radius: 9px;
+`;
+
+export const CarImageBlock = styled(Box)`
+  margin-top: 25px;
+  padding-left: 30px;
+  padding-right: 30px;
+`;
+
+export const CarImage = styled.img`
+  width: 175px;
+  height: auto;
+`;
+
+export const CarTitle = styled(Typography)`
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24.5px;
+  line-height: 28px;
+  text-align: center;
+  letter-spacing: -0.6125px;
+  color: #3d5170;
+  margin-top: ${({ theme }) => theme.spacing(1.25)}px;
+`;
+
+export const CarType = styled(Typography)`
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 14px;
+  text-align: center;
+  letter-spacing: -0.3125px;
+  color: #818ea3;
+  margin-top: ${({ theme }) => theme.spacing(0.5)}px;
+`;
+
+export const ImgInput = styled.input``;
 
 export function CarCard() {
   const [cookie] = useCookies(['access']);
-  const [error, setError] = useState('');
-  const [filter, setFilter] = useState('');
-  const { data, isLoading, isError } = useGetData<TCars>({
+  const [image, setImage] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState('');
+  const carId = useAppSelector(state => state.carId.carId);
+  const { data, isLoading, isError } = useGetData<TSingleCar>({
     QUERY_KEY: 'cars',
-    url: `car?${filter}&limit=${PAGE_LIMIT}`,
+    url: `car/${carId}`,
     token: cookie.access,
   });
-  const carId = useAppSelector(state => state.carId.carId);
-  console.log(carId);
+
+  const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setImage(e.target.files && e.target.files[0]);
+  };
+
+  useEffect(() => {
+    if (!image) return;
+    const newImages = URL.createObjectURL(image);
+    setImageUrl(newImages);
+  }, [image]);
+
+  console.log(imageUrl);
   return (
-    <Wrapper>
-      <Title>Карточка автомобиля</Title>
-      <CarInfoContainer></CarInfoContainer>
-      <CarOptionsContainer></CarOptionsContainer>
+    <Wrapper component="main">
+      <Title variant="h1">Карточка автомобиля</Title>
+      <CarWrapper component="section">
+        <CarInfoContainer>
+          <CarImageBlock>
+            <CarImage src={imageUrl || data?.data.thumbnail.path} />
+          </CarImageBlock>
+          <CarTitle variant="h2">
+            {data?.data?.name || 'Нет информации'}
+          </CarTitle>
+          <CarType variant="caption">
+            {data?.data.categoryId?.name || 'Нет информации'}
+          </CarType>
+          <ImgInput
+            type="file"
+            accept="image/*"
+            onChange={e => onImageChange(e)}
+          />
+        </CarInfoContainer>
+        <CarOptionsContainer></CarOptionsContainer>
+      </CarWrapper>
     </Wrapper>
   );
 }
