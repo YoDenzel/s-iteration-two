@@ -9,4 +9,5 @@ export type TCarsInformation = {
   nextPageClickhandler: () => void;
   prevPageClickhandler: () => void;
   paginationRange: (string | number)[] | undefined;
+  carClickhandler: (v?: string) => void;
 };

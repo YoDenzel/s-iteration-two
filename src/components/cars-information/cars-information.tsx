@@ -21,6 +21,7 @@ export function CarsInformation({
   paginationRange,
   prevPageClickhandler,
   setCurrrentPage,
+  carClickhandler
 }: TCarsInformation) {
   return (
     <Wrapper>
@@ -33,7 +34,7 @@ export function CarsInformation({
           ))}
         </TableCols>
         {carsData?.map(item => (
-          <TableItem key={item.id}>
+          <TableItem key={item.id} onClick={() => carClickhandler(item.id)}>
             <TableItemIconBlock>
               <TableItemIcon alt="Машина" src={item?.thumbnail?.path || ''} />
             </TableItemIconBlock>

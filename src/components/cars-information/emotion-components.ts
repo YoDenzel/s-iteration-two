@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 export const Wrapper = styled(Box)`
   height: 100%;
@@ -47,11 +47,16 @@ export const TableCol = styled(Typography)`
   }
 `;
 
-export const TableItem = styled(Box)`
+export const TableItem = styled(Button)`
   display: flex;
   align-items: center;
   margin-top: ${({ theme }) => theme.spacing(1.375)}px;
   height: 50px;
+  text-transform: none;
+  padding: 0;
+  text-align: left;
+  border: 0;
+  overflow: hidden;
   @media (max-width: ${({ theme }) => theme.breakPoints.mobile}) {
     height: unset;
     flex-wrap: wrap;
