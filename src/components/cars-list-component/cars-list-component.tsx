@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
+import { setActiveComponentIndex } from '../../redux/active-component-index/active-component-index';
+import { setCarId } from '../../redux/car-id/car-id';
 import {
   removeFilter,
   setActiveCarObj,
@@ -81,6 +83,18 @@ export function CarsListComponent() {
     setFilter(filterStr);
   };
 
+  const carClickhandler = (carId?: string) => {
+    dispatch(
+      setCarId({
+        carId: carId || '',
+      }),
+    );
+    dispatch(
+      setActiveComponentIndex({
+        activeComponentIndex: 0,
+      }),
+    );
+  };
   return (
     <>
       {!isError && (
@@ -117,6 +131,7 @@ export function CarsListComponent() {
                   setCurrentPage(prevValue => prevValue - 1)
                 }
                 paginationRange={paginationRange}
+                carClickhandler={carClickhandler}
               />
             )}
             {data?.data.length === 0 && <Empty>Ничего не найдено</Empty>}
