@@ -7,26 +7,28 @@ import {
   AdminPanelHeader,
   NavigationMenu,
 } from '../../components';
+import { setActiveComponentIndex } from '../../redux/active-component-index/active-component-index';
 import {
+  useAppDispatch,
+  useAppSelector,
   useClickOutside,
   useGetWindowWidth,
-  useLocalStorage,
   usePostLogout,
 } from '../../shared/custom-hooks';
 import { components } from './constants';
 import { Container, Wrapper } from './emotion-components';
 
 export function AdminPanel() {
-  const [activeIndex, setActiveIndex] = useLocalStorage({
-    key: 'activeComponentIndex',
-    defaultValue: '0',
-  });
   const [cookie, _, removeCookie] = useCookies(['access']);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   const [isMenuActive, setIsMenuActive] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const activeComponentIndex = useAppSelector(
+    state => state.activeComponentIndex.activeComponentIndex,
+  );
   const { windowWidth } = useGetWindowWidth();
   const { mutateAsync } = usePostLogout();
+  const dispatch = useAppDispatch();
   const dropdownRef = useClickOutside<HTMLDivElement>(() =>
     setIsDropdownActive(false),
   );
@@ -34,7 +36,6 @@ export function AdminPanel() {
     () => windowWidth < 1024 && setIsMenuActive(false),
   );
   const navigate = useNavigate();
-
   const logoutClickhandler = () => {
     mutateAsync({ accessToken: cookie.access });
     removeCookie('access', {
@@ -45,7 +46,11 @@ export function AdminPanel() {
   };
 
   const navItemClickhandler = (index: number) => {
-    setActiveIndex(String(index));
+    dispatch(
+      setActiveComponentIndex({
+        activeComponentIndex: index,
+      }),
+    );
     if (windowWidth < 1024) {
       setIsMenuActive(false);
     }
@@ -53,7 +58,7 @@ export function AdminPanel() {
   return (
     <Wrapper>
       <NavigationMenu
-        activeIndex={Number(activeIndex)}
+        activeIndex={activeComponentIndex}
         navItemClickhandler={navItemClickhandler}
         isMenuActive={isMenuActive}
         setIsMenuActive={setIsMenuActive}
@@ -72,7 +77,7 @@ export function AdminPanel() {
           />
           {components.map(
             (Item, index) =>
-              index === Number(activeIndex) && (
+              index === activeComponentIndex && (
                 <Item key={index + Date.now()} />
               ),
           )}

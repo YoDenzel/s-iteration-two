@@ -1,4 +1,5 @@
 import {
+  CarCard,
   CarsCategoriesListComponent,
   CarsListComponent,
   CitiesListComponent,
@@ -10,6 +11,7 @@ import {
 } from '../../components';
 
 export const components = [
+  CarCard,
   CarsListComponent,
   OrdersListComponent,
   CitiesListComponent,
