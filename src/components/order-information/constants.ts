@@ -1,6 +1,6 @@
 import { Icons } from '../../shared/icons';
 
-export const OrderChangeStatusData = [
+export const orderChangeStatusData = [
   {
     title: 'Готово',
     icon: Icons.CheckMark,

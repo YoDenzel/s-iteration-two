@@ -11,4 +11,5 @@ export type TOrderInformation = {
   nextPageClickhandler: () => void;
   prevPageClickhandler: () => void;
   paginationRange: (string | number)[] | undefined;
+  changeStatusClickhandler: (index: number, carId?: string) => void;
 };
