@@ -145,6 +145,16 @@ export function OrdersListComponent() {
     );
   };
 
+  const changeStatusClickhandler = (index: number, carId?: string) => {
+    switch (index) {
+      case 0:
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+    }
+  };
   return (
     <>
       {!isError && (
@@ -186,6 +196,7 @@ export function OrdersListComponent() {
                 prevPageClickhandler={() =>
                   setCurrentPage(prevValue => prevValue - 1)
                 }
+                changeStatusClickhandler={changeStatusClickhandler}
               />
             )}
             {data?.data.length === 0 && <Empty>Ничего не найдено</Empty>}
