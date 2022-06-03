@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const carId = createSlice({
   name: 'carId',
   initialState: {
-    carId: null as string | null,
+    carId: '6152e00d18f5c2264119b3b7' as string | null,
   },
   reducers: {
     setCarId: (state, action: PayloadAction<{ carId: null | string }>) => {
