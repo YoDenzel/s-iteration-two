@@ -1,5 +1,4 @@
-import { Box } from '@mui/material';
-import { InputTitle, Input, Error } from './empotion-components';
+import { InputTitle, Input, Error, Container } from './empotion-components';
 import { TTextInputComponent } from './types';
 
 export function TextInputComponent({
@@ -11,7 +10,7 @@ export function TextInputComponent({
   type,
 }: TTextInputComponent) {
   return (
-    <Box>
+    <Container>
       <InputTitle variant="caption">{title}</InputTitle>
       <Input
         variant="outlined"
@@ -24,6 +23,6 @@ export function TextInputComponent({
         }}
       />
       {errorMessage && <Error>{errorMessage}</Error>}
-    </Box>
+    </Container>
   );
 }
