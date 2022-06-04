@@ -37,6 +37,7 @@ export const Title = styled(Typography)`
 export const CarWrapper = styled(Box)`
   display: flex;
   width: 100%;
+  margin-top: ${({ theme }) => theme.spacing(3.75)}px;
 `;
 
 export const CarInfoContainer = styled(Box)`
@@ -60,9 +61,11 @@ export const CarOptionsContainer = styled(Box)`
 `;
 
 export const CarImageBlock = styled(Box)`
-  margin-top: 25px;
-  padding-left: 30px;
-  padding-right: 30px;
+  display: flex;
+  justify-content: center;
+  margin-top: ${({ theme }) => theme.spacing(3.125)}px;
+  padding-left: ${({ theme }) => theme.spacing(3.75)}px;
+  padding-right: ${({ theme }) => theme.spacing(3.75)}px;
 `;
 
 export const CarImage = styled.img`
@@ -78,7 +81,7 @@ export const CarTitle = styled(Typography)`
   line-height: 28px;
   text-align: center;
   letter-spacing: -0.6125px;
-  color: #3d5170;
+  color: ${({ theme }) => theme.colors.titleFont};
   margin-top: ${({ theme }) => theme.spacing(1.25)}px;
 `;
 
@@ -90,11 +93,70 @@ export const CarType = styled(Typography)`
   line-height: 14px;
   text-align: center;
   letter-spacing: -0.3125px;
-  color: #818ea3;
+  color: ${({ theme }) => theme.colors.tableTextFont};
   margin-top: ${({ theme }) => theme.spacing(0.5)}px;
 `;
 
-export const ImgInput = styled.input``;
+export const ImgInputBlock = styled(Box)`
+  height: 25px;
+  display: flex;
+  align-items: center;
+  border: 0.5px solid #becad6;
+  border-radius: 4px;
+  margin-left: ${({ theme }) => theme.spacing(4)}px;
+  margin-right: ${({ theme }) => theme.spacing(4)}px;
+  margin-top: ${({ theme }) => theme.spacing(1.25)}px;
+  margin-bottom: ${({ theme }) => theme.spacing(3)}px;
+  position: relative;
+`;
+
+export const ImgInput = styled.input`
+  position: absolute;
+  visibility: hidden;
+`;
+
+export const ImgInputPlaceholder = styled(Typography)`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  letter-spacing: -0.175439px;
+  color: #495057;
+  margin-left: ${({ theme }) => theme.spacing(1.25)}px;
+  flex: 1;
+`;
+
+export const InputLoadFileBlock = styled(Box)`
+  display: flex;
+  align-items: center;
+  border-left: 0.5px solid ${({ theme }) => theme.colors.inputBorder};
+  background: #e9ecef;
+  height: 100%;
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.veryLightGray};
+  }
+`;
+
+export const InputLabel = styled.label`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: ${({ theme }) => theme.spacing(1.5)}px;
+  padding-right: ${({ theme }) => theme.spacing(1.5)}px;
+  cursor: pointer;
+`;
+
+export const InputLabelTile = styled(Typography)`
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: center;
+  letter-spacing: -0.175439px;
+  color: #495057;
+`;
 
 export function CarCard() {
   const [cookie] = useCookies(['access']);
@@ -117,7 +179,7 @@ export function CarCard() {
     setImageUrl(newImages);
   }, [image]);
 
-  console.log(imageUrl);
+  console.log(image?.name);
   return (
     <Wrapper component="main">
       <Title variant="h1">Карточка автомобиля</Title>
@@ -132,11 +194,22 @@ export function CarCard() {
           <CarType variant="caption">
             {data?.data.categoryId?.name || 'Нет информации'}
           </CarType>
-          <ImgInput
-            type="file"
-            accept="image/*"
-            onChange={e => onImageChange(e)}
-          />
+          <ImgInputBlock>
+            <ImgInputPlaceholder>
+              {image?.name || ' Выберите файл...'}
+            </ImgInputPlaceholder>
+            <InputLoadFileBlock>
+              <InputLabel htmlFor="file_input">
+                <InputLabelTile>Обзор</InputLabelTile>
+              </InputLabel>
+              <ImgInput
+                id="file_input"
+                type="file"
+                accept="image/*"
+                onChange={e => onImageChange(e)}
+              />
+            </InputLoadFileBlock>
+          </ImgInputBlock>
         </CarInfoContainer>
         <CarOptionsContainer></CarOptionsContainer>
       </CarWrapper>
