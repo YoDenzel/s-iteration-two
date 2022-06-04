@@ -42,7 +42,7 @@ export const CarWrapper = styled(Box)`
 
 export const CarInfoContainer = styled(Box)`
   display: flex;
-  flex: 25%;
+  flex: 30%;
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0px 2px 4px rgba(90, 97, 105, 0.12);
@@ -53,7 +53,7 @@ export const CarInfoContainer = styled(Box)`
 
 export const CarOptionsContainer = styled(Box)`
   display: flex;
-  flex: 75%;
+  flex: 70%;
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0px 2px 4px rgba(90, 97, 105, 0.12);
@@ -69,7 +69,7 @@ export const CarImageBlock = styled(Box)`
 `;
 
 export const CarImage = styled.img`
-  width: 175px;
+  width: 200px;
   height: auto;
 `;
 
@@ -98,7 +98,7 @@ export const CarType = styled(Typography)`
 `;
 
 export const ImgInputBlock = styled(Box)`
-  height: 25px;
+  min-height: 30px;
   display: flex;
   align-items: center;
   border: 0.5px solid #becad6;
@@ -108,6 +108,7 @@ export const ImgInputBlock = styled(Box)`
   margin-top: ${({ theme }) => theme.spacing(1.25)}px;
   margin-bottom: ${({ theme }) => theme.spacing(3)}px;
   position: relative;
+  overflow: hidden;
 `;
 
 export const ImgInput = styled.input`
@@ -158,6 +159,82 @@ export const InputLabelTile = styled(Typography)`
   color: #495057;
 `;
 
+export const ProgressBarBlock = styled(Box)`
+  padding-left: ${({ theme }) => theme.spacing(2.5)}px;
+  padding-right: ${({ theme }) => theme.spacing(2.5)}px;
+  box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.12), 0px 1px 0px rgba(0, 0, 0, 0.12);
+  margin-bottom: ${({ theme }) => theme.spacing(2.75)}px;
+`;
+
+export const ProgressBarTextInfoWrapper = styled(Box)`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: ${({ theme }) => theme.spacing(1.25)}px;
+  margin-top: ${({ theme }) => theme.spacing(1.75)}px;
+`;
+
+export const ProgressBarTitle = styled(Typography)`
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: -0.408571px;
+  color: ${({ theme }) => theme.colors.lightGray};
+`;
+
+export const ProgresstBarPercent = styled(Typography)`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  letter-spacing: -0.345714px;
+  color: ${({ theme }) => theme.colors.secondaryFont};
+`;
+
+export const ProgressBarLineContainer = styled(Box)`
+  height: 5px;
+  width: 100%;
+  box-shadow: inset 0px 0.5px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  margin-bottom: ${({ theme }) => theme.spacing(2)}px;
+`;
+
+export const ProgressBarLine = styled(Box)<{ width: number }>`
+  height: 100%;
+  width: ${({ width }) => width}%;
+  background: ${({ theme }) => theme.colors.blue};
+  border-radius: 4px;
+  transition: width 1s ease-in-out;
+`;
+
+export const DescriptionBlock = styled(Box)`
+  margin-left: ${({ theme }) => theme.spacing(2.75)}px;
+  margin-right: ${({ theme }) => theme.spacing(3.625)}px;
+`;
+
+export const DescriptionTitle = styled(Typography)`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: -0.408571px;
+  color: #868e96;
+`;
+
+export const DescriptionText = styled(Typography)`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13.5px;
+  line-height: 20px;
+  letter-spacing: -0.408571px;
+  color: #5a6169;
+  margin-top: ${({ theme }) => theme.spacing(1.75)}px;
+  margin-bottom: ${({ theme }) => theme.spacing(6.25)}px;
+`;
+
 export function CarCard() {
   const [cookie] = useCookies(['access']);
   const [image, setImage] = useState<File | null>(null);
@@ -184,7 +261,7 @@ export function CarCard() {
     <Wrapper component="main">
       <Title variant="h1">Карточка автомобиля</Title>
       <CarWrapper component="section">
-        <CarInfoContainer>
+        <CarInfoContainer component="article">
           <CarImageBlock>
             <CarImage src={imageUrl || data?.data.thumbnail.path} />
           </CarImageBlock>
@@ -195,12 +272,12 @@ export function CarCard() {
             {data?.data.categoryId?.name || 'Нет информации'}
           </CarType>
           <ImgInputBlock>
-            <ImgInputPlaceholder>
-              {image?.name || ' Выберите файл...'}
+            <ImgInputPlaceholder variant="caption">
+              {image?.name || 'Выберите файл...'}
             </ImgInputPlaceholder>
-            <InputLoadFileBlock>
+            <InputLoadFileBlock component="article">
               <InputLabel htmlFor="file_input">
-                <InputLabelTile>Обзор</InputLabelTile>
+                <InputLabelTile variant="body1">Обзор</InputLabelTile>
               </InputLabel>
               <ImgInput
                 id="file_input"
@@ -210,6 +287,19 @@ export function CarCard() {
               />
             </InputLoadFileBlock>
           </ImgInputBlock>
+          <ProgressBarBlock component="article">
+            <ProgressBarTextInfoWrapper>
+              <ProgressBarTitle variant="h2">Заполнено</ProgressBarTitle>
+              <ProgresstBarPercent variant="h2">70%</ProgresstBarPercent>
+            </ProgressBarTextInfoWrapper>
+            <ProgressBarLineContainer>
+              <ProgressBarLine width={70} />
+            </ProgressBarLineContainer>
+          </ProgressBarBlock>
+          <DescriptionBlock>
+            <DescriptionTitle>Описание</DescriptionTitle>
+            <DescriptionText>{data?.data.description}</DescriptionText>
+          </DescriptionBlock>
         </CarInfoContainer>
         <CarOptionsContainer></CarOptionsContainer>
       </CarWrapper>
