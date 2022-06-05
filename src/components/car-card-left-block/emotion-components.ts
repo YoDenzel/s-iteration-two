@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, Typography } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
 
 export const CarInfoContainer = styled(Box)`
   display: flex;
@@ -176,7 +176,7 @@ export const DescriptionTitle = styled(Typography)`
   color: #868e96;
 `;
 
-export const DescriptionText = styled(Typography)`
+export const DescriptionInput = styled(TextField)`
   font-style: normal;
   font-weight: 400;
   font-size: 13.5px;
@@ -185,4 +185,18 @@ export const DescriptionText = styled(Typography)`
   color: #5a6169;
   margin-top: ${({ theme }) => theme.spacing(1.75)}px;
   margin-bottom: ${({ theme }) => theme.spacing(6.25)}px;
+  border: none;
+  outline: none;
+  width: 100%;
+  flex: 1;
+  padding: 0;
+  & fieldset {
+    border: none;
+  }
+  & fieldset:hover {
+    border: none;
+  }
+  & div {
+    padding: 0;
+  }
 `;

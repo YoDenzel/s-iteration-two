@@ -5,4 +5,6 @@ export type TCarCardLeftBlock = {
   onImageChange: (v: React.ChangeEvent<HTMLInputElement>) => void;
   image: File | null;
   imageUrl: string;
+  descriptionInputValue: string;
+  setDescriptionInputValue: (v: string) => void;
 };

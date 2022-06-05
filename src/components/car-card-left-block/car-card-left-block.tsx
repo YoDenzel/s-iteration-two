@@ -17,7 +17,7 @@ import {
   ProgressBarLine,
   DescriptionBlock,
   DescriptionTitle,
-  DescriptionText,
+  DescriptionInput,
   InputLabel,
 } from './emotion-components';
 import { TCarCardLeftBlock } from './types';
@@ -27,6 +27,8 @@ export function CarCardLeftBlock({
   onImageChange,
   image,
   imageUrl,
+  descriptionInputValue,
+  setDescriptionInputValue,
 }: TCarCardLeftBlock) {
   return (
     <CarInfoContainer component="section">
@@ -64,7 +66,12 @@ export function CarCardLeftBlock({
       </ProgressBarBlock>
       <DescriptionBlock>
         <DescriptionTitle>Описание</DescriptionTitle>
-        <DescriptionText>{data?.description}</DescriptionText>
+        <DescriptionInput
+          value={descriptionInputValue}
+          onChange={e => setDescriptionInputValue(e.target.value)}
+          multiline
+          placeholder="Введите описание машины"
+        />
       </DescriptionBlock>
     </CarInfoContainer>
   );
