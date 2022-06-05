@@ -8,9 +8,10 @@ export function TextInputComponent({
   placeholder,
   errorMessage,
   type,
+  flex
 }: TTextInputComponent) {
   return (
-    <Container>
+    <Container flx={flex}>
       <InputTitle variant="caption">{title}</InputTitle>
       <Input
         variant="outlined"
