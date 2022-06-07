@@ -7,4 +7,5 @@ export type TCarCardLeftBlock = {
   imageUrl: string;
   descriptionInputValue: string;
   setDescriptionInputValue: (v: string) => void;
+  progressBarPercent: number;
 };
