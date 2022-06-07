@@ -145,7 +145,7 @@ export function OrdersListComponent() {
     );
   };
 
-  const changeStatusClickhandler = (index: number, carId?: string) => {
+  const changeStatusClickhandler = (index: number) => {
     switch (index) {
       case 0:
         break;
