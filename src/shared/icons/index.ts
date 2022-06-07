@@ -10,6 +10,7 @@ import { CheckMark } from './check-mark';
 import { XIcon } from './x-icon';
 import { MoreIcon } from './more-icon';
 import { ChangePage } from './change-page';
+import { PlusIcon } from './plus-icon';
 
 export const Icons = {
   NeedForDriveLogo,
@@ -24,4 +25,5 @@ export const Icons = {
   XIcon,
   MoreIcon,
   ChangePage,
+  PlusIcon,
 };
