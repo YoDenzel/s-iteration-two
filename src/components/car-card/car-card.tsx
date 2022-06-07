@@ -1,18 +1,25 @@
 import styled from '@emotion/styled';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { useAppSelector } from '../../shared/custom-hooks';
+import {
+  setColorCheckboxIsActive,
+  setInitialColorsCheckboxArr,
+  addColor,
+} from '../../redux/colors-checkbox-arr/colors-checkbox-arr';
+import { useAppDispatch, useAppSelector } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
+import { Icons } from '../../shared/icons';
 import { TSingleCar } from '../../shared/types';
 import { CarCardLeftBlock } from '../car-card-left-block';
+import { TextInputComponent } from '../text-input-component';
 
 export const Wrapper = styled(Box)`
   display: flex;
   flex: 1;
   flex-direction: column;
   margin-left: ${({ theme }) => theme.spacing(4)}px;
-  margin-right: ${({ theme }) => theme.spacing(6.3)}px;
+  padding-right: ${({ theme }) => theme.spacing(6.3)}px;
   border-radius: 9px;
   overflow: auto;
   @media (max-width: ${({ theme }) => theme.breakPoints.tablet}) {
@@ -39,27 +46,123 @@ export const CarWrapper = styled(Box)`
   display: flex;
   width: 100%;
   margin-top: ${({ theme }) => theme.spacing(3.75)}px;
+  height: 100%;
 `;
 
 export const CarOptionsContainer = styled(Box)`
   display: flex;
-  flex: 70%;
-  justify-content: center;
+  flex-direction: column;
+  flex: 75%;
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0px 2px 4px rgba(90, 97, 105, 0.12);
   border-radius: 9px;
+  padding: ${({ theme }) => theme.spacing(2.5)}px;
+  min-height: 80%;
+  margin-bottom: ${({ theme }) => theme.spacing(2.5)}px;
+`;
+
+export const CarOptionsTitle = styled(Typography)`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17.5px;
+  line-height: 21px;
+  letter-spacing: -0.4375px;
+  color: ${({ theme }) => theme.colors.titleFont};
+`;
+
+export const EditInfrormationBlock = styled(Box)`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing(2.625)}px;
+`;
+
+export const AvailableColorsBlock = styled(Box)`
+  flex: 100%;
+`;
+
+export const ColorsInputBlock = styled(Box)`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing(1)}px;
+  align-items: flex-end;
+`;
+export const AddColor = styled(Box)`
+  padding: ${({ theme }) => theme.spacing(1.375)}px;
+  border: 1px solid ${({ theme }) => theme.colors.inputBorder};
+  border-radius: 4px;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  bottom: 1px;
+  cursor: pointer;
+`;
+
+export const CheckboxesBlock = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(1)}px;
+  margin-top: ${({ theme }) => theme.spacing(1.75)}px;
+  padding: 0;
+`;
+
+export const CheckboxItem = styled.li`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(1)}px;
+  cursor: pointer;
+  width: fit-content;
+  padding: 0;
+  text-transform: none;
+  min-width: unset;
+  padding-right: ${({ theme }) => theme.spacing(1.25)}px;
+`;
+
+export const CheckboxMark = styled(Box)<{ isactive: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${({ isactive }) => (isactive ? '#007bff' : '#ffffff')};
+  border: 1px solid #007bff;
+  border-radius: 2px;
+  width: 12px;
+  height: 12px;
+`;
+
+export const CheckboxTitle = styled(Typography)`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  letter-spacing: -0.175439px;
+  color: #495057;
 `;
 
 export function CarCard() {
   const [cookie] = useCookies(['access']);
-  const [image, setImage] = useState<File | null>(null);
-  const [imageUrl, setImageUrl] = useState('');
-  const carId = useAppSelector(state => state.carId.carId);
+  const { carId, colorsCheckboxArr } = useAppSelector(state => ({
+    carId: state.carId.carId,
+    colorsCheckboxArr: state.colorsCheckboxArr.colorsArr,
+  }));
   const { data, isLoading, isError } = useGetData<TSingleCar>({
     QUERY_KEY: 'cars',
     url: `car/${carId}`,
     token: cookie.access,
   });
+  const [image, setImage] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState('');
+  const [carInputObj, setCarInputObj] = useState({
+    carModelInput: data?.data?.name || '',
+    carTypeInput: data?.data.categoryId?.name || '',
+    carMinPrice: data?.data?.priceMin || '',
+    carMaxPrice: data?.data?.priceMax || '',
+    carNumber: data?.data?.number || '',
+    carDescription: data?.data?.description || '',
+    carColorInput: '',
+  });
+  const [wrongColorErr, setWrongColorErr] = useState(false);
+  const [fillingCarPercent, setFillingtCarPercent] = useState(0);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!image) return;
@@ -67,7 +170,50 @@ export function CarCard() {
     setImageUrl(newImages);
   }, [image]);
 
-  console.log(image?.name);
+  useEffect(() => {
+    if (data?.data.colors)
+      dispatch(
+        setInitialColorsCheckboxArr({
+          titles: [...data.data.colors],
+        }),
+      );
+  }, [data]);
+
+  const colorCheckboxClickhandler = (title: string) => {
+    dispatch(
+      setColorCheckboxIsActive({
+        activeTitle: title,
+      }),
+    );
+  };
+
+  useEffect(() => {
+    for (let i = 0; i < colorsCheckboxArr.length; i++) {
+      if (
+        colorsCheckboxArr[i].title.toLowerCase().replace(/\s/g, '') ===
+        carInputObj.carColorInput.toLowerCase().replace(/\s/g, '')
+      ) {
+        setWrongColorErr(true);
+        break;
+      } else setWrongColorErr(false);
+    }
+  }, [carInputObj.carColorInput]);
+
+  const setColorClickhandler = () => {
+    if (!wrongColorErr && carInputObj.carColorInput) {
+      dispatch(
+        addColor({
+          colorObj: {
+            title: carInputObj.carColorInput,
+            isActive: true,
+          },
+        }),
+      );
+      setCarInputObj({ ...carInputObj, carColorInput: '' });
+    }
+  };
+  console.log(colorsCheckboxArr);
+
   return (
     <Wrapper component="main">
       <Title variant="h1">Карточка автомобиля</Title>
@@ -77,8 +223,96 @@ export function CarCard() {
           imageUrl={imageUrl}
           onImageChange={e => setImage(e.target.files && e.target.files[0])}
           data={data?.data}
+          descriptionInputValue={carInputObj.carDescription}
+          setDescriptionInputValue={(v: string) =>
+            setCarInputObj({ ...carInputObj, carDescription: v })
+          }
+          progressBarPercent={74}
         />
-        <CarOptionsContainer component="section"></CarOptionsContainer>
+        <CarOptionsContainer component="section">
+          <CarOptionsTitle>Настройки автомобиля</CarOptionsTitle>
+          <EditInfrormationBlock>
+            <TextInputComponent
+              type="text"
+              placeholder="Введите модель"
+              setValue={(v: string) => {
+                setCarInputObj({ ...carInputObj, carModelInput: v });
+              }}
+              value={carInputObj.carModelInput}
+              title="Модель автомобиля"
+              flex="45%"
+            />
+            <TextInputComponent
+              type="text"
+              placeholder="Введите тип автомобиля"
+              value={carInputObj.carTypeInput}
+              setValue={(v: string) =>
+                setCarInputObj({ ...carInputObj, carTypeInput: v })
+              }
+              title="Тип автомобиля"
+              flex="45%"
+            />
+            <TextInputComponent
+              type="text"
+              placeholder="Введите минимальную цену"
+              value={String(carInputObj.carMinPrice)}
+              setValue={(v: string) =>
+                setCarInputObj({ ...carInputObj, carMinPrice: v })
+              }
+              title="Мин. цена, ₽"
+              flex="25%"
+            />
+            <TextInputComponent
+              type="text"
+              placeholder="Введите максимальную цену"
+              value={String(carInputObj.carMaxPrice)}
+              setValue={(v: string) =>
+                setCarInputObj({ ...carInputObj, carMaxPrice: v })
+              }
+              title="Макс. цена, ₽"
+              flex="25%"
+            />
+            <TextInputComponent
+              type="text"
+              placeholder="Введите номер машины"
+              value={String(carInputObj.carNumber)}
+              setValue={(v: string) =>
+                setCarInputObj({ ...carInputObj, carNumber: v })
+              }
+              title="Номер машины"
+              flex="25%"
+            />
+            <AvailableColorsBlock>
+              <ColorsInputBlock>
+                <TextInputComponent
+                  value={carInputObj.carColorInput}
+                  setValue={(v: string) =>
+                    setCarInputObj({ ...carInputObj, carColorInput: v })
+                  }
+                  placeholder="Введите цвет"
+                  title="Доступные цвета"
+                  type="text"
+                />
+                <AddColor onClick={() => setColorClickhandler()}>
+                  <Icons.PlusIcon />
+                </AddColor>
+              </ColorsInputBlock>
+            </AvailableColorsBlock>
+          </EditInfrormationBlock>
+          <CheckboxesBlock>
+            {colorsCheckboxArr.map((item, id) => (
+              <CheckboxItem
+                key={item.title + id}
+                onClick={() => colorCheckboxClickhandler(item.title)}
+              >
+                <CheckboxMark isactive={item.isActive}>
+                  {item.isActive && <Icons.CheckMark color="#ffffff" />}
+                </CheckboxMark>
+                <CheckboxTitle variant="body1">{item.title}</CheckboxTitle>
+              </CheckboxItem>
+            ))}
+          </CheckboxesBlock>
+        </CarOptionsContainer>
       </CarWrapper>
     </Wrapper>
   );
