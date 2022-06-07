@@ -3,13 +3,14 @@ import { Box, TextField, Typography } from '@mui/material';
 
 export const CarInfoContainer = styled(Box)`
   display: flex;
-  flex: 30%;
+  flex: 25%;
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0px 2px 4px rgba(90, 97, 105, 0.12);
   border-radius: 9px;
   margin-right: ${({ theme }) => theme.spacing(3.5)}px;
   flex-direction: column;
+  height: fit-content;
 `;
 
 export const CarImageBlock = styled(Box)`
@@ -84,7 +85,7 @@ export const InputLoadFileBlock = styled(Box)`
   align-items: center;
   border-left: 0.5px solid ${({ theme }) => theme.colors.inputBorder};
   background: #e9ecef;
-  height: 100%;
+  min-height: 32px;
   cursor: pointer;
   &:hover {
     background-color: ${({ theme }) => theme.colors.veryLightGray};
