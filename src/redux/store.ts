@@ -14,6 +14,7 @@ import authSlice from './auth-slice/auth-slice';
 import carId from './car-id/car-id';
 import carOrderCheckboxData from './car-order-checkbox-data/car-order-checkbox-data';
 import carsActiveFilterData from './cars-active-filter-data/cars-active-filter-data';
+import colorsCheckboxArr from './colors-checkbox-arr/colors-checkbox-arr';
 import orderActiveFilterData from './order-active-filter-data/order-active-filter-data';
 import pointsActiveFilterData from './points-active-filter-data/points-active-filter-data';
 
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   pointsActiveFilterData: pointsActiveFilterData,
   carId: carId,
   activeComponentIndex: activeComponentIndex,
+  colorsCheckboxArr: colorsCheckboxArr,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
