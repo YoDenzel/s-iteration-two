@@ -104,6 +104,7 @@ export const CheckboxesBlock = styled.ul`
   gap: ${({ theme }) => theme.spacing(1)}px;
   margin-top: ${({ theme }) => theme.spacing(1.75)}px;
   padding: 0;
+  flex: 1;
 `;
 
 export const CheckboxItem = styled.li`
@@ -138,6 +139,78 @@ export const CheckboxTitle = styled(Typography)`
   color: #495057;
 `;
 
+export const ButtonsBlock = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const SaveAndCancelButtonsWrapper = styled(Box)`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing(1.5)}px;
+`;
+
+export const SaveCarDataButton = styled(Button)`
+  text-transform: none;
+  background: #007bff;
+  border-radius: 4px;
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11.5px;
+  line-height: 13px;
+  text-align: center;
+  letter-spacing: -0.0821429px;
+  color: #ffffff;
+  &:hover {
+    background: #1567be;
+  }
+  padding: 8px 15px 8.5px 15px;
+  border-radius: 4px;
+  height: max-content;
+`;
+
+export const CancelButton = styled(Button)`
+  text-transform: none;
+  background: #e9ecef;
+  border-radius: 4px;
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11.5px;
+  line-height: 13px;
+  text-align: center;
+  letter-spacing: -0.0821429px;
+  color: #3d5170;
+  &:hover {
+    background: #cad0d8;
+  }
+  padding: 8px 15px 8.5px 15px;
+  border-radius: 4px;
+  height: max-content;
+`;
+
+export const DeleteWrapper = styled(Box)``;
+
+export const DeleteCarButton = styled(Button)`
+  text-transform: none;
+  background: #cb3656;
+  border-radius: 4px;
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11.5px;
+  line-height: 13px;
+  text-align: center;
+  letter-spacing: -0.0821429px;
+  color: #ffffff;
+  &:hover {
+    background: #a0233e;
+  }
+  padding: 8px 15px 8.5px 15px;
+  border-radius: 4px;
+  height: max-content;
+`;
+
 export function CarCard() {
   const [cookie] = useCookies(['access']);
   const { carId, colorsCheckboxArr } = useAppSelector(state => ({
@@ -158,9 +231,11 @@ export function CarCard() {
     carMaxPrice: data?.data?.priceMax || '',
     carNumber: data?.data?.number || '',
     carDescription: data?.data?.description || '',
-    carColorInput: '',
   });
-  const [wrongColorErr, setWrongColorErr] = useState(false);
+  const [carColorObj, setCarColorObj] = useState({
+    carColorInput: '',
+    wrongColorErr: false,
+  });
   const [fillingCarPercent, setFillingtCarPercent] = useState(0);
   const dispatch = useAppDispatch();
 
@@ -191,28 +266,43 @@ export function CarCard() {
     for (let i = 0; i < colorsCheckboxArr.length; i++) {
       if (
         colorsCheckboxArr[i].title.toLowerCase().replace(/\s/g, '') ===
-        carInputObj.carColorInput.toLowerCase().replace(/\s/g, '')
+        carColorObj.carColorInput.toLowerCase().replace(/\s/g, '')
       ) {
-        setWrongColorErr(true);
+        setCarColorObj({ ...carColorObj, wrongColorErr: true });
         break;
-      } else setWrongColorErr(false);
+      } else setCarColorObj({ ...carColorObj, wrongColorErr: false });
     }
-  }, [carInputObj.carColorInput]);
+  }, [carColorObj]);
 
   const setColorClickhandler = () => {
-    if (!wrongColorErr && carInputObj.carColorInput) {
+    if (!carColorObj.wrongColorErr && carColorObj.carColorInput) {
       dispatch(
         addColor({
           colorObj: {
-            title: carInputObj.carColorInput,
+            title: carColorObj.carColorInput,
             isActive: true,
           },
         }),
       );
-      setCarInputObj({ ...carInputObj, carColorInput: '' });
+      setCarColorObj({ ...carColorObj, carColorInput: '' });
     }
   };
-  console.log(colorsCheckboxArr);
+
+  const progressBarFunc = () => {
+    let acc = 0;
+    Object.entries(carInputObj).forEach(item => item[1] && acc++);
+    for (let i = 0; i < colorsCheckboxArr.length; i++) {
+      if (colorsCheckboxArr[i].isActive) {
+        acc++;
+        break;
+      }
+    }
+    acc === 7 ? setFillingtCarPercent(100) : setFillingtCarPercent(acc * 14);
+  };
+
+  useEffect(() => {
+    progressBarFunc();
+  }, [carInputObj, carColorObj]);
 
   return (
     <Wrapper component="main">
@@ -227,7 +317,7 @@ export function CarCard() {
           setDescriptionInputValue={(v: string) =>
             setCarInputObj({ ...carInputObj, carDescription: v })
           }
-          progressBarPercent={74}
+          progressBarPercent={fillingCarPercent}
         />
         <CarOptionsContainer component="section">
           <CarOptionsTitle>Настройки автомобиля</CarOptionsTitle>
@@ -281,13 +371,14 @@ export function CarCard() {
               }
               title="Номер машины"
               flex="25%"
+              maxLength={9}
             />
             <AvailableColorsBlock>
               <ColorsInputBlock>
                 <TextInputComponent
-                  value={carInputObj.carColorInput}
+                  value={carColorObj.carColorInput}
                   setValue={(v: string) =>
-                    setCarInputObj({ ...carInputObj, carColorInput: v })
+                    setCarColorObj({ ...carColorObj, carColorInput: v })
                   }
                   placeholder="Введите цвет"
                   title="Доступные цвета"
@@ -312,6 +403,13 @@ export function CarCard() {
               </CheckboxItem>
             ))}
           </CheckboxesBlock>
+          <ButtonsBlock>
+            <SaveAndCancelButtonsWrapper>
+              <SaveCarDataButton>Сохранить</SaveCarDataButton>
+              <CancelButton>Отменить</CancelButton>
+            </SaveAndCancelButtonsWrapper>
+            <DeleteCarButton>Удалить</DeleteCarButton>
+          </ButtonsBlock>
         </CarOptionsContainer>
       </CarWrapper>
     </Wrapper>
