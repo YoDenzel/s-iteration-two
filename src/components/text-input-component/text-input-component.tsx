@@ -8,7 +8,8 @@ export function TextInputComponent({
   placeholder,
   errorMessage,
   type,
-  flex
+  flex,
+  maxLength,
 }: TTextInputComponent) {
   return (
     <Container flx={flex}>
@@ -21,6 +22,7 @@ export function TextInputComponent({
         type={type}
         inputProps={{
           autoComplete: 'off',
+          maxLength: `${maxLength}`,
         }}
       />
       {errorMessage && <Error>{errorMessage}</Error>}

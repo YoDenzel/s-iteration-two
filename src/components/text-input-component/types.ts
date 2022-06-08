@@ -5,5 +5,6 @@ export type TTextInputComponent = {
   placeholder: string;
   type: string;
   errorMessage?: string;
-  flex?: string
+  flex?: string;
+  maxLength?: number;
 };
