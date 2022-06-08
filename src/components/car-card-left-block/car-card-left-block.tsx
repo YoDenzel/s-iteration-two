@@ -28,8 +28,8 @@ export function CarCardLeftBlock({
   image,
   imageUrl,
   descriptionInputValue,
-    setDescriptionInputValue,
-  progressBarPercent
+  setDescriptionInputValue,
+  progressBarPercent,
 }: TCarCardLeftBlock) {
   return (
     <CarInfoContainer component="section">
@@ -59,7 +59,9 @@ export function CarCardLeftBlock({
       <ProgressBarBlock component="article">
         <ProgressBarTextInfoWrapper>
           <ProgressBarTitle variant="h2">Заполнено</ProgressBarTitle>
-          <ProgresstBarPercent variant="h2">70%</ProgresstBarPercent>
+          <ProgresstBarPercent variant="h2">
+            {progressBarPercent}%
+          </ProgresstBarPercent>
         </ProgressBarTextInfoWrapper>
         <ProgressBarLineContainer>
           <ProgressBarLine width={progressBarPercent} />

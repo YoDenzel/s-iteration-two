@@ -11,6 +11,7 @@ export const CarInfoContainer = styled(Box)`
   margin-right: ${({ theme }) => theme.spacing(3.5)}px;
   flex-direction: column;
   height: fit-content;
+  margin-bottom: ${({ theme }) => theme.spacing(3.5)}px;
 `;
 
 export const CarImageBlock = styled(Box)`
