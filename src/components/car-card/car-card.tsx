@@ -318,6 +318,14 @@ export function CarCard() {
       carNumber: data?.data?.number || 'Нет информации',
       carTypeInput: data?.data?.categoryId?.name || 'Нет информации',
     });
+    setImage(null);
+    setImageUrl('');
+    data &&
+      dispatch(
+        setInitialColorsCheckboxArr({
+          titles: [...data.data.colors],
+        }),
+      );
   };
 
   useEffect(() => {
