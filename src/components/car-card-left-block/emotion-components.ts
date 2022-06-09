@@ -37,6 +37,9 @@ export const CarTitle = styled(Typography)`
   letter-spacing: -0.6125px;
   color: ${({ theme }) => theme.colors.titleFont};
   margin-top: ${({ theme }) => theme.spacing(1.25)}px;
+  margin-right: ${({ theme }) => theme.spacing(1)}px;
+  margin-left: ${({ theme }) => theme.spacing(1)}px;
+  word-break: break-all;
 `;
 
 export const CarType = styled(Typography)`
@@ -49,6 +52,9 @@ export const CarType = styled(Typography)`
   letter-spacing: -0.3125px;
   color: ${({ theme }) => theme.colors.tableTextFont};
   margin-top: ${({ theme }) => theme.spacing(0.5)}px;
+  word-break: break-all;
+  margin-right: ${({ theme }) => theme.spacing(1)}px;
+  margin-left: ${({ theme }) => theme.spacing(1)}px;
 `;
 
 export const ImgInputBlock = styled(Box)`
