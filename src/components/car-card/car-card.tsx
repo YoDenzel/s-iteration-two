@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import {
@@ -11,13 +11,13 @@ import {
   useAppDispatch,
   useAppSelector,
   useDeleteCarData,
+  usePostPutCar,
 } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
-import { Icons } from '../../shared/icons';
+import { getBase64FromUrl } from '../../shared/functions';
 import { TSingleCar } from '../../shared/types';
 import { CarCardLeftBlock } from '../car-card-left-block';
 import { CarCardRightBlock } from '../car-card-right-block';
-import { TextInputComponent } from '../text-input-component';
 
 export const Wrapper = styled(Box)`
   display: flex;
@@ -65,13 +65,17 @@ export function CarCard() {
     url: `car/${carId}`,
     token: cookie.access,
   });
-  const {
-    mutateAsync,
-    data: deleteResponseData,
-    isLoading: isDeleteLoading,
-  } = useDeleteCarData();
+  const { mutateAsync } = useDeleteCarData({
+    token: cookie.access,
+  });
+  const { mutateAsync: createCar, data: responseData } = usePostPutCar({
+    method: 'POST',
+    token: cookie.access,
+    url: 'car',
+  });
   const [image, setImage] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState('');
+  const [img, setImg] = useState<string | ArrayBuffer | null>();
   const [carInputObj, setCarInputObj] = useState({
     carModelInput: '',
     carTypeInput: '',
@@ -91,6 +95,7 @@ export function CarCard() {
     if (!image) return;
     const newImages = URL.createObjectURL(image);
     setImageUrl(newImages);
+    getBase64FromUrl({ setImg: setImg, url: newImages });
   }, [image]);
 
   useEffect(() => {
@@ -129,7 +134,7 @@ export function CarCard() {
         break;
       } else setCarColorObj({ ...carColorObj, wrongColorErr: false });
     }
-  }, [carColorObj]);
+  }, [carColorObj.carColorInput]);
 
   const setColorClickhandler = () => {
     if (!carColorObj.wrongColorErr && carColorObj.carColorInput) {
@@ -177,14 +182,34 @@ export function CarCard() {
   };
 
   const deleteCarButtonClickhandler = () => {
-    mutateAsync(carId || '');
+    mutateAsync({ id: carId || '' });
+  };
+
+  const createOrChangeCar = () => {
+    createCar({
+      bodyObj: {
+        priceMin: carInputObj.carMinPrice,
+        priceMax: carInputObj.carMaxPrice,
+        name: carInputObj.carModelInput,
+        number: carInputObj.carNumber,
+        description: carInputObj.carDescription,
+        tank: 50,
+        categoryId: '6276c7ae66f15900106866ae',
+        thumbnail: {
+          size: image?.size,
+          originalname: image?.name,
+          mimetype: image?.type,
+          path: img,
+        },
+      },
+    });
   };
 
   useEffect(() => {
     progressBarFunc();
   }, [carInputObj, carColorObj]);
 
-  console.log(deleteResponseData, isDeleteLoading);
+  console.log(responseData);
 
   return (
     <Wrapper component="main">
@@ -213,6 +238,7 @@ export function CarCard() {
           setCarColorObj={setCarColorObj}
           setCarInputObj={setCarInputObj}
           setColorClickhandler={() => setColorClickhandler()}
+          createOrChangeCar={createOrChangeCar}
         />
       </CarWrapper>
     </Wrapper>
