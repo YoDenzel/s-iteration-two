@@ -5,7 +5,14 @@ export type TCarCardLeftBlock = {
   onImageChange: (v: React.ChangeEvent<HTMLInputElement>) => void;
   image: File | null;
   imageUrl: string;
-  descriptionInputValue: string;
   setDescriptionInputValue: (v: string) => void;
   progressBarPercent: number;
+  carInputObj: {
+    carModelInput: string;
+    carTypeInput: string;
+    carMinPrice: string | number;
+    carMaxPrice: string | number;
+    carNumber: string;
+    carDescription: string;
+  };
 };
