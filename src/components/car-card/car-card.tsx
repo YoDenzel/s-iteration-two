@@ -225,12 +225,12 @@ export function CarCard() {
   const [image, setImage] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState('');
   const [carInputObj, setCarInputObj] = useState({
-    carModelInput: data?.data?.name || '',
-    carTypeInput: data?.data.categoryId?.name || '',
-    carMinPrice: data?.data?.priceMin || '',
-    carMaxPrice: data?.data?.priceMax || '',
-    carNumber: data?.data?.number || '',
-    carDescription: data?.data?.description || '',
+    carModelInput: '',
+    carTypeInput: '',
+    carMinPrice: '' as number | string,
+    carMaxPrice: '' as number | string,
+    carNumber: '',
+    carDescription: '',
   });
   const [carColorObj, setCarColorObj] = useState({
     carColorInput: '',
@@ -246,12 +246,21 @@ export function CarCard() {
   }, [image]);
 
   useEffect(() => {
-    if (data?.data.colors)
+    if (data?.data) {
       dispatch(
         setInitialColorsCheckboxArr({
           titles: [...data.data.colors],
         }),
       );
+      setCarInputObj({
+        carModelInput: data.data.name,
+        carTypeInput: data.data.categoryId.name,
+        carMinPrice: data.data.priceMin,
+        carMaxPrice: data.data.priceMax,
+        carNumber: data.data.number,
+        carDescription: data.data.description,
+      });
+    }
   }, [data]);
 
   const colorCheckboxClickhandler = (title: string) => {
@@ -300,6 +309,17 @@ export function CarCard() {
     acc === 7 ? setFillingtCarPercent(100) : setFillingtCarPercent(acc * 14);
   };
 
+  const cancelChangesButtonHandler = () => {
+    setCarInputObj({
+      carDescription: data?.data?.description || 'Нет информации',
+      carMaxPrice: data?.data?.priceMax || 'Нет информации',
+      carMinPrice: data?.data?.priceMin || 'Нет информации',
+      carModelInput: data?.data?.name || 'Нет информации',
+      carNumber: data?.data?.number || 'Нет информации',
+      carTypeInput: data?.data?.categoryId?.name || 'Нет информации',
+    });
+  };
+
   useEffect(() => {
     progressBarFunc();
   }, [carInputObj, carColorObj]);
@@ -313,7 +333,7 @@ export function CarCard() {
           imageUrl={imageUrl}
           onImageChange={e => setImage(e.target.files && e.target.files[0])}
           data={data?.data}
-          descriptionInputValue={carInputObj.carDescription}
+          carInputObj={carInputObj}
           setDescriptionInputValue={(v: string) =>
             setCarInputObj({ ...carInputObj, carDescription: v })
           }
@@ -406,7 +426,9 @@ export function CarCard() {
           <ButtonsBlock>
             <SaveAndCancelButtonsWrapper>
               <SaveCarDataButton>Сохранить</SaveCarDataButton>
-              <CancelButton>Отменить</CancelButton>
+              <CancelButton onClick={() => cancelChangesButtonHandler()}>
+                Отменить
+              </CancelButton>
             </SaveAndCancelButtonsWrapper>
             <DeleteCarButton>Удалить</DeleteCarButton>
           </ButtonsBlock>
