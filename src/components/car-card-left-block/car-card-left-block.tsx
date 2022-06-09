@@ -27,18 +27,20 @@ export function CarCardLeftBlock({
   onImageChange,
   image,
   imageUrl,
-  descriptionInputValue,
   setDescriptionInputValue,
   progressBarPercent,
+  carInputObj,
 }: TCarCardLeftBlock) {
   return (
     <CarInfoContainer component="section">
       <CarImageBlock>
         <CarImage src={imageUrl || data?.thumbnail?.path} />
       </CarImageBlock>
-      <CarTitle variant="h2">{data?.name || 'Нет информации'}</CarTitle>
+      <CarTitle variant="h2">
+        {carInputObj.carModelInput || 'Нет информации'}
+      </CarTitle>
       <CarType variant="caption">
-        {data?.categoryId?.name || 'Нет информации'}
+        {carInputObj.carTypeInput || 'Нет информации'}
       </CarType>
       <ImgInputBlock>
         <ImgInputPlaceholder variant="caption">
@@ -70,7 +72,7 @@ export function CarCardLeftBlock({
       <DescriptionBlock>
         <DescriptionTitle>Описание</DescriptionTitle>
         <DescriptionInput
-          value={descriptionInputValue}
+          value={carInputObj.carDescription}
           onChange={e => setDescriptionInputValue(e.target.value)}
           multiline
           placeholder="Введите описание машины"
