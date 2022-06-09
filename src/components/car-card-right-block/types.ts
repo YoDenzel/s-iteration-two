@@ -11,6 +11,7 @@ export type TCarCardRightBlock = {
   colorsCheckboxArr: TColorItem[];
   carColorObj: TCarColorObj;
   setCarColorObj: (v: TCarColorObj) => void;
+  createOrChangeCar: () => void;
 };
 
 type TCarColorObj = {

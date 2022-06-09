@@ -29,6 +29,7 @@ export function CarCardRightBlock({
   carColorObj,
   setCarColorObj,
   setColorClickhandler,
+  createOrChangeCar,
 }: TCarCardRightBlock) {
   return (
     <CarOptionsContainer component="section">
@@ -117,7 +118,9 @@ export function CarCardRightBlock({
       </CheckboxesBlock>
       <ButtonsBlock>
         <SaveAndCancelButtonsWrapper>
-          <SaveCarDataButton>Сохранить</SaveCarDataButton>
+          <SaveCarDataButton onClick={() => createOrChangeCar()}>
+            Сохранить
+          </SaveCarDataButton>
           <CancelButton onClick={() => cancelChangesButtonClickhandler()}>
             Отменить
           </CancelButton>
