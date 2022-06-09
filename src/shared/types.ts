@@ -175,3 +175,12 @@ export type TSingleCar = {
   fields: {};
   data: TCarsData;
 };
+
+export type TCarInputObj = {
+  carModelInput: string;
+  carTypeInput: string;
+  carMinPrice: string | number;
+  carMaxPrice: string | number;
+  carNumber: string;
+  carDescription: string;
+};
