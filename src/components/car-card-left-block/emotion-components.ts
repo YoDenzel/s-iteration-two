@@ -173,6 +173,7 @@ export const ProgressBarLine = styled(Box)<{ width: number }>`
 export const DescriptionBlock = styled(Box)`
   margin-left: ${({ theme }) => theme.spacing(2.75)}px;
   margin-right: ${({ theme }) => theme.spacing(3.625)}px;
+  width: 100%;
 `;
 
 export const DescriptionTitle = styled(Typography)`
