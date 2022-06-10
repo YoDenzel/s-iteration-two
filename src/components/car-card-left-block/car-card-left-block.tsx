@@ -40,7 +40,7 @@ export function CarCardLeftBlock({
         {carInputObj.carModelInput || 'Нет информации'}
       </CarTitle>
       <CarType variant="caption">
-        {carInputObj.carTypeInput || 'Нет информации'}
+        {carInputObj.carChoosedType?.name || 'Нет информации'}
       </CarType>
       <ImgInputBlock>
         <ImgInputPlaceholder variant="caption">
