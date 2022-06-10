@@ -178,9 +178,10 @@ export type TSingleCar = {
 
 export type TCarInputObj = {
   carModelInput: string;
-  carTypeInput: string;
+  carChoosedType: TCarCategoryId | null;
   carMinPrice: string | number;
   carMaxPrice: string | number;
   carNumber: string;
   carDescription: string;
+  carTank: string | number;
 };
