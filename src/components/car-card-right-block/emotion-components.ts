@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { Box, Typography, Button } from "@mui/material";
+import styled from '@emotion/styled';
+import { Box, Typography, Button } from '@mui/material';
 
 export const CarOptionsContainer = styled(Box)`
   display: flex;
@@ -11,6 +11,9 @@ export const CarOptionsContainer = styled(Box)`
   padding: ${({ theme }) => theme.spacing(2.5)}px;
   min-height: 80%;
   margin-bottom: ${({ theme }) => theme.spacing(2.5)}px;
+  @media (max-width: ${({ theme }) => theme.breakPoints.tablet}) {
+    min-height: unset;
+  }
 `;
 
 export const CarOptionsTitle = styled(Typography)`
@@ -161,4 +164,47 @@ export const DeleteCarButton = styled(Button)`
   padding: 8px 15px 8.5px 15px;
   border-radius: 4px;
   height: max-content;
+`;
+
+export const CarTypeBlock = styled(Box)`
+  position: relative;
+`;
+
+export const CarTypesList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  box-shadow: 0px 2px 4px rgb(90 97 105 / 12%);
+  position: absolute;
+  background-color: ${({ theme }) => theme.colors.white};
+  z-index: 1;
+  gap: ${({ theme }) => theme.spacing(0.5)}px;
+  width: 100%;
+  height: 100px;
+  overflow: scroll;
+`;
+
+export const CarTypeListItem = styled.li`
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: -0.192982px;
+  color: ${({ theme }) => theme.colors.black};
+  margin-left: ${({ theme }) => theme.spacing(1)}px;
+  padding-bottom: 4px;
+  padding-top: 4px;
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.primaryBackground};
+  }
+  &:first-of-type {
+    margin-top: ${({ theme }) => theme.spacing(0.5)}px;
+  }
+  &:last-of-type {
+    margin-bottom: ${({ theme }) => theme.spacing(0.5)}px;
+  }
 `;
