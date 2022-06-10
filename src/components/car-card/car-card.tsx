@@ -10,12 +10,13 @@ import {
 import {
   useAppDispatch,
   useAppSelector,
+  useClickOutside,
   useDeleteCarData,
   usePostPutCar,
 } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
 import { getBase64FromUrl } from '../../shared/functions';
-import { TSingleCar } from '../../shared/types';
+import { TCarCategory, TCarCategoryId, TSingleCar } from '../../shared/types';
 import { CarCardLeftBlock } from '../car-card-left-block';
 import { CarCardRightBlock } from '../car-card-right-block';
 
@@ -30,6 +31,7 @@ export const Wrapper = styled(Box)`
   @media (max-width: ${({ theme }) => theme.breakPoints.tablet}) {
     margin-left: ${({ theme }) => theme.spacing(1.5)}px;
     margin-right: ${({ theme }) => theme.spacing(1.5)}px;
+    padding: 0;
   }
   @media (max-width: ${({ theme }) => theme.breakPoints.mobile}) {
     overflow: unset;
@@ -51,7 +53,10 @@ export const CarWrapper = styled(Box)`
   display: flex;
   width: 100%;
   margin-top: ${({ theme }) => theme.spacing(3.75)}px;
-  height: 100%;
+  @media (max-width: ${({ theme }) => theme.breakPoints.tablet}) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export function CarCard() {
@@ -64,6 +69,17 @@ export function CarCard() {
     QUERY_KEY: 'cars',
     url: `car/${carId}`,
     token: cookie.access,
+  });
+  const { data: carCategoryData } = useGetData<TCarCategoryId[]>({
+    QUERY_KEY: 'category',
+    url: 'category',
+    token: cookie.access,
+    selectorFunction: (state: TCarCategory) =>
+      state.data.map(item => ({
+        name: item.name,
+        id: item.id,
+        description: item.description,
+      })),
   });
   const { mutateAsync } = useDeleteCarData({
     token: cookie.access,
@@ -78,17 +94,23 @@ export function CarCard() {
   const [img, setImg] = useState<string | ArrayBuffer | null>();
   const [carInputObj, setCarInputObj] = useState({
     carModelInput: '',
-    carTypeInput: '',
+    carChoosedType: null as TCarCategoryId | null,
     carMinPrice: '' as number | string,
     carMaxPrice: '' as number | string,
     carNumber: '',
     carDescription: '',
+    carTank: '' as number | string,
   });
   const [carColorObj, setCarColorObj] = useState({
     carColorInput: '',
     wrongColorErr: false,
   });
+  const [carTypeInput, setCarTypeInput] = useState('');
   const [fillingCarPercent, setFillingtCarPercent] = useState(0);
+  const [isCarTypeDropdownActive, setIsCarTypeDropdownActive] = useState(false);
+  const carDropdownInputRef = useClickOutside<HTMLUListElement>(() =>
+    setIsCarTypeDropdownActive(false),
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -107,11 +129,12 @@ export function CarCard() {
       );
       setCarInputObj({
         carModelInput: data?.data.name || '',
-        carTypeInput: data?.data.categoryId.name || '',
+        carChoosedType: data?.data.categoryId || null,
         carMinPrice: data?.data.priceMin || '',
         carMaxPrice: data?.data.priceMax || '',
         carNumber: data?.data.number || '',
         carDescription: data?.data.description || '',
+        carTank: data.data.tank || 0,
       });
     }
   }, [data?.data]);
@@ -159,7 +182,7 @@ export function CarCard() {
         break;
       }
     }
-    acc === 7 ? setFillingtCarPercent(100) : setFillingtCarPercent(acc * 14);
+    acc === 8 ? setFillingtCarPercent(100) : setFillingtCarPercent(acc * 12);
   };
 
   const cancelChangesButtonClickhandler = () => {
@@ -169,7 +192,8 @@ export function CarCard() {
       carMinPrice: data?.data?.priceMin || 'Нет информации',
       carModelInput: data?.data?.name || 'Нет информации',
       carNumber: data?.data?.number || 'Нет информации',
-      carTypeInput: data?.data?.categoryId?.name || 'Нет информации',
+      carChoosedType: data?.data?.categoryId || null,
+      carTank: data?.data.tank || 0,
     });
     setImage(null);
     setImageUrl('');
@@ -193,8 +217,8 @@ export function CarCard() {
         name: carInputObj.carModelInput,
         number: carInputObj.carNumber,
         description: carInputObj.carDescription,
-        tank: 50,
-        categoryId: '6276c7ae66f15900106866ae',
+        tank: carInputObj.carTank,
+        categoryId: carInputObj.carChoosedType?.id,
         thumbnail: {
           size: image?.size,
           originalname: image?.name,
@@ -205,11 +229,16 @@ export function CarCard() {
     });
   };
 
+  const setChoosedCarType = (v: TCarCategoryId) => {
+    setCarInputObj({ ...carInputObj, carChoosedType: v });
+    setCarTypeInput(v.name);
+  };
+
   useEffect(() => {
     progressBarFunc();
   }, [carInputObj, carColorObj]);
 
-  console.log(responseData);
+  console.log(carCategoryData);
 
   return (
     <Wrapper component="main">
@@ -239,6 +268,15 @@ export function CarCard() {
           setCarInputObj={setCarInputObj}
           setColorClickhandler={() => setColorClickhandler()}
           createOrChangeCar={createOrChangeCar}
+          carCategoriesArr={carCategoryData}
+          isCarTypeDropdownActive={isCarTypeDropdownActive}
+          setIsCarTypeDropdownActive={() =>
+            setIsCarTypeDropdownActive(!isCarTypeDropdownActive)
+          }
+          carDropdownInputRef={carDropdownInputRef}
+          carTypeInput={carTypeInput}
+          setCarTypeInput={setCarTypeInput}
+          setChoosedCarType={setChoosedCarType}
         />
       </CarWrapper>
     </Wrapper>
