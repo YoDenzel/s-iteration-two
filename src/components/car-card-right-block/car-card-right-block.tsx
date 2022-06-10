@@ -16,6 +16,9 @@ import {
   CancelButton,
   DeleteCarButton,
   CheckboxItem,
+  CarTypeBlock,
+  CarTypeListItem,
+  CarTypesList,
 } from './emotion-components';
 import { TCarCardRightBlock } from './types';
 
@@ -30,6 +33,13 @@ export function CarCardRightBlock({
   setCarColorObj,
   setColorClickhandler,
   createOrChangeCar,
+  carCategoriesArr,
+  isCarTypeDropdownActive,
+  setIsCarTypeDropdownActive,
+  carDropdownInputRef,
+  carTypeInput,
+  setCarTypeInput,
+  setChoosedCarType,
 }: TCarCardRightBlock) {
   return (
     <CarOptionsContainer component="section">
@@ -45,18 +55,31 @@ export function CarCardRightBlock({
           title="Модель автомобиля"
           flex="45%"
         />
+        <CarTypeBlock>
+          <TextInputComponent
+            type="text"
+            placeholder="Введите тип автомобиля"
+            value={carTypeInput}
+            setValue={(v: string) => setCarTypeInput(v)}
+            title="Тип автомобиля"
+            flex="45%"
+            onInputClick={setIsCarTypeDropdownActive}
+          />
+          {isCarTypeDropdownActive && (carCategoriesArr?.length || 0) > 0 && (
+            <CarTypesList ref={carDropdownInputRef}>
+              {carCategoriesArr?.map((item, index) => (
+                <CarTypeListItem
+                  key={index + item.id}
+                  onClick={() => setChoosedCarType(item)}
+                >
+                  {item.name}
+                </CarTypeListItem>
+              ))}
+            </CarTypesList>
+          )}
+        </CarTypeBlock>
         <TextInputComponent
-          type="text"
-          placeholder="Введите тип автомобиля"
-          value={carInputObj.carTypeInput}
-          setValue={(v: string) =>
-            setCarInputObj({ ...carInputObj, carTypeInput: v })
-          }
-          title="Тип автомобиля"
-          flex="45%"
-        />
-        <TextInputComponent
-          type="text"
+          type="number"
           placeholder="Введите минимальную цену"
           value={String(carInputObj.carMinPrice)}
           setValue={(v: string) =>
@@ -66,7 +89,7 @@ export function CarCardRightBlock({
           flex="25%"
         />
         <TextInputComponent
-          type="text"
+          type="number"
           placeholder="Введите максимальную цену"
           value={String(carInputObj.carMaxPrice)}
           setValue={(v: string) =>
@@ -85,6 +108,20 @@ export function CarCardRightBlock({
           title="Номер машины"
           flex="25%"
           maxLength={9}
+        />
+        <TextInputComponent
+          type="number"
+          placeholder="Введите насколько заполнен бак"
+          value={carInputObj.carTank}
+          setValue={(v: string) =>
+            setCarInputObj({ ...carInputObj, carTank: Number(v) })
+          }
+          title="Бак, %"
+          flex="100%"
+          maxLength={3}
+          errorMessage={
+            (carInputObj.carTank || 0) > 100 ? 'Значение не больше 100' : ''
+          }
         />
         <AvailableColorsBlock>
           <ColorsInputBlock>
