@@ -13,8 +13,12 @@ import './fonts/Roboto/Roboto-Light.ttf';
 import './fonts/Roboto/Roboto-Medium.ttf';
 import './fonts/Roboto/Roboto-Regular.ttf';
 import { AppThemeProvider } from './shared/ui/theme';
+import { PersistGate } from 'redux-persist/integration/react';
+import persistStore from 'redux-persist/es/persistStore';
 
 const queryClient = new QueryClient();
+
+const persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -24,11 +28,13 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <AppThemeProvider>
         <Provider store={store}>
-          <BrowserRouter>
-            <CookiesProvider>
-              <App />
-            </CookiesProvider>
-          </BrowserRouter>
+          <PersistGate loading={null} persistor={persistor}>
+            <BrowserRouter>
+              <CookiesProvider>
+                <App />
+              </CookiesProvider>
+            </BrowserRouter>
+          </PersistGate>
         </Provider>
       </AppThemeProvider>
     </QueryClientProvider>

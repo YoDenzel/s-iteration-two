@@ -24,6 +24,7 @@ export function App() {
           <ErrorComponent
             errorCodeStatus="404"
             reloadButtonClickhandler={() => history.back()}
+            isButton
           />
         }
       />

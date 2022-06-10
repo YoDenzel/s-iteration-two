@@ -1,5 +1,4 @@
-import { Box } from '@mui/material';
-import { InputTitle, Input, Error } from './empotion-components';
+import { InputTitle, Input, Error, Container } from './empotion-components';
 import { TTextInputComponent } from './types';
 
 export function TextInputComponent({
@@ -9,9 +8,12 @@ export function TextInputComponent({
   placeholder,
   errorMessage,
   type,
+  flex,
+  maxLength,
+  onInputClick,
 }: TTextInputComponent) {
   return (
-    <Box>
+    <Container flx={flex}>
       <InputTitle variant="caption">{title}</InputTitle>
       <Input
         variant="outlined"
@@ -21,9 +23,11 @@ export function TextInputComponent({
         type={type}
         inputProps={{
           autoComplete: 'off',
+          maxLength: `${maxLength}`,
         }}
+        onClick={onInputClick}
       />
       {errorMessage && <Error>{errorMessage}</Error>}
-    </Box>
+    </Container>
   );
 }

@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
-import { TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
+
+export const Container = styled(Box)<{ flx?: string }>`
+  flex: ${({ flx }) => flx || '100%'};
+`;
 
 export const Input = styled(TextField)`
   width: 100%;

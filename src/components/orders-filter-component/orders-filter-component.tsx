@@ -4,12 +4,16 @@ import {
   Wrapper,
   FilterButtonContainer,
   ApplyFilterButton,
+  CancelFilterButton,
+  SubmitContainer,
 } from './emotion-components';
 import { TOrdersFilterComponent } from './types';
 
 export function OrderFilterComponent({
   filterDataArr,
   submitHandler,
+  cancelButtonClickhandler,
+  dropdownItemClickhandler,
 }: TOrdersFilterComponent) {
   return (
     <Wrapper component="form" onSubmit={e => submitHandler(e)}>
@@ -23,10 +27,18 @@ export function OrderFilterComponent({
               item.activeTitle?.name || '',
             )}
             activeIndex={index}
+            dropdownItemClickhandler={dropdownItemClickhandler}
           />
         ))}
       </FilterButtonContainer>
-      <ApplyFilterButton type="submit">Применить</ApplyFilterButton>
+      <SubmitContainer>
+        {cancelButtonClickhandler && (
+          <CancelFilterButton onClick={() => cancelButtonClickhandler()}>
+            Отменить
+          </CancelFilterButton>
+        )}
+        <ApplyFilterButton type="submit">Применить</ApplyFilterButton>
+      </SubmitContainer>
     </Wrapper>
   );
 }

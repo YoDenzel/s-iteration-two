@@ -1,7 +1,7 @@
 import { TOrderInformation } from './types';
 import { CheckboxItem } from '../checkbox-item';
 import { useAppSelector } from '../../shared/custom-hooks';
-import { OrderChangeStatusData } from './constants';
+import { orderChangeStatusData } from './constants';
 import {
   CarImg,
   CarInfoBlock,
@@ -27,6 +27,7 @@ export function OrderInformation({
   paginationRange,
   prevPageClickhandler,
   setCurrrentPage,
+  changeStatusClickhandler,
 }: TOrderInformation) {
   const checkboxArr = useAppSelector(
     state => state.carOrderCheckboxArr.checkboxArr,
@@ -44,7 +45,7 @@ export function OrderInformation({
             </Title>
             <Title isblack={0}>
               {(activeOrderObj?.pointId !== null &&
-                activeOrderObj?.pointId.address) ||
+                activeOrderObj?.pointId?.address) ||
                 ''}
             </Title>
             <Title isblack={0}>{dateFrom + ' - ' + dateTo}</Title>
@@ -63,11 +64,14 @@ export function OrderInformation({
         </CheckboxBlock>
         <Price>{activeOrderObj?.price} ₽</Price>
         <ChangeStatusBlock component="article">
-          {OrderChangeStatusData.map((item, index) => (
+          {orderChangeStatusData.map((item, index) => (
             <ChangeStatusButton
               activeindex={index}
               key={item.title + index}
               startIcon={<item.icon color={index === 0 ? '#17C671 ' : ''} />}
+              onClick={() =>
+                changeStatusClickhandler(index, activeOrderObj?.carId.id)
+              }
             >
               {item.title}
             </ChangeStatusButton>

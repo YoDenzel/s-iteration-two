@@ -29,7 +29,7 @@ export const useGetData = <T>({
     {
       select: selectorFunction,
       staleTime: STALE_TIME,
-      retry: 0,
+      notifyOnChangeProps: 'tracked',
     },
   );
   return query;

@@ -1,28 +1,34 @@
 import { addDays } from 'date-fns';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import {
   AdminPanelFooter,
   AdminPanelHeader,
   NavigationMenu,
-  OrdersListComponent,
 } from '../../components';
+import { setActiveComponentIndex } from '../../redux/active-component-index/active-component-index';
 import {
+  useAppDispatch,
+  useAppSelector,
   useClickOutside,
   useGetWindowWidth,
   usePostLogout,
 } from '../../shared/custom-hooks';
+import { components } from './constants';
 import { Container, Wrapper } from './emotion-components';
 
 export function AdminPanel() {
-  const [activeIndex, setActiveIndex] = useState(0);
   const [cookie, _, removeCookie] = useCookies(['access']);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   const [isMenuActive, setIsMenuActive] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const activeComponentIndex = useAppSelector(
+    state => state.activeComponentIndex.activeComponentIndex,
+  );
   const { windowWidth } = useGetWindowWidth();
   const { mutateAsync } = usePostLogout();
+  const dispatch = useAppDispatch();
   const dropdownRef = useClickOutside<HTMLDivElement>(() =>
     setIsDropdownActive(false),
   );
@@ -30,11 +36,6 @@ export function AdminPanel() {
     () => windowWidth < 1024 && setIsMenuActive(false),
   );
   const navigate = useNavigate();
-
-  useEffect(() => {
-    windowWidth > 1023 && setIsMenuActive(true);
-  }, [windowWidth]);
-
   const logoutClickhandler = () => {
     mutateAsync({ accessToken: cookie.access });
     removeCookie('access', {
@@ -43,27 +44,45 @@ export function AdminPanel() {
     });
     navigate('/s-iteration-two/admin');
   };
+
+  const navItemClickhandler = (index: number) => {
+    dispatch(
+      setActiveComponentIndex({
+        activeComponentIndex: index,
+      }),
+    );
+    if (windowWidth < 1024) {
+      setIsMenuActive(false);
+    }
+  };
   return (
     <Wrapper>
       <NavigationMenu
-        activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
+        activeIndex={activeComponentIndex}
+        navItemClickhandler={navItemClickhandler}
         isMenuActive={isMenuActive}
         setIsMenuActive={setIsMenuActive}
         windowWidth={windowWidth}
         mobileMenuRef={mobileMenuRef}
       />
       <Container>
-        <AdminPanelHeader
-          logoutClickhandler={logoutClickhandler}
-          dropdownRef={dropdownRef}
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-          isDropdownActive={isDropdownActive}
-          setIsDropdownActive={setIsDropdownActive}
-        />
-        <OrdersListComponent />
-        <AdminPanelFooter />
+        <>
+          <AdminPanelHeader
+            logoutClickhandler={logoutClickhandler}
+            dropdownRef={dropdownRef}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            isDropdownActive={isDropdownActive}
+            setIsDropdownActive={setIsDropdownActive}
+          />
+          {components.map(
+            (Item, index) =>
+              index === activeComponentIndex && (
+                <Item key={index + Date.now()} />
+              ),
+          )}
+          <AdminPanelFooter />
+        </>
       </Container>
     </Wrapper>
   );

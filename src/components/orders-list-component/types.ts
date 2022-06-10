@@ -1,4 +1,4 @@
-import { TOptionsArr } from '../../types';
+import { TOptionsArr } from '../../shared/types';
 
 export type TFilterDataArr = {
   data: Array<TOptionsArr[] | undefined>;

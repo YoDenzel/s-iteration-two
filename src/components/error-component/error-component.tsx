@@ -16,6 +16,7 @@ import { TErrorComponent } from './types';
 export function ErrorComponent({
   errorCodeStatus,
   reloadButtonClickhandler,
+  isButton,
 }: TErrorComponent) {
   const [cookie, _, removeCookie] = useCookies(['access']);
   const { mutateAsync } = usePostLogout();
@@ -43,7 +44,11 @@ export function ErrorComponent({
       </InfoBlock>
       {/* эта кнопка чисто для gh-pages, из-за того что мэйн пэйдж имеет ссылку отличную от
       s-iteration-two/, то gh pages перекидывает вас на экран ошибки, в нормальных условиях такой штуки нет */}
-      <SignOutButton onClick={() => logoutClickhandler()}>Выйти</SignOutButton>
+      {isButton && (
+        <SignOutButton onClick={() => logoutClickhandler()}>
+          Выйти
+        </SignOutButton>
+      )}
     </Container>
   );
 }

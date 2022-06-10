@@ -4,10 +4,10 @@ import { format } from 'date-fns';
 import {
   useAppDispatch,
   useAppSelector,
+  useLocalStorage,
   usePagination,
 } from '../../shared/custom-hooks';
 import { useGetData } from '../../shared/custom-hooks/use-get-data/use-get-data';
-import { filterDataArr } from '../../shared/functions';
 import {
   TCarOrder,
   TCarRate,
@@ -21,18 +21,22 @@ import { OrderFilterComponent } from '../orders-filter-component';
 import { Container, Empty, Title, Wrapper } from './emotion-components';
 import { setCheckboxesStatus } from '../../redux/car-order-checkbox-data/car-order-checkbox-data';
 import { Loader } from '../loader';
-import { PAGE_LIMIT } from './constants';
+import { filterDataArr, PAGE_LIMIT } from './constants';
+import { setActiveObj } from '../../redux/order-active-filter-data/order-active-filter-data';
 import { ErrorComponent } from '../error-component';
 
 export function OrdersListComponent() {
   const { activeCarObj, activeCitiesObj, activeRateObj, activeStatusObj } =
     useAppSelector(state => ({
-      activeRateObj: state.filterActiveData.activeRateObj,
-      activeCarObj: state.filterActiveData.activeCarObj,
-      activeStatusObj: state.filterActiveData.activeStatusObj,
-      activeCitiesObj: state.filterActiveData.activeCitiesObj,
+      activeRateObj: state.orderActiveFilterData.activeRateObj,
+      activeCarObj: state.orderActiveFilterData.activeCarObj,
+      activeStatusObj: state.orderActiveFilterData.activeStatusObj,
+      activeCitiesObj: state.orderActiveFilterData.activeCitiesObj,
     }));
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useLocalStorage({
+    defaultValue: '',
+    key: 'orderListComponent',
+  });
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState('');
   const [cookie] = useCookies(['access']);
@@ -103,14 +107,11 @@ export function OrdersListComponent() {
   const submitHandler = (e: React.FormEvent<HTMLDivElement>) => {
     let filterStr = '';
     e.preventDefault();
-    if (activeRateObj)
-      setFilter(() => (filterStr += `&rateId=${activeRateObj.id}`));
-    if (activeCitiesObj)
-      setFilter(() => (filterStr += `&cityId=${activeCitiesObj.id}`));
-    if (activeStatusObj)
-      setFilter(() => (filterStr += `&orderStatusId=${activeStatusObj.id}`));
-    if (activeCarObj)
-      setFilter(() => (filterStr += `&carId=${activeCarObj.id}`));
+    if (activeRateObj) filterStr += `&rateId=${activeRateObj.id}`;
+    if (activeCitiesObj) filterStr += `&cityId=${activeCitiesObj.id}`;
+    if (activeStatusObj) filterStr += `&orderStatusId=${activeStatusObj.id}`;
+    if (activeCarObj) filterStr += `&carId=${activeCarObj.id}`;
+    setFilter(filterStr);
   };
   const dateFrom = format(
     new Date(data?.data[0]?.dateFrom || 0),
@@ -135,18 +136,31 @@ export function OrdersListComponent() {
     else return false;
   };
 
+  const dropdownItemClickhandler = (activeObj: TOptionsArr, index?: number) => {
+    dispatch(
+      setActiveObj({
+        activeObj: activeObj,
+        id: index,
+      }),
+    );
+  };
+
+  const changeStatusClickhandler = (index: number) => {
+    switch (index) {
+      case 0:
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+    }
+  };
   return (
     <>
-      {isError && (
-        <ErrorComponent
-          errorCodeStatus={error}
-          reloadButtonClickhandler={() => window.location.reload()}
-        />
-      )}
       {!isError && (
         <Wrapper component="main">
           <Title variant="h1">Заказы</Title>
-          <Container>
+          <Container component="section">
             <OrderFilterComponent
               filterDataArr={filterDataArr({
                 data: [
@@ -163,6 +177,7 @@ export function OrdersListComponent() {
                 ],
               })}
               submitHandler={submitHandler}
+              dropdownItemClickhandler={dropdownItemClickhandler}
             />
             {isLoading && <Loader />}
             {!isLoading && data?.data.length !== 0 && (
@@ -181,11 +196,18 @@ export function OrdersListComponent() {
                 prevPageClickhandler={() =>
                   setCurrentPage(prevValue => prevValue - 1)
                 }
+                changeStatusClickhandler={changeStatusClickhandler}
               />
             )}
             {data?.data.length === 0 && <Empty>Ничего не найдено</Empty>}
           </Container>
         </Wrapper>
+      )}
+      {isError && (
+        <ErrorComponent
+          reloadButtonClickhandler={() => window.location.reload()}
+          errorCodeStatus={error}
+        />
       )}
     </>
   );

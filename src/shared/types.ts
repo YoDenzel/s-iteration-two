@@ -131,3 +131,57 @@ type TPointId = {
   id: string;
   name: string;
 };
+
+export type TCarCategory = {
+  count: number;
+  fields: {};
+  data: TCarCategoryData[];
+};
+
+export type TCarCategoryData = {
+  updatedAt: number;
+  createdAt: number;
+  name: string;
+  description: string;
+  id: string;
+};
+
+export type TPoint = {
+  count: number;
+  fields: {};
+  data: TPointData[];
+};
+
+export type TPointData = {
+  address: string;
+  id: string;
+  name: string;
+  cityId: TOptionsArr;
+};
+
+export type TCarRateTypes = {
+  count: number;
+  fields: {};
+  data: TCarRateTypesData[];
+};
+
+export type TCarRateTypesData = {
+  name: string;
+  unit: string;
+  id: string;
+};
+
+export type TSingleCar = {
+  fields: {};
+  data: TCarsData;
+};
+
+export type TCarInputObj = {
+  carModelInput: string;
+  carChoosedType: TCarCategoryId | null;
+  carMinPrice: string | number;
+  carMaxPrice: string | number;
+  carNumber: string;
+  carDescription: string;
+  carTank: string | number;
+};
