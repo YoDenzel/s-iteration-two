@@ -10,6 +10,7 @@ export function TextInputComponent({
   type,
   flex,
   maxLength,
+  onInputClick,
 }: TTextInputComponent) {
   return (
     <Container flx={flex}>
@@ -24,6 +25,7 @@ export function TextInputComponent({
           autoComplete: 'off',
           maxLength: `${maxLength}`,
         }}
+        onClick={onInputClick}
       />
       {errorMessage && <Error>{errorMessage}</Error>}
     </Container>
