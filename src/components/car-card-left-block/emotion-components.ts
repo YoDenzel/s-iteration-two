@@ -12,6 +12,10 @@ export const CarInfoContainer = styled(Box)`
   flex-direction: column;
   height: fit-content;
   margin-bottom: ${({ theme }) => theme.spacing(3.5)}px;
+  @media (max-width: ${({ theme }) => theme.breakPoints.tablet}) {
+    width: 100%;
+    margin-right: unset;
+  }
 `;
 
 export const CarImageBlock = styled(Box)`
@@ -61,7 +65,7 @@ export const ImgInputBlock = styled(Box)`
   min-height: 30px;
   display: flex;
   align-items: center;
-  border: 0.5px solid #becad6;
+  border: 0.5px solid ${({ theme }) => theme.colors.inputBorder};
   border-radius: 4px;
   margin-left: ${({ theme }) => theme.spacing(4)}px;
   margin-right: ${({ theme }) => theme.spacing(4)}px;
@@ -173,7 +177,6 @@ export const ProgressBarLine = styled(Box)<{ width: number }>`
 export const DescriptionBlock = styled(Box)`
   margin-left: ${({ theme }) => theme.spacing(2.75)}px;
   margin-right: ${({ theme }) => theme.spacing(3.625)}px;
-  width: 100%;
 `;
 
 export const DescriptionTitle = styled(Typography)`
@@ -196,7 +199,6 @@ export const DescriptionInput = styled(TextField)`
   margin-bottom: ${({ theme }) => theme.spacing(6.25)}px;
   border: none;
   outline: none;
-  width: 100%;
   flex: 1;
   padding: 0;
   & fieldset {
